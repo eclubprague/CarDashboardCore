@@ -1,4 +1,4 @@
-package com.eclubprague.cardashboard.core.modules.models;
+package com.eclubprague.cardashboard.core.modules.models.resources;
 
 /**
  * Created by Michael on 9. 7. 2015.

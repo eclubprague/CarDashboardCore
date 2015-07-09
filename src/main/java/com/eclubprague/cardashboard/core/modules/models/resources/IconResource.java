@@ -1,4 +1,4 @@
-package com.eclubprague.cardashboard.core.modules.models;
+package com.eclubprague.cardashboard.core.modules.models.resources;
 
 /**
  * Created by Michael on 9. 7. 2015.
@@ -7,7 +7,7 @@ package com.eclubprague.cardashboard.core.modules.models;
  */
 public class IconResource extends SimpleAbstractResource {
 
-    public IconResource(int resourceId) {
+    private IconResource(int resourceId) {
         super(resourceId);
     }
 

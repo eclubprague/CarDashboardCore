@@ -1,4 +1,4 @@
-package com.eclubprague.cardashboard.core.modules.models;
+package com.eclubprague.cardashboard.core.modules.models.resources;
 
 import java.util.Map;
 
