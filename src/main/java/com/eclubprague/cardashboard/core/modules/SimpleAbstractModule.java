@@ -10,14 +10,14 @@ import com.eclubprague.cardashboard.core.modules.models.resources.StringResource
  * Simple implementation of IModule interface.
  */
 public class SimpleAbstractModule implements IModule {
-    private final IconResource iconResource;
     private final StringResource titleResource;
+    private final IconResource iconResource;
     private final ColorResource bgColorResource;
     private final ColorResource fgColorResource;
 
-    public SimpleAbstractModule(IconResource iconResource, StringResource titleResource, ColorResource bgColorResource, ColorResource fgColorResource) {
-        this.iconResource = iconResource;
+    public SimpleAbstractModule(StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource) {
         this.titleResource = titleResource;
+        this.iconResource = iconResource;
         this.bgColorResource = bgColorResource;
         this.fgColorResource = fgColorResource;
     }
