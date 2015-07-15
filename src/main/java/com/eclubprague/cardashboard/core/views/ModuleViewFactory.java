@@ -4,10 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.eclubprague.cardashboard.core.modules.models.resources.IconResource;
-import com.eclubprague.cardashboard.core.modules.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
+import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.utils.ModuleViewUtils;
 
 /**

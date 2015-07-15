@@ -1,8 +1,6 @@
-package com.eclubprague.cardashboard.core.modules.models.resources;
+package com.eclubprague.cardashboard.core.modules.base.models.resources;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Color;
 
 /**
  * Created by Michael on 9. 7. 2015.

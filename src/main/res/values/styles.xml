@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="card">
+
+    <style name="card_holder">
         <item name="android:elevation">2dp</item>
+    </style>
+
+    <style name="card">
+        <item name="android:textSize">34sp</item>
     </style>
 </resources>

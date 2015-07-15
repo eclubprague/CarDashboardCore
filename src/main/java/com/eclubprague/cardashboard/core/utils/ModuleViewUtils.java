@@ -2,10 +2,12 @@ package com.eclubprague.cardashboard.core.utils;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.eclubprague.cardashboard.core.modules.models.resources.IconResource;
-import com.eclubprague.cardashboard.core.modules.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.R;
+import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
+import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 
 /**
  * Utility class containing tools for module views
@@ -15,8 +17,10 @@ import com.eclubprague.cardashboard.core.modules.models.resources.StringResource
 public class ModuleViewUtils {
 
     public static View preparePassive(View moduleView, Context context, IconResource iconResource, StringResource titleResource){
-        TextView titleView = (TextView) moduleView.findViewById(com.eclubprague.cardashboard.core.R.id.module_title);
-        titleView.setText(titleResource.getString(context));
+        TextView titleView = (TextView) moduleView.findViewById(R.id.module_title);
+        titleResource.setInView(titleView);
+        ImageView iconView = (ImageView) moduleView.findViewById(R.id.module_icon);
+        iconResource.setInView(iconView);
         return moduleView;
     }
 }

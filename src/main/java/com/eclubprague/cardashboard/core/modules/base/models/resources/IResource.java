@@ -1,6 +1,4 @@
-package com.eclubprague.cardashboard.core.modules.models.resources;
-
-import java.util.Map;
+package com.eclubprague.cardashboard.core.modules.base.models.resources;
 
 /**
  * Created by Michael on 9. 7. 2015.

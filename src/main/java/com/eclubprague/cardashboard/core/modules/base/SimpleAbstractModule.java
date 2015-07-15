@@ -1,15 +1,15 @@
-package com.eclubprague.cardashboard.core.modules;
+package com.eclubprague.cardashboard.core.modules.base;
 
-import com.eclubprague.cardashboard.core.modules.models.resources.ColorResource;
-import com.eclubprague.cardashboard.core.modules.models.resources.IconResource;
-import com.eclubprague.cardashboard.core.modules.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
+import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
+import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 
 /**
  * Created by Michael on 9. 7. 2015.
  * <p/>
  * Simple implementation of IModule interface.
  */
-public class SimpleAbstractModule implements IModule {
+abstract public class SimpleAbstractModule implements IModule {
     private final StringResource titleResource;
     private final IconResource iconResource;
     private final ColorResource bgColorResource;
@@ -41,4 +41,5 @@ public class SimpleAbstractModule implements IModule {
     public ColorResource getForegroundColor() {
         return fgColorResource;
     }
+
 }
