@@ -23,4 +23,14 @@ public class ModuleViewUtils {
         iconResource.setInView(iconView);
         return moduleView;
     }
+
+    public static View prepareActive(View moduleView, Context context, IconResource iconResource, StringResource titleResource, StringResource unitResource) {
+        TextView titleView = (TextView) moduleView.findViewById(R.id.module_title);
+        titleResource.setInView(titleView);
+        ImageView iconView = (ImageView) moduleView.findViewById(R.id.module_icon);
+        iconResource.setInView(iconView);
+        TextView unitView = (TextView) moduleView.findViewById(R.id.module_unit);
+        unitResource.setInView(unitView);
+        return moduleView;
+    }
 }

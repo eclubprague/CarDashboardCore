@@ -1,0 +1,66 @@
+package com.eclubprague.cardashboard.core.modules.base;
+
+import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.eclubprague.cardashboard.core.R;
+import com.eclubprague.cardashboard.core.model.eventbus.interfaces.MainThreadReciever;
+import com.eclubprague.cardashboard.core.modules.base.models.ModuleUpdateEvent;
+import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
+import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
+import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.views.ModuleViewFactory;
+
+import de.greenrobot.event.EventBus;
+import de.greenrobot.event.Subscribe;
+import de.greenrobot.event.ThreadMode;
+
+/**
+ * Created by Michael on 16. 7. 2015.
+ * <p/>
+ * Base implementation of display module.
+ * Displays information. ATM it displays only String up to 4 characters.
+ * Should launch simple menu on click (TODO)
+ */
+abstract public class AbstractDisplayModule extends AbstractSimpleModule implements MainThreadReciever<ModuleUpdateEvent> {
+    private TextView valueView = null;
+    private final StringResource unitResource;
+
+    public AbstractDisplayModule(IModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource, StringResource unitResource) {
+        super(parent, titleResource, iconResource, bgColorResource, fgColorResource);
+        this.unitResource = unitResource;
+        EventBus.getDefault().register(this);
+    }
+
+    public StringResource getUnit() {
+        return unitResource;
+    }
+
+    protected void updateValue(String value) {
+        if (valueView != null) {
+            valueView.setText(value);
+        }
+    }
+
+    @Override
+    public View createNewView(Context context, ViewGroup parent) {
+        View view = ModuleViewFactory.createActive(context, parent, getIcon(), getTitle(), getUnit());
+        valueView = (TextView) view.findViewById(R.id.module_value);
+        return view;
+    }
+
+    @Override
+    public ViewGroup createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
+        ViewGroup holderView = ModuleViewFactory.createActiveWithHolder(context, holderResourceId, holderParent, getIcon(), getTitle(), getUnit());
+        valueView = (TextView) holderView.findViewById(R.id.module_value);
+        return holderView;
+    }
+
+    @Override
+    @Subscribe(threadMode = ThreadMode.MainThread)
+    public void onEventMainThread(ModuleUpdateEvent event) {
+        updateValue(event.getValue());
+    }
+}

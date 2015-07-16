@@ -1,6 +1,8 @@
 package com.eclubprague.cardashboard.core.modules.base;
 
 import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
@@ -13,6 +15,8 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
  */
 public interface IModule {
 
+    IModule getParent();
+
     IconResource getIcon();
 
     StringResource getTitle();
@@ -21,8 +25,12 @@ public interface IModule {
 
     ColorResource getForegroundColor();
 
-    void onClick(Context context);
+    void onClickEvent(Context context);
 
-    void onLongClick(Context context);
+    void onLongClickEvent(Context context);
+
+    View createView(Context context, ViewGroup parent);
+
+    ViewGroup createViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent);
 
 }

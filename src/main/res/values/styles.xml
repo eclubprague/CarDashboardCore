@@ -2,10 +2,11 @@
 <resources>
 
     <style name="card_holder">
-        <item name="android:elevation">2dp</item>
+        <item name="android:elevation">@dimen/elevation_card_default</item>
+        <item name="android:stateListAnimator">@anim/raise</item>
     </style>
 
     <style name="card">
-        <item name="android:textSize">34sp</item>
+        <item name="android:textSize">@dimen/text_size_display_regular</item>
     </style>
 </resources>

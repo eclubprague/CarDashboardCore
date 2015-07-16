@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="text_side_margin">16dp</dimen>
-    <dimen name="text_bottom_margin">10dp</dimen>
+    <dimen name="text_margin_horizontal">16dp</dimen>
+    <dimen name="text_margin_vertical">10dp</dimen>
     <dimen name="icon_size">192dp</dimen>
+    <dimen name="text_size_display_small">24sp</dimen>
+    <dimen name="text_size_display_regular">34sp</dimen>
+    <dimen name="text_size_display_extra_large">112sp</dimen>
+    <dimen name="elevation_card_default">2dp</dimen>
+    <dimen name="elevation_card_pressed">8dp</dimen>
+    <dimen name="card_size">250dp</dimen>
+    <dimen name="card_margin">50dp</dimen>
+    <dimen name="card_size_half">125dp</dimen>
+    <dimen name="card_size_half_negative">-125dp</dimen>
 </resources>
