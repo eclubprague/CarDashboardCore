@@ -25,6 +25,7 @@ abstract public class AbstractSimpleModule implements IModule {
     private ColorResource bgColorResource;
     private ColorResource fgColorResource;
     private boolean longClicked = false;
+    private View view;
     private static final String TAG = AbstractSimpleModule.class.getSimpleName();
 
     public AbstractSimpleModule(StringResource titleResource, IconResource iconResource) {
@@ -134,7 +135,7 @@ abstract public class AbstractSimpleModule implements IModule {
 
     @Override
     public View createView(final Context context, ViewGroup parent) {
-        View view = createNewView(context, parent);
+        view = createNewView(context, parent);
         setListeners(context, view);
         return view;
     }
@@ -142,6 +143,7 @@ abstract public class AbstractSimpleModule implements IModule {
     @Override
     public ViewGroup createViewWithHolder(final Context context, int holderResourceId, ViewGroup holderParent) {
         ViewGroup viewGroup = createNewViewWithHolder(context, holderResourceId, holderParent);
+        view = viewGroup;
         setListeners(context, viewGroup);
         return viewGroup;
     }
@@ -180,6 +182,11 @@ abstract public class AbstractSimpleModule implements IModule {
     abstract protected ViewGroup createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent);
 
     @Override
+    public View getView() {
+        return view;
+    }
+
+    @Override
     public String toString() {
         return "AbstractSimpleModule{" +
                 "id=" + id +
@@ -191,5 +198,21 @@ abstract public class AbstractSimpleModule implements IModule {
                 ", fgColorResource=" + fgColorResource +
                 ", longClicked=" + longClicked +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AbstractSimpleModule that = (AbstractSimpleModule) o;
+
+        return id.equals(that.id);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

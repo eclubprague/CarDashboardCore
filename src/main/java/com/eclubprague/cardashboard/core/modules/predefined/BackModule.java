@@ -45,7 +45,7 @@ public class BackModule extends AbstractSimpleModule {
     @Override
     public void onClickEvent(Context context) {
 //        Log.d("BackModule", getParent().toString());
-        getModuleContext().setSubmenuModule(getParent().getParent());
+        getModuleContext().goBack(getParent().getParent());
     }
 
     @Override

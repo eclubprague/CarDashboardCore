@@ -34,12 +34,16 @@ abstract public class AbstractSubmenuModule extends AbstractSimpleModule impleme
         super(moduleContext, parent, titleResource, iconResource, bgColorResource, fgColorResource);
     }
 
-    public void addSubmodules(IModule... modules) {
+    @Override
+    public ISubmenuModule addSubmodules(IModule... modules) {
         submodules.addAll(Arrays.asList(modules));
+        return this;
     }
 
-    public void addSubmodules(List<IModule> modules) {
+    @Override
+    public ISubmenuModule addSubmodules(List<IModule> modules) {
         submodules.addAll(modules);
+        return this;
     }
 
     @Override
@@ -63,7 +67,7 @@ abstract public class AbstractSubmenuModule extends AbstractSimpleModule impleme
     @Override
     public void onClickEvent(Context context) {
 //        Log.d("SubmenuModule", "setting modules: " + getSubmodules().size());
-        getModuleContext().setSubmenuModule(this);
+        getModuleContext().goToSubmenu(this);
     }
 
     @Override

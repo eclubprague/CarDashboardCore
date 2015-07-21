@@ -48,6 +48,8 @@ public interface IModule {
 
     View createView(Context context, ViewGroup parent);
 
+    View getView();
+
     ViewGroup createViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent);
 
 

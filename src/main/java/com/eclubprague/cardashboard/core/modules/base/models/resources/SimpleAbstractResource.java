@@ -16,4 +16,11 @@ abstract public class SimpleAbstractResource implements IResource {
     public int getResourceId() {
         return resourceId;
     }
+
+    @Override
+    public String toString() {
+        return "SimpleAbstractResource{" +
+                "resourceId=" + resourceId +
+                '}';
+    }
 }

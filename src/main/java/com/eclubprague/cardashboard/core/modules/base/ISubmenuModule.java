@@ -9,4 +9,8 @@ import java.util.List;
  */
 public interface ISubmenuModule extends IModule {
     List<IModule> getSubmodules(IModuleContext moduleContext);
+
+    public ISubmenuModule addSubmodules(IModule... modules);
+
+    public ISubmenuModule addSubmodules(List<IModule> modules);
 }

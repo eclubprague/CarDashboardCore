@@ -1,5 +1,7 @@
 package com.eclubprague.cardashboard.core.data;
 
+import android.content.Context;
+
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.modules.TestDisplayModule;
 import com.eclubprague.cardashboard.core.modules.TestSimpleModule;
@@ -11,7 +13,6 @@ import com.eclubprague.cardashboard.core.modules.base.models.ModuleId;
 import com.eclubprague.cardashboard.core.modules.base.models.ModuleUpdateEvent;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
-import com.eclubprague.cardashboard.core.modules.predefined.HomeScreenModule;
 import com.eclubprague.cardashboard.core.modules.predefined.SimpleSubmenuModule;
 
 import java.util.ArrayList;
@@ -29,44 +30,50 @@ public class ModuleSupplier {
 
     private static final ModuleSupplier instance = new ModuleSupplier();
     private final Map<ModuleId, IModule> map = new HashMap<>();
+    private final ISubmenuModule homeScreenModule = new AbstractSubmenuModule(null, null) {
+        @Override
+        public void onLongClickEvent(Context context) {
+
+        }
+    };
 
     private ModuleSupplier() {
-        put(HomeScreenModule.getInstance());
+        put(homeScreenModule);
         List<IModule> modules = new ArrayList<>();
         AbstractSubmenuModule submenuModule;
         modules.add(new TestSimpleModule(
                 null,
-                HomeScreenModule.getInstance(),
+                homeScreenModule,
                 StringResource.fromString("Settings"),
                 IconResource.fromResourceId(R.drawable.ic_settings_black_24dp),
                 null, null));
         modules.add(submenuModule = new SimpleSubmenuModule(
                 null,
-                HomeScreenModule.getInstance(),
+                homeScreenModule,
                 StringResource.fromString("OBD"),
                 IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp),
                 null, null));
         modules.add(new TestSimpleModule(
                 null,
-                HomeScreenModule.getInstance(),
+                homeScreenModule,
                 StringResource.fromString("Voice input"),
                 IconResource.fromResourceId(R.drawable.ic_mic_black_24dp),
                 null, null));
         modules.add(new TestSimpleModule(
                 null,
-                HomeScreenModule.getInstance(),
+                homeScreenModule,
                 StringResource.fromString("Google maps"),
                 IconResource.fromResourceId(R.drawable.ic_map_black_24dp),
                 null, null));
         modules.add(new TestSimpleModule(
                 null,
-                HomeScreenModule.getInstance(),
+                homeScreenModule,
                 StringResource.fromString("SMS"),
                 IconResource.fromResourceId(R.drawable.ic_chat_black_24dp),
                 null, null));
         modules.add(new TestSimpleModule(
                 null,
-                HomeScreenModule.getInstance(),
+                homeScreenModule,
                 StringResource.fromString("Email"),
                 IconResource.fromResourceId(R.drawable.ic_email_black_24dp),
                 null, null));
@@ -76,7 +83,7 @@ public class ModuleSupplier {
             sb.append(gm.charAt(i % gm.length()));
             modules.add(new TestSimpleModule(
                     null,
-                    HomeScreenModule.getInstance(), StringResource.fromString(sb.toString()),
+                    homeScreenModule, StringResource.fromString(sb.toString()),
                     IconResource.fromResourceId(R.drawable.ic_settings_black_24dp),
                     null, null));
         }
@@ -104,7 +111,7 @@ public class ModuleSupplier {
         testDisplayModule.onEventMainThread(new ModuleUpdateEvent(Integer.toString(999)));
         submenuModule.addSubmodules(testDisplayModule);
         put(submenuModule.getSubmodules(null));
-        HomeScreenModule.getInstance().addSubmodules(modules);
+        homeScreenModule.addSubmodules(modules);
         put(modules);
 
     }
@@ -138,6 +145,6 @@ public class ModuleSupplier {
     }
 
     public ISubmenuModule getHomeScreenModule(IModuleContext moduleContext) {
-        return (ISubmenuModule) HomeScreenModule.getInstance().setModuleContext(moduleContext);
+        return (ISubmenuModule) homeScreenModule.setModuleContext(moduleContext);
     }
 }
