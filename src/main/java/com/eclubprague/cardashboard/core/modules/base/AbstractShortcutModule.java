@@ -52,4 +52,12 @@ public class AbstractShortcutModule extends AbstractSimpleModule {
     public ViewGroup createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
         return ModuleViewFactory.createPassiveWithHolder(context, holderResourceId, holderParent, getIcon(), getTitle());
     }
+
+    @Override
+    public String toString() {
+        return "AbstractShortcutModule{" +
+                super.toString() + ", " +
+                "intent=" + intent +
+                '}';
+    }
 }

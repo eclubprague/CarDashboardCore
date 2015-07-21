@@ -93,4 +93,14 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule impleme
     public String getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return "AbstractDisplayModule{" +
+                super.toString() + ", " +
+                "value='" + value + '\'' +
+                ", valueView=" + valueView +
+                ", unitResource=" + unitResource +
+                '}';
+    }
 }

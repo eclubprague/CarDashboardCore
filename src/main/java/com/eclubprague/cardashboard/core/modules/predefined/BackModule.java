@@ -20,7 +20,15 @@ import com.eclubprague.cardashboard.core.views.ModuleViewFactory;
  */
 public class BackModule extends AbstractSimpleModule {
 
-    public BackModule(IModuleContext moduleContext, ISubmenuModule parent, ColorResource bgColorResource, ColorResource fgColorResource, IModuleContext moduleController) {
+    public BackModule() {
+        super(StringResource.fromResourceId(R.string.appmenu_module_up_title), IconResource.fromResourceId(R.drawable.ic_reply_black_24dp));
+    }
+
+    public BackModule(IModuleContext moduleContext, ISubmenuModule parent) {
+        super(moduleContext, parent, StringResource.fromResourceId(R.string.appmenu_module_up_title), IconResource.fromResourceId(R.drawable.ic_reply_black_24dp));
+    }
+
+    public BackModule(IModuleContext moduleContext, ISubmenuModule parent, ColorResource bgColorResource, ColorResource fgColorResource) {
         super(moduleContext, parent, StringResource.fromResourceId(R.string.appmenu_module_up_title), IconResource.fromResourceId(R.drawable.ic_reply_black_24dp), bgColorResource, fgColorResource);
     }
 
@@ -36,7 +44,8 @@ public class BackModule extends AbstractSimpleModule {
 
     @Override
     public void onClickEvent(Context context) {
-        getModuleContext().setSubmenuModule(getParent());
+//        Log.d("BackModule", getParent().toString());
+        getModuleContext().setSubmenuModule(getParent().getParent());
     }
 
     @Override

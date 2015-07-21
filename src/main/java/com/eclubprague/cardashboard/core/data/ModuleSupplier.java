@@ -31,41 +31,42 @@ public class ModuleSupplier {
     private final Map<ModuleId, IModule> map = new HashMap<>();
 
     private ModuleSupplier() {
+        put(HomeScreenModule.getInstance());
         List<IModule> modules = new ArrayList<>();
         AbstractSubmenuModule submenuModule;
         modules.add(new TestSimpleModule(
                 null,
-                null,
+                HomeScreenModule.getInstance(),
                 StringResource.fromString("Settings"),
                 IconResource.fromResourceId(R.drawable.ic_settings_black_24dp),
                 null, null));
         modules.add(submenuModule = new SimpleSubmenuModule(
                 null,
-                null,
+                HomeScreenModule.getInstance(),
                 StringResource.fromString("OBD"),
                 IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp),
                 null, null));
         modules.add(new TestSimpleModule(
                 null,
-                null,
+                HomeScreenModule.getInstance(),
                 StringResource.fromString("Voice input"),
                 IconResource.fromResourceId(R.drawable.ic_mic_black_24dp),
                 null, null));
         modules.add(new TestSimpleModule(
                 null,
-                null,
+                HomeScreenModule.getInstance(),
                 StringResource.fromString("Google maps"),
                 IconResource.fromResourceId(R.drawable.ic_map_black_24dp),
                 null, null));
         modules.add(new TestSimpleModule(
                 null,
-                null,
+                HomeScreenModule.getInstance(),
                 StringResource.fromString("SMS"),
                 IconResource.fromResourceId(R.drawable.ic_chat_black_24dp),
                 null, null));
         modules.add(new TestSimpleModule(
                 null,
-                null,
+                HomeScreenModule.getInstance(),
                 StringResource.fromString("Email"),
                 IconResource.fromResourceId(R.drawable.ic_email_black_24dp),
                 null, null));
@@ -74,7 +75,8 @@ public class ModuleSupplier {
         for (int i = 0; i < 10; i++) {
             sb.append(gm.charAt(i % gm.length()));
             modules.add(new TestSimpleModule(
-                    null, null, StringResource.fromString(sb.toString()),
+                    null,
+                    HomeScreenModule.getInstance(), StringResource.fromString(sb.toString()),
                     IconResource.fromResourceId(R.drawable.ic_settings_black_24dp),
                     null, null));
         }
@@ -104,6 +106,7 @@ public class ModuleSupplier {
         put(submenuModule.getSubmodules(null));
         HomeScreenModule.getInstance().addSubmodules(modules);
         put(modules);
+
     }
 
     public static ModuleSupplier getInstance() {

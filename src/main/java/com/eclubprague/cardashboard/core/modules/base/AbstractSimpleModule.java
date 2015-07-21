@@ -179,4 +179,17 @@ abstract public class AbstractSimpleModule implements IModule {
 
     abstract protected ViewGroup createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent);
 
+    @Override
+    public String toString() {
+        return "AbstractSimpleModule{" +
+                "id=" + id +
+                ", moduleContext=" + moduleContext +
+                ", parent=" + parent +
+                ", titleResource=" + titleResource +
+                ", iconResource=" + iconResource +
+                ", bgColorResource=" + bgColorResource +
+                ", fgColorResource=" + fgColorResource +
+                ", longClicked=" + longClicked +
+                '}';
+    }
 }

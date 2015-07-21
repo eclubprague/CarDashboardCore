@@ -33,4 +33,11 @@ public class ModuleId implements Serializable {
     public int hashCode() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "ModuleId{" +
+                "id=" + id +
+                '}';
+    }
 }

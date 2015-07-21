@@ -65,4 +65,12 @@ abstract public class AbstractSubmenuModule extends AbstractSimpleModule impleme
 //        Log.d("SubmenuModule", "setting modules: " + getSubmodules().size());
         getModuleContext().setSubmenuModule(this);
     }
+
+    @Override
+    public String toString() {
+        return "AbstractSubmenuModule{" +
+                super.toString() + ", " +
+                "submodules=" + submodules.size() +
+                '}';
+    }
 }
