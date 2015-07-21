@@ -6,7 +6,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.eclubprague.cardashboard.core.modules.base.AbstractSimpleModule;
-import com.eclubprague.cardashboard.core.modules.base.IModule;
+import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
+import com.eclubprague.cardashboard.core.modules.base.ISubmenuModule;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
@@ -19,8 +20,8 @@ import com.eclubprague.cardashboard.core.views.ModuleViewFactory;
  */
 public class TestSimpleModule extends AbstractSimpleModule {
 
-    public TestSimpleModule(IModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource) {
-        super(parent, titleResource, iconResource, bgColorResource, fgColorResource);
+    public TestSimpleModule(IModuleContext moduleContext, ISubmenuModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource) {
+        super(moduleContext, parent, titleResource, iconResource, bgColorResource, fgColorResource);
     }
 
     @Override

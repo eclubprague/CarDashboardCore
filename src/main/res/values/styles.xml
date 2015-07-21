@@ -6,7 +6,11 @@
         <item name="android:stateListAnimator">@anim/raise</item>
     </style>
 
-    <style name="card">
+    <style name="card_style">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="card_theme">
         <item name="android:textSize">@dimen/text_size_display_regular</item>
     </style>
 </resources>

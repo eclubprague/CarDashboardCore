@@ -25,11 +25,25 @@ import de.greenrobot.event.ThreadMode;
  * Should launch simple menu on click (TODO)
  */
 abstract public class AbstractDisplayModule extends AbstractSimpleModule implements MainThreadReciever<ModuleUpdateEvent> {
+    private String value = null;
     private TextView valueView = null;
-    private final StringResource unitResource;
+    private StringResource unitResource;
 
-    public AbstractDisplayModule(IModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource, StringResource unitResource) {
-        super(parent, titleResource, iconResource, bgColorResource, fgColorResource);
+
+    public AbstractDisplayModule(StringResource titleResource, IconResource iconResource, StringResource unitResource) {
+        super(titleResource, iconResource);
+        this.unitResource = unitResource;
+        EventBus.getDefault().register(this);
+    }
+
+    public AbstractDisplayModule(IModuleContext moduleContext, ISubmenuModule parent, StringResource titleResource, IconResource iconResource, StringResource unitResource) {
+        super(moduleContext, parent, titleResource, iconResource);
+        this.unitResource = unitResource;
+        EventBus.getDefault().register(this);
+    }
+
+    public AbstractDisplayModule(IModuleContext moduleContext, ISubmenuModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource, StringResource unitResource) {
+        super(moduleContext, parent, titleResource, iconResource, bgColorResource, fgColorResource);
         this.unitResource = unitResource;
         EventBus.getDefault().register(this);
     }
@@ -38,7 +52,13 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule impleme
         return unitResource;
     }
 
+    public AbstractDisplayModule setUnitResource(StringResource unitResource) {
+        this.unitResource = unitResource;
+        return this;
+    }
+
     protected void updateValue(String value) {
+        this.value = value;
         if (valueView != null) {
             valueView.setText(value);
         }
@@ -48,6 +68,9 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule impleme
     public View createNewView(Context context, ViewGroup parent) {
         View view = ModuleViewFactory.createActive(context, parent, getIcon(), getTitle(), getUnit());
         valueView = (TextView) view.findViewById(R.id.module_value);
+        if (value != null) {
+            updateValue(value);
+        }
         return view;
     }
 
@@ -55,6 +78,9 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule impleme
     public ViewGroup createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
         ViewGroup holderView = ModuleViewFactory.createActiveWithHolder(context, holderResourceId, holderParent, getIcon(), getTitle(), getUnit());
         valueView = (TextView) holderView.findViewById(R.id.module_value);
+        if (value != null) {
+            updateValue(value);
+        }
         return holderView;
     }
 
@@ -62,5 +88,9 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule impleme
     @Subscribe(threadMode = ThreadMode.MainThread)
     public void onEventMainThread(ModuleUpdateEvent event) {
         updateValue(event.getValue());
+    }
+
+    public String getValue() {
+        return value;
     }
 }

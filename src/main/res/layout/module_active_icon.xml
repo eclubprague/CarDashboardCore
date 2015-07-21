@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:theme="@style/card">
+    style="@style/card_style"
+    android:theme="@style/card_theme">
 
 
     <TextView
@@ -13,77 +14,63 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/text_margin_vertical"
         android:layout_marginLeft="@dimen/text_margin_horizontal"
         android:layout_marginRight="@dimen/text_margin_horizontal"
+        android:layout_marginTop="@dimen/text_margin_vertical"
         android:gravity="center_horizontal"
         android:includeFontPadding="false"
         android:padding="0dp"
         android:singleLine="true"
         android:textAlignment="gravity" />
 
-    <LinearLayout
+    <com.eclubprague.cardashboard.core.views.AutoResizeTextView
+        android:id="@+id/module_value"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        app:layout_heightPercent="60%"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="74"
+        android:textSize="@dimen/text_size_display_extra_large"
+        app:layout_marginTopPercent="15%"
+        android:layout_above="@+id/module_active_bottom" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_heightPercent="25%"
+        android:id="@+id/module_active_bottom"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:orientation="vertical">
+        android:layout_alignParentEnd="true">
 
-
-        <RelativeLayout
+        <TextView
+            android:id="@+id/module_unit"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.15"></RelativeLayout>
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/text_margin_vertical"
+            android:layout_marginLeft="@dimen/text_margin_horizontal"
+            android:layout_marginRight="@dimen/text_margin_horizontal"
+            android:gravity="right|bottom"
+            android:singleLine="true"
+            android:text="unit"
+            android:textAlignment="gravity"
+            android:textSize="@dimen/text_size_display_small" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.6"
-            android:baselineAligned="false">
-
-            <TextView
-                android:id="@+id/module_value"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text="74"
-                android:textSize="@dimen/text_size_display_extra_large" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.25">
-
-            <TextView
-                android:id="@+id/module_unit"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/text_margin_vertical"
-                android:layout_marginLeft="@dimen/text_margin_horizontal"
-                android:layout_marginRight="@dimen/text_margin_horizontal"
-                android:gravity="right|bottom"
-                android:singleLine="true"
-                android:text="unit"
-                android:textAlignment="gravity"
-                android:textSize="@dimen/text_size_display_small" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/module_icon"
-        android:layout_width="@dimen/card_size"
-        android:layout_height="@dimen/card_size"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="@dimen/card_size_half_negative"
-        android:layout_marginLeft="@dimen/card_size_half_negative"
+        android:layout_width="0dp"
+        app:layout_widthPercent="60%"
+        android:layout_height="0dp"
+        app:layout_heightPercent="60%"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        app:layout_marginTopPercent="70%"
+        app:layout_marginRightPercent="70%"
+        android:gravity="bottom|clip_horizontal|clip_vertical|left"
         android:alpha="0.2"
         android:src="@android:drawable/ic_menu_camera"
         android:tint="@android:color/secondary_text_dark" />
 
-</RelativeLayout>
+</android.support.percent.PercentRelativeLayout>

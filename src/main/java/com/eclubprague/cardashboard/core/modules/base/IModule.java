@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.eclubprague.cardashboard.core.modules.base.models.ModuleId;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
@@ -15,15 +16,31 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
  */
 public interface IModule {
 
-    IModule getParent();
+    IModuleContext getModuleContext();
+
+    IModule setModuleContext(IModuleContext moduleContext);
+
+    ISubmenuModule getParent();
+
+    IModule setParent(ISubmenuModule parent);
 
     IconResource getIcon();
 
+    IModule setIcon(IconResource iconResource);
+
     StringResource getTitle();
+
+    IModule setTitle(StringResource titleResource);
 
     ColorResource getBackgroundColor();
 
+    IModule setBackgroundColor(ColorResource bgColorResource);
+
     ColorResource getForegroundColor();
+
+    IModule setForegroundColor(ColorResource fgColorResource);
+
+    ModuleId getId();
 
     void onClickEvent(Context context);
 
@@ -32,5 +49,6 @@ public interface IModule {
     View createView(Context context, ViewGroup parent);
 
     ViewGroup createViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent);
+
 
 }

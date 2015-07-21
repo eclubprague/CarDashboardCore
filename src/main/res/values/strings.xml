@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CarDashboardCore</string>
+    <string name="appmenu_module_up_title">Back</string>
+    <string name="appmenu_module_add_title">Add</string>
 </resources>

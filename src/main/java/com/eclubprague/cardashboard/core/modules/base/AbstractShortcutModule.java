@@ -19,8 +19,18 @@ import com.eclubprague.cardashboard.core.views.ModuleViewFactory;
 public class AbstractShortcutModule extends AbstractSimpleModule {
     private final Intent intent;
 
-    public AbstractShortcutModule(IModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource, Intent intent) {
-        super(parent, titleResource, iconResource, bgColorResource, fgColorResource);
+    public AbstractShortcutModule(StringResource titleResource, IconResource iconResource, Intent intent) {
+        super(titleResource, iconResource);
+        this.intent = intent;
+    }
+
+    public AbstractShortcutModule(IModuleContext moduleContext, ISubmenuModule parent, StringResource titleResource, IconResource iconResource, Intent intent) {
+        super(moduleContext, parent, titleResource, iconResource);
+        this.intent = intent;
+    }
+
+    public AbstractShortcutModule(IModuleContext moduleContext, ISubmenuModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource, Intent intent) {
+        super(moduleContext, parent, titleResource, iconResource, bgColorResource, fgColorResource);
         this.intent = intent;
     }
 
