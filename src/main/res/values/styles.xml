@@ -28,8 +28,15 @@
         <item name="android:cacheColorHint">?card_background</item>
     </style>
 
-    <style name="card_mini_style" parent="card_style">
-        <item name="android:layout_margin">@dimen/card_submenu_margin_inner</item>
+    <style name="card_mini_style">
+        <item name="android:elevation">@dimen/elevation_card_default</item>
+        <item name="android:stateListAnimator">@anim/raise</item>
+        <item name="android:background">?attr/card_background</item>
+        <item name="android:cacheColorHint">?card_background</item>
+    </style>
+
+    <style name="card_submenu">
+
     </style>
 
     <style name="card_inner_background_ripple_style">

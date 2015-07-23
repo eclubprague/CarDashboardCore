@@ -19,5 +19,5 @@
     <dimen name="card_size_half">125dp</dimen>
     <dimen name="card_size_half_negative">-125dp</dimen>
     <dimen name="card_submenu_margin_inner">12.5dp</dimen>
-    <dimen name="card_submenu_margin_outer">0dp</dimen>
+    <dimen name="card_submenu_margin_outer">25dp</dimen>
 </resources>
