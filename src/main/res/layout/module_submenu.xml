@@ -3,54 +3,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:theme="@style/card_theme"
-    android:clickable="false">
+    android:theme="@style/card_theme">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.5"
-        android:orientation="horizontal"
-        android:clickable="false">
+        android:orientation="horizontal">
 
 
-        <LinearLayout
+        <RelativeLayout
             style="@style/card_mini_style"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:layout_marginTop="@dimen/card_submenu_margin_outer"
+            android:layout_marginBottom="@dimen/card_submenu_margin_inner"
             android:layout_marginLeft="@dimen/card_submenu_margin_outer"
             android:layout_marginRight="@dimen/card_submenu_margin_inner"
-            android:layout_marginBottom="@dimen/card_submenu_margin_inner"
-            android:clickable="false">
+            android:layout_marginTop="@dimen/card_submenu_margin_outer"
+            android:layout_weight="0.5"
+            android:id="@+id/card_submenu_topLeft">
 
-            <ImageView
-                android:id="@+id/imageView"
+            <RelativeLayout
+                style="@style/card_inner_background_ripple_style"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_close_black_24dp"
-                style="@style/card_icon" />
-        </LinearLayout>
+                android:layout_height="match_parent">
 
-        <LinearLayout
+                <ImageView
+                    style="@style/card_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_close_black_24dp" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
             style="@style/card_mini_style"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:layout_marginTop="@dimen/card_submenu_margin_outer"
-            android:layout_marginRight="@dimen/card_submenu_margin_outer"
-            android:layout_marginLeft="@dimen/card_submenu_margin_inner"
             android:layout_marginBottom="@dimen/card_submenu_margin_inner"
-            android:clickable="false">
+            android:layout_marginLeft="@dimen/card_submenu_margin_inner"
+            android:layout_marginRight="@dimen/card_submenu_margin_outer"
+            android:layout_marginTop="@dimen/card_submenu_margin_outer"
+            android:layout_weight="0.5"
+            android:id="@+id/card_submenu_topRight">
 
-            <ImageView
-                android:id="@+id/imageView2"
+            <RelativeLayout
+                style="@style/card_inner_background_ripple_style"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_open_with_black_24dp"
-                style="@style/card_icon" />
-        </LinearLayout>
+                android:layout_height="match_parent">
+
+                <ImageView
+                    style="@style/card_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_open_with_black_24dp" />
+            </RelativeLayout>
+        </RelativeLayout>
     </LinearLayout>
 
 
@@ -58,47 +67,55 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.5"
-        android:orientation="horizontal"
-        android:clickable="false">
+        android:orientation="horizontal">
 
 
-        <LinearLayout
+        <RelativeLayout
             style="@style/card_mini_style"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
             android:layout_marginBottom="@dimen/card_submenu_margin_outer"
             android:layout_marginLeft="@dimen/card_submenu_margin_outer"
             android:layout_marginRight="@dimen/card_submenu_margin_inner"
             android:layout_marginTop="@dimen/card_submenu_margin_inner"
-            android:clickable="false">
+            android:layout_weight="0.5"
+            android:id="@+id/card_submenu_bottomLeft">
 
-            <ImageView
-                android:id="@+id/imageView3"
+            <RelativeLayout
+                style="@style/card_inner_background_ripple_style"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_delete_black_24dp"
-                style="@style/card_icon" />
-        </LinearLayout>
+                android:layout_height="match_parent">
 
-        <LinearLayout
+                <ImageView
+                    style="@style/card_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_delete_black_24dp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
             style="@style/card_mini_style"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
             android:layout_marginBottom="@dimen/card_submenu_margin_outer"
-            android:layout_marginRight="@dimen/card_submenu_margin_outer"
             android:layout_marginLeft="@dimen/card_submenu_margin_inner"
+            android:layout_marginRight="@dimen/card_submenu_margin_outer"
             android:layout_marginTop="@dimen/card_submenu_margin_inner"
-            android:clickable="false">
+            android:layout_weight="0.5"
+            android:id="@+id/card_submenu_bottomRight">
 
-            <ImageView
-                android:id="@+id/imageView4"
+            <RelativeLayout
+                style="@style/card_inner_background_ripple_style"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_more_horiz_black_24dp"
-                style="@style/card_icon"
-                android:background="?android:attr/selectableItemBackground" />
-        </LinearLayout>
+                android:layout_height="match_parent">
+
+                <ImageView
+                    style="@style/card_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_more_horiz_black_24dp" />
+            </RelativeLayout>
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.eclubprague.cardashboard.core.modules;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
  */
 public class TestSubmenuModule implements IModule {
 
+    private static final String TAG = TestSubmenuModule.class.getSimpleName();
 
     private final ModuleId id;
     private IModuleContext moduleContext;
@@ -30,6 +32,11 @@ public class TestSubmenuModule implements IModule {
     private IconResource iconResource;
     private ColorResource bgColorResource;
     private ColorResource fgColorResource;
+    private View view;
+    private View btnTopLeft;
+    private View btnTopRight;
+    private View btnBottomLeft;
+    private View btnBottomRight;
 
     public TestSubmenuModule(IModuleContext moduleContext, IParentModule parent) {
         this.id = ModuleId.createNew();
@@ -72,12 +79,41 @@ public class TestSubmenuModule implements IModule {
 
     @Override
     public View createView(Context context, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.module_submenu, parent, false);
+        view = LayoutInflater.from(context).inflate(R.layout.module_submenu, parent, false);
+        btnTopLeft = view.findViewById(R.id.card_submenu_topLeft);
+        btnTopLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "top left clicked");
+            }
+        });
+        btnTopRight = view.findViewById(R.id.card_submenu_topRight);
+        btnTopRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "top right clicked");
+            }
+        });
+        btnBottomLeft = view.findViewById(R.id.card_submenu_bottomLeft);
+        btnBottomLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "bottom left clicked");
+            }
+        });
+        btnBottomRight = view.findViewById(R.id.card_submenu_bottomRight);
+        btnBottomRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "bottom right clicked");
+            }
+        });
+        return view;
     }
 
     @Override
     public View getView() {
-        return null;
+        return view;
     }
 
     @Override

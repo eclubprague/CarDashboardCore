@@ -29,7 +29,7 @@
     </style>
 
     <style name="card_mini_style">
-        <item name="android:elevation">@dimen/elevation_card_default</item>
+        <!--<item name="android:elevation">@dimen/elevation_card_default</item>-->
         <item name="android:stateListAnimator">@anim/raise</item>
         <item name="android:background">?attr/card_background</item>
         <item name="android:cacheColorHint">?card_background</item>
