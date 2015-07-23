@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
@@ -24,12 +25,12 @@ public class AbstractShortcutModule extends AbstractSimpleModule {
         this.intent = intent;
     }
 
-    public AbstractShortcutModule(IModuleContext moduleContext, ISubmenuModule parent, StringResource titleResource, IconResource iconResource, Intent intent) {
+    public AbstractShortcutModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, Intent intent) {
         super(moduleContext, parent, titleResource, iconResource);
         this.intent = intent;
     }
 
-    public AbstractShortcutModule(IModuleContext moduleContext, ISubmenuModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource, Intent intent) {
+    public AbstractShortcutModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource, Intent intent) {
         super(moduleContext, parent, titleResource, iconResource, bgColorResource, fgColorResource);
         this.intent = intent;
     }
@@ -49,7 +50,7 @@ public class AbstractShortcutModule extends AbstractSimpleModule {
     }
 
     @Override
-    public ViewGroup createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
+    public ViewWithHolder createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
         return ModuleViewFactory.createPassiveWithHolder(context, holderResourceId, holderParent, getIcon(), getTitle());
     }
 

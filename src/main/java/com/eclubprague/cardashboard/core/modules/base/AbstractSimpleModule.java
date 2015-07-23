@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.modules.base.models.ModuleId;
+import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
@@ -19,7 +20,7 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
 abstract public class AbstractSimpleModule implements IModule {
     private final ModuleId id;
     private IModuleContext moduleContext;
-    private ISubmenuModule parent;
+    private IParentModule parent;
     private StringResource titleResource;
     private IconResource iconResource;
     private ColorResource bgColorResource;
@@ -34,7 +35,7 @@ abstract public class AbstractSimpleModule implements IModule {
         this.iconResource = iconResource;
     }
 
-    public AbstractSimpleModule(IModuleContext moduleContext, ISubmenuModule parent, StringResource titleResource, IconResource iconResource) {
+    public AbstractSimpleModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource) {
         this.id = ModuleId.createNew();
         this.moduleContext = moduleContext;
         this.parent = parent;
@@ -42,7 +43,7 @@ abstract public class AbstractSimpleModule implements IModule {
         this.iconResource = iconResource;
     }
 
-    public AbstractSimpleModule(IModuleContext moduleContext, ISubmenuModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource) {
+    public AbstractSimpleModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource) {
         this.id = ModuleId.createNew();
         this.moduleContext = moduleContext;
         this.parent = parent;
@@ -85,7 +86,7 @@ abstract public class AbstractSimpleModule implements IModule {
     }
 
     @Override
-    public ISubmenuModule getParent() {
+    public IParentModule getParent() {
         if (parent == null) {
             throw new IllegalStateException("Parent requested, but is null.");
         }
@@ -99,7 +100,7 @@ abstract public class AbstractSimpleModule implements IModule {
     }
 
     @Override
-    public IModule setParent(@NonNull ISubmenuModule parent) {
+    public IModule setParent(@NonNull IParentModule parent) {
         this.parent = parent;
         return this;
     }
@@ -141,11 +142,11 @@ abstract public class AbstractSimpleModule implements IModule {
     }
 
     @Override
-    public ViewGroup createViewWithHolder(final Context context, int holderResourceId, ViewGroup holderParent) {
-        ViewGroup viewGroup = createNewViewWithHolder(context, holderResourceId, holderParent);
-        view = viewGroup;
-        setListeners(context, viewGroup);
-        return viewGroup;
+    public ViewWithHolder createViewWithHolder(final Context context, int holderResourceId, ViewGroup holderParent) {
+        ViewWithHolder viewWithHolder = createNewViewWithHolder(context, holderResourceId, holderParent);
+        view = viewWithHolder.view;
+        setListeners(context, view);
+        return viewWithHolder;
     }
 
     private void setListeners(final Context context, View view) {
@@ -179,7 +180,7 @@ abstract public class AbstractSimpleModule implements IModule {
 
     abstract protected View createNewView(Context context, ViewGroup parent);
 
-    abstract protected ViewGroup createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent);
+    abstract protected ViewWithHolder createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent);
 
     @Override
     public View getView() {

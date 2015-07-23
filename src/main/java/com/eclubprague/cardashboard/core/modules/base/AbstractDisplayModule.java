@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.MainThreadReciever;
 import com.eclubprague.cardashboard.core.modules.base.models.ModuleUpdateEvent;
+import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
@@ -36,13 +37,13 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule impleme
         EventBus.getDefault().register(this);
     }
 
-    public AbstractDisplayModule(IModuleContext moduleContext, ISubmenuModule parent, StringResource titleResource, IconResource iconResource, StringResource unitResource) {
+    public AbstractDisplayModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, StringResource unitResource) {
         super(moduleContext, parent, titleResource, iconResource);
         this.unitResource = unitResource;
         EventBus.getDefault().register(this);
     }
 
-    public AbstractDisplayModule(IModuleContext moduleContext, ISubmenuModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource, StringResource unitResource) {
+    public AbstractDisplayModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource, StringResource unitResource) {
         super(moduleContext, parent, titleResource, iconResource, bgColorResource, fgColorResource);
         this.unitResource = unitResource;
         EventBus.getDefault().register(this);
@@ -75,13 +76,13 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule impleme
     }
 
     @Override
-    public ViewGroup createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
-        ViewGroup holderView = ModuleViewFactory.createActiveWithHolder(context, holderResourceId, holderParent, getIcon(), getTitle(), getUnit());
-        valueView = (TextView) holderView.findViewById(R.id.module_value);
+    public ViewWithHolder createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
+        ViewWithHolder viewWithHolder = ModuleViewFactory.createActiveWithHolder(context, holderResourceId, holderParent, getIcon(), getTitle(), getUnit());
+        valueView = (TextView) viewWithHolder.view.findViewById(R.id.module_value);
         if (value != null) {
             updateValue(value);
         }
-        return holderView;
+        return viewWithHolder;
     }
 
     @Override

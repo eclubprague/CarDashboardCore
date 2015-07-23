@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
@@ -19,29 +20,29 @@ import java.util.List;
  * Base implementation of submenu module.
  * Submenu module leads to "submenu", meaning it launches another menu with a different set of modules.
  */
-abstract public class AbstractSubmenuModule extends AbstractSimpleModule implements ISubmenuModule {
+abstract public class AbstractParentModule extends AbstractSimpleModule implements IParentModule {
     private final List<IModule> submodules = new ArrayList<>();
 
-    public AbstractSubmenuModule(StringResource titleResource, IconResource iconResource) {
+    public AbstractParentModule(StringResource titleResource, IconResource iconResource) {
         super(titleResource, iconResource);
     }
 
-    public AbstractSubmenuModule(IModuleContext moduleContext, ISubmenuModule parent, StringResource titleResource, IconResource iconResource) {
+    public AbstractParentModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource) {
         super(moduleContext, parent, titleResource, iconResource);
     }
 
-    public AbstractSubmenuModule(IModuleContext moduleContext, ISubmenuModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource) {
+    public AbstractParentModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource) {
         super(moduleContext, parent, titleResource, iconResource, bgColorResource, fgColorResource);
     }
 
     @Override
-    public ISubmenuModule addSubmodules(IModule... modules) {
+    public IParentModule addSubmodules(IModule... modules) {
         submodules.addAll(Arrays.asList(modules));
         return this;
     }
 
     @Override
-    public ISubmenuModule addSubmodules(List<IModule> modules) {
+    public IParentModule addSubmodules(List<IModule> modules) {
         submodules.addAll(modules);
         return this;
     }
@@ -60,7 +61,7 @@ abstract public class AbstractSubmenuModule extends AbstractSimpleModule impleme
     }
 
     @Override
-    public ViewGroup createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
+    public ViewWithHolder createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
         return ModuleViewFactory.createPassiveWithHolder(context, holderResourceId, holderParent, getIcon(), getTitle());
     }
 
@@ -72,7 +73,7 @@ abstract public class AbstractSubmenuModule extends AbstractSimpleModule impleme
 
     @Override
     public String toString() {
-        return "AbstractSubmenuModule{" +
+        return "AbstractParentModule{" +
                 super.toString() + ", " +
                 "submodules=" + submodules.size() +
                 '}';

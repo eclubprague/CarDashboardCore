@@ -5,15 +5,16 @@ import android.content.Context;
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.modules.TestDisplayModule;
 import com.eclubprague.cardashboard.core.modules.TestSimpleModule;
-import com.eclubprague.cardashboard.core.modules.base.AbstractSubmenuModule;
+import com.eclubprague.cardashboard.core.modules.TestSubmenuModule;
+import com.eclubprague.cardashboard.core.modules.base.AbstractParentModule;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
-import com.eclubprague.cardashboard.core.modules.base.ISubmenuModule;
+import com.eclubprague.cardashboard.core.modules.base.IParentModule;
 import com.eclubprague.cardashboard.core.modules.base.models.ModuleId;
 import com.eclubprague.cardashboard.core.modules.base.models.ModuleUpdateEvent;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
-import com.eclubprague.cardashboard.core.modules.predefined.SimpleSubmenuModule;
+import com.eclubprague.cardashboard.core.modules.predefined.SimpleParentModule;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +31,10 @@ public class ModuleSupplier {
 
     private static final ModuleSupplier instance = new ModuleSupplier();
     private final Map<ModuleId, IModule> map = new HashMap<>();
-    private final ISubmenuModule homeScreenModule = new AbstractSubmenuModule(null, null) {
+    private final IParentModule homeScreenModule = new AbstractParentModule(
+            StringResource.fromResourceId(R.string.module_title_home),
+            IconResource.fromResourceId(R.drawable.ic_home_black_24dp)
+    ) {
         @Override
         public void onLongClickEvent(Context context) {
 
@@ -40,14 +44,14 @@ public class ModuleSupplier {
     private ModuleSupplier() {
         put(homeScreenModule);
         List<IModule> modules = new ArrayList<>();
-        AbstractSubmenuModule submenuModule;
+        AbstractParentModule submenuModule;
         modules.add(new TestSimpleModule(
                 null,
                 homeScreenModule,
                 StringResource.fromString("Settings"),
                 IconResource.fromResourceId(R.drawable.ic_settings_black_24dp),
                 null, null));
-        modules.add(submenuModule = new SimpleSubmenuModule(
+        modules.add(submenuModule = new SimpleParentModule(
                 null,
                 homeScreenModule,
                 StringResource.fromString("OBD"),
@@ -77,6 +81,7 @@ public class ModuleSupplier {
                 StringResource.fromString("Email"),
                 IconResource.fromResourceId(R.drawable.ic_email_black_24dp),
                 null, null));
+        modules.add(new TestSubmenuModule(null, homeScreenModule, null, null));
         String gm = "Google maps";
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 10; i++) {
@@ -124,8 +129,8 @@ public class ModuleSupplier {
         return map.get(id).setModuleContext(moduleContext);
     }
 
-    public ISubmenuModule findSubmenuModule(IModuleContext moduleContext, ModuleId id) {
-        return (ISubmenuModule) map.get(id).setModuleContext(moduleContext);
+    public IParentModule findSubmenuModule(IModuleContext moduleContext, ModuleId id) {
+        return (IParentModule) map.get(id).setModuleContext(moduleContext);
     }
 
     public void put(IModule module) {
@@ -144,7 +149,7 @@ public class ModuleSupplier {
         }
     }
 
-    public ISubmenuModule getHomeScreenModule(IModuleContext moduleContext) {
-        return (ISubmenuModule) homeScreenModule.setModuleContext(moduleContext);
+    public IParentModule getHomeScreenModule(IModuleContext moduleContext) {
+        return (IParentModule) homeScreenModule.setModuleContext(moduleContext);
     }
 }

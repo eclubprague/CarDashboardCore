@@ -6,9 +6,9 @@ package com.eclubprague.cardashboard.core.modules.base;
  * Module context required for calls from modules.
  */
 public interface IModuleContext {
-    void goToSubmenu(ISubmenuModule parentModule);
+    void goToSubmenu(IParentModule parentModule);
 
-    void goBack(ISubmenuModule parentModule);
+    void goBack(IParentModule parentModule);
 
     void swapModules(IModule oldModule, IModule newModule, boolean animate);
 }

@@ -2,9 +2,9 @@ package com.eclubprague.cardashboard.core.modules.predefined;
 
 import android.content.Context;
 
-import com.eclubprague.cardashboard.core.modules.base.AbstractSubmenuModule;
+import com.eclubprague.cardashboard.core.modules.base.AbstractParentModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
-import com.eclubprague.cardashboard.core.modules.base.ISubmenuModule;
+import com.eclubprague.cardashboard.core.modules.base.IParentModule;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
@@ -14,9 +14,9 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
  * <p/>
  * Simple implementation of submenu module.
  */
-public class SimpleSubmenuModule extends AbstractSubmenuModule {
+public class SimpleParentModule extends AbstractParentModule {
 
-    public SimpleSubmenuModule(IModuleContext moduleContext, ISubmenuModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource) {
+    public SimpleParentModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource) {
         super(moduleContext, parent, titleResource, iconResource, bgColorResource, fgColorResource);
     }
 

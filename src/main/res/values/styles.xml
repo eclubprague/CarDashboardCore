@@ -1,16 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="DarkTheme" parent="android:Theme.Material">
+        <item name="card_background">@color/card_background_dark</item>
+
+    </style>
+
+    <style name="LightTheme" parent="android:Theme.Material.Light">
+        <item name="card_background">@color/card_background_light</item>
+    </style>
+
     <style name="card_holder">
-        <item name="android:elevation">@dimen/elevation_card_default</item>
-        <item name="android:stateListAnimator">@anim/raise</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:clipChildren">false</item>
+        <!--<item name="android:padding">@dimen/card_holder_padding</item>-->
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">false</item>
+        <item name="android:background">?android:attr/colorBackground</item>
+        <!--<item name="android:background">#80000000</item>-->
     </style>
 
     <style name="card_style">
+        <item name="android:layout_margin">@dimen/card_holder_padding</item>
+        <item name="android:elevation">@dimen/elevation_card_default</item>
+        <item name="android:stateListAnimator">@anim/raise</item>
+        <item name="android:background">?attr/card_background</item>
+        <item name="android:cacheColorHint">?card_background</item>
+    </style>
+
+    <style name="card_mini_style" parent="card_style">
+        <item name="android:layout_margin">@dimen/card_submenu_margin_inner</item>
+    </style>
+
+    <style name="card_inner_background_ripple_style">
         <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 
     <style name="card_theme">
         <item name="android:textSize">@dimen/text_size_display_regular</item>
+    </style>
+
+    <style name="card_icon">
+        <item name="android:tint">?android:attr/textColorSecondary</item>
     </style>
 </resources>

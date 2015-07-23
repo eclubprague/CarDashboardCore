@@ -8,8 +8,16 @@
     <dimen name="text_size_display_extra_large">112sp</dimen>
     <dimen name="elevation_card_default">2dp</dimen>
     <dimen name="elevation_card_pressed">8dp</dimen>
-    <dimen name="card_size">250dp</dimen>
-    <dimen name="card_margin">50dp</dimen>
+    <dimen name="card_size">300dp</dimen>
+    <!-- including padding -->
+    <dimen name="card_holder_padding">25dp</dimen>
+    <!-- padding for elevation -->
+    <dimen name="card_margin">0dp</dimen>
+    <!-- excluding padding -->
+    <dimen name="card_margin_side">25dp</dimen>
+    <!-- including padding on ONE side -->
     <dimen name="card_size_half">125dp</dimen>
     <dimen name="card_size_half_negative">-125dp</dimen>
+    <dimen name="card_submenu_margin_inner">12.5dp</dimen>
+    <dimen name="card_submenu_margin_outer">0dp</dimen>
 </resources>

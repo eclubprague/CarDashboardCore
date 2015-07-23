@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.eclubprague.cardashboard.core.modules.base.AbstractDisplayModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
-import com.eclubprague.cardashboard.core.modules.base.ISubmenuModule;
+import com.eclubprague.cardashboard.core.modules.base.IParentModule;
 import com.eclubprague.cardashboard.core.modules.base.models.ModuleUpdateEvent;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
@@ -26,7 +26,7 @@ public class TestDisplayModule extends AbstractDisplayModule {
     private UpdateTask task;
 
 
-    public TestDisplayModule(IModuleContext moduleContext, ISubmenuModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource, StringResource unitResource) {
+    public TestDisplayModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource, StringResource unitResource) {
         super(moduleContext, parent, titleResource, iconResource, bgColorResource, fgColorResource, unitResource);
     }
 

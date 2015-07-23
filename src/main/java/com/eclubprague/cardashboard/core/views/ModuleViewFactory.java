@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.R;
+import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.utils.ModuleViewUtils;
@@ -21,10 +22,11 @@ public class ModuleViewFactory {
         return ModuleViewUtils.preparePassive(view, context, iconResource, titleResource);
     }
 
-    public static ViewGroup createPassiveWithHolder(Context context, int holderResourceId, ViewGroup holderParent, IconResource iconResource, StringResource titleResource) {
+    public static ViewWithHolder createPassiveWithHolder(Context context, int holderResourceId, ViewGroup holderParent, IconResource iconResource, StringResource titleResource) {
         ViewGroup holder = (ViewGroup) LayoutInflater.from(context).inflate(holderResourceId, holderParent, false);
-        holder.addView(createPassive(context, holder, iconResource, titleResource));
-        return holder;
+        View view = createPassive(context, holder, iconResource, titleResource);
+        holder.addView(view);
+        return new ViewWithHolder(view, holder);
     }
 
     public static View createActive(Context context, ViewGroup parent, IconResource iconResource, StringResource titleResource, StringResource unitResource) {
@@ -33,9 +35,10 @@ public class ModuleViewFactory {
     }
 
 
-    public static ViewGroup createActiveWithHolder(Context context, int holderResourceId, ViewGroup holderParent, IconResource iconResource, StringResource titleResource, StringResource unitResource) {
+    public static ViewWithHolder createActiveWithHolder(Context context, int holderResourceId, ViewGroup holderParent, IconResource iconResource, StringResource titleResource, StringResource unitResource) {
         ViewGroup holder = (ViewGroup) LayoutInflater.from(context).inflate(holderResourceId, holderParent, false);
-        holder.addView(createActive(context, holder, iconResource, titleResource, unitResource));
-        return holder;
+        View view = createActive(context, holder, iconResource, titleResource, unitResource);
+        holder.addView(view);
+        return new ViewWithHolder(view, holder);
     }
 }

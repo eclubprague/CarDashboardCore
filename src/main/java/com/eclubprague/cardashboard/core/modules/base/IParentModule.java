@@ -7,10 +7,10 @@ import java.util.List;
  * <p/>
  * An interface for submenu modules (modules containing more modules).
  */
-public interface ISubmenuModule extends IModule {
+public interface IParentModule extends IModule {
     List<IModule> getSubmodules(IModuleContext moduleContext);
 
-    public ISubmenuModule addSubmodules(IModule... modules);
+    IParentModule addSubmodules(IModule... modules);
 
-    public ISubmenuModule addSubmodules(List<IModule> modules);
+    IParentModule addSubmodules(List<IModule> modules);
 }
