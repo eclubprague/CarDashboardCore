@@ -67,7 +67,7 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule impleme
 
     @Override
     public View createNewView(Context context, ViewGroup parent) {
-        View view = ModuleViewFactory.createActive(context, parent, getIcon(), getTitle(), getUnit());
+        View view = ModuleViewFactory.createActive(context, parent, this, getModuleContext(), getIcon(), getTitle(), getUnit());
         valueView = (TextView) view.findViewById(R.id.module_value);
         if (value != null) {
             updateValue(value);
@@ -77,7 +77,7 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule impleme
 
     @Override
     public ViewWithHolder createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
-        ViewWithHolder viewWithHolder = ModuleViewFactory.createActiveWithHolder(context, holderResourceId, holderParent, getIcon(), getTitle(), getUnit());
+        ViewWithHolder viewWithHolder = ModuleViewFactory.createActiveWithHolder(context, holderResourceId, holderParent, this, getModuleContext(), getIcon(), getTitle(), getUnit());
         valueView = (TextView) viewWithHolder.view.findViewById(R.id.module_value);
         if (value != null) {
             updateValue(value);

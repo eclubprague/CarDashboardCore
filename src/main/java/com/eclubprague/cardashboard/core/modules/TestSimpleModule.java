@@ -3,7 +3,6 @@ package com.eclubprague.cardashboard.core.modules;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.eclubprague.cardashboard.core.modules.base.AbstractSimpleModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
@@ -26,22 +25,17 @@ public class TestSimpleModule extends AbstractSimpleModule {
     }
 
     @Override
-    public void onClickEvent(Context context) {
-        Toast.makeText(context, "short click", Toast.LENGTH_SHORT);
-    }
-
-    @Override
-    public void onLongClickEvent(Context context) {
-        Toast.makeText(context, "long click", Toast.LENGTH_SHORT);
-    }
-
-    @Override
     public View createNewView(Context context, ViewGroup parent) {
-        return ModuleViewFactory.createPassive(context, parent, getIcon(), getTitle());
+        return ModuleViewFactory.createPassive(context, parent, this, getModuleContext(), getIcon(), getTitle());
     }
 
     @Override
     public ViewWithHolder createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
-        return ModuleViewFactory.createPassiveWithHolder(context, holderResourceId, holderParent, getIcon(), getTitle());
+        return ModuleViewFactory.createPassiveWithHolder(context, holderResourceId, holderParent, this, getModuleContext(), getIcon(), getTitle());
+    }
+
+    @Override
+    public void onClickEvent(IModuleContext context) {
+
     }
 }

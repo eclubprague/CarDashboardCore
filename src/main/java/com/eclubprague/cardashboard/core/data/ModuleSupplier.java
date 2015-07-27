@@ -1,11 +1,8 @@
 package com.eclubprague.cardashboard.core.data;
 
-import android.content.Context;
-
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.modules.TestDisplayModule;
 import com.eclubprague.cardashboard.core.modules.TestSimpleModule;
-import com.eclubprague.cardashboard.core.modules.TestSubmenuModule;
 import com.eclubprague.cardashboard.core.modules.base.AbstractParentModule;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
@@ -35,10 +32,6 @@ public class ModuleSupplier {
             StringResource.fromResourceId(R.string.module_title_home),
             IconResource.fromResourceId(R.drawable.ic_home_black_24dp)
     ) {
-        @Override
-        public void onLongClickEvent(Context context) {
-
-        }
     };
 
     private ModuleSupplier() {
@@ -81,7 +74,6 @@ public class ModuleSupplier {
                 StringResource.fromString("Email"),
                 IconResource.fromResourceId(R.drawable.ic_email_black_24dp),
                 null, null));
-        modules.add(new TestSubmenuModule(null, homeScreenModule, null, null));
         String gm = "Google maps";
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 10; i++) {

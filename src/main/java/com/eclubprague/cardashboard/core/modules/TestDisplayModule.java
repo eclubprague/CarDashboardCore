@@ -1,9 +1,7 @@
 package com.eclubprague.cardashboard.core.modules;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.eclubprague.cardashboard.core.modules.base.AbstractDisplayModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
@@ -31,8 +29,7 @@ public class TestDisplayModule extends AbstractDisplayModule {
     }
 
     @Override
-    public void onClickEvent(Context context) {
-        Toast.makeText(context, "short click", Toast.LENGTH_SHORT);
+    public void onClickEvent(IModuleContext moduleContext) {
 //        new AlertDialog.Builder(context).setMessage("SHORT CLICK").create().show();
         try {
             Integer i = Integer.parseInt(getValue());
@@ -41,18 +38,6 @@ public class TestDisplayModule extends AbstractDisplayModule {
             // no value, do nothing then
         }
         Log.d("TestDisplayModule", "clicked");
-    }
-
-    @Override
-    public void onLongClickEvent(Context context) {
-        Toast.makeText(context, "long click", Toast.LENGTH_SHORT);
-
-        try {
-            Integer i = Integer.parseInt(getValue());
-            updateValue(Integer.toString(i + 1000));
-        } catch (NumberFormatException ex) {
-            // no value, do nothing then
-        }
     }
 
     private class UpdateTask extends AsyncTask<Void, Integer, Void> {

@@ -26,21 +26,20 @@ public class EmptyModule extends AbstractSimpleModule {
 
     @Override
     protected View createNewView(Context context, ViewGroup parent) {
-        return ModuleViewFactory.createPassive(context, parent, getIcon(), getTitle());
+        return ModuleViewFactory.createPassive(context, parent, this, getModuleContext(), getIcon(), getTitle());
     }
 
     @Override
     protected ViewWithHolder createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
-        return ModuleViewFactory.createPassiveWithHolder(context, holderResourceId, holderParent, getIcon(), getTitle());
+        return ModuleViewFactory.createPassiveWithHolder(context, holderResourceId, holderParent, this, getModuleContext(), getIcon(), getTitle());
     }
 
     @Override
-    public void onClickEvent(Context context) {
+    public void onClickEvent(IModuleContext context) {
 
     }
 
     @Override
-    public void onLongClickEvent(Context context) {
-
+    public void onLongClickEvent(IModuleContext context) {
     }
 }

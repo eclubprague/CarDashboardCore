@@ -2,7 +2,6 @@ package com.eclubprague.cardashboard.core.modules.base;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -11,10 +10,11 @@ import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.views.ModuleViewFactory;
 
 /**
  * Created by Michael on 9. 7. 2015.
- * <p/>
+ * <p>
  * Simple implementation of IModule interface.
  */
 abstract public class AbstractSimpleModule implements IModule {
@@ -25,8 +25,9 @@ abstract public class AbstractSimpleModule implements IModule {
     private IconResource iconResource;
     private ColorResource bgColorResource;
     private ColorResource fgColorResource;
-    private boolean longClicked = false;
+    private boolean quickMenuActive = false;
     private View view;
+    private ViewGroup holderView;
     private static final String TAG = AbstractSimpleModule.class.getSimpleName();
 
     public AbstractSimpleModule(StringResource titleResource, IconResource iconResource) {
@@ -137,7 +138,6 @@ abstract public class AbstractSimpleModule implements IModule {
     @Override
     public View createView(final Context context, ViewGroup parent) {
         view = createNewView(context, parent);
-        setListeners(context, view);
         return view;
     }
 
@@ -145,32 +145,19 @@ abstract public class AbstractSimpleModule implements IModule {
     public ViewWithHolder createViewWithHolder(final Context context, int holderResourceId, ViewGroup holderParent) {
         ViewWithHolder viewWithHolder = createNewViewWithHolder(context, holderResourceId, holderParent);
         view = viewWithHolder.view;
-        setListeners(context, view);
+        holderView = viewWithHolder.holder;
         return viewWithHolder;
     }
 
-    private void setListeners(final Context context, View view) {
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (longClicked) {
-                    longClicked = false;
-                    Log.d(TAG, "absorbed click");
-                } else {
-                    Log.d(TAG, "click");
-                    onClickEvent(context);
-                }
-            }
-        });
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                onLongClickEvent(context);
-                longClicked = true;
-                Log.d(TAG, "long click");
-                return false;
-            }
-        });
+
+    @Override
+    public View createQuickMenuView(Context context, ViewGroup parent) {
+        return ModuleViewFactory.createQuickMenu(context, parent, this, getModuleContext());
+    }
+
+    @Override
+    public ViewWithHolder createQuickMenuViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
+        return ModuleViewFactory.createQuickMenuWithHolder(context, holderResourceId, holderParent, this, getModuleContext());
     }
 
     @Override
@@ -188,6 +175,48 @@ abstract public class AbstractSimpleModule implements IModule {
     }
 
     @Override
+    public void saveHolder(ViewGroup holder) {
+        holderView = holder;
+    }
+
+    @Override
+    public ViewGroup loadHolder() {
+        if (holderView == null) {
+            throw new IllegalStateException("Holder has not been saved");
+        }
+        return holderView;
+    }
+
+    @Override
+    public void onLongClickEvent(IModuleContext context) {
+        quickMenuActive = true;
+        context.toggleQuickMenu(this, true);
+    }
+
+    @Override
+    public void onCancel(IModuleContext moduleContext) {
+        if (quickMenuActive) {
+            moduleContext.toggleQuickMenu(this, false);
+            quickMenuActive = false;
+        }
+    }
+
+    @Override
+    public void onDelete(IModuleContext moduleContext) {
+
+    }
+
+    @Override
+    public void onMove(IModuleContext moduleContext) {
+
+    }
+
+    @Override
+    public void onMore(IModuleContext moduleContext) {
+
+    }
+
+    @Override
     public String toString() {
         return "AbstractSimpleModule{" +
                 "id=" + id +
@@ -197,7 +226,6 @@ abstract public class AbstractSimpleModule implements IModule {
                 ", iconResource=" + iconResource +
                 ", bgColorResource=" + bgColorResource +
                 ", fgColorResource=" + fgColorResource +
-                ", longClicked=" + longClicked +
                 '}';
     }
 

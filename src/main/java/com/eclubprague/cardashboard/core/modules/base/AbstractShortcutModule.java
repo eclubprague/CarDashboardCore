@@ -36,22 +36,18 @@ public class AbstractShortcutModule extends AbstractSimpleModule {
     }
 
     @Override
-    public void onClickEvent(Context context) {
-        context.startActivity(intent);
-    }
-
-    @Override
-    public void onLongClickEvent(Context context) {
+    public void onClickEvent(IModuleContext context) {
+        context.launchIntent(intent);
     }
 
     @Override
     public View createNewView(Context context, ViewGroup parent) {
-        return ModuleViewFactory.createPassive(context, parent, getIcon(), getTitle());
+        return ModuleViewFactory.createPassive(context, parent, this, getModuleContext(), getIcon(), getTitle());
     }
 
     @Override
     public ViewWithHolder createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
-        return ModuleViewFactory.createPassiveWithHolder(context, holderResourceId, holderParent, getIcon(), getTitle());
+        return ModuleViewFactory.createPassiveWithHolder(context, holderResourceId, holderParent, this, getModuleContext(), getIcon(), getTitle());
     }
 
     @Override

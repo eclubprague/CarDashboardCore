@@ -21,7 +21,7 @@
             android:layout_marginRight="@dimen/card_submenu_margin_inner"
             android:layout_marginTop="@dimen/card_submenu_margin_outer"
             android:layout_weight="0.5"
-            android:id="@+id/card_submenu_topLeft">
+            android:id="@+id/card_submenu_cancel">
 
             <RelativeLayout
                 style="@style/card_inner_background_ripple_style"
@@ -46,7 +46,7 @@
             android:layout_marginRight="@dimen/card_submenu_margin_outer"
             android:layout_marginTop="@dimen/card_submenu_margin_outer"
             android:layout_weight="0.5"
-            android:id="@+id/card_submenu_topRight">
+            android:id="@+id/card_submenu_move">
 
             <RelativeLayout
                 style="@style/card_inner_background_ripple_style"
@@ -79,7 +79,7 @@
             android:layout_marginRight="@dimen/card_submenu_margin_inner"
             android:layout_marginTop="@dimen/card_submenu_margin_inner"
             android:layout_weight="0.5"
-            android:id="@+id/card_submenu_bottomLeft">
+            android:id="@+id/card_submenu_delete">
 
             <RelativeLayout
                 style="@style/card_inner_background_ripple_style"
@@ -103,7 +103,7 @@
             android:layout_marginRight="@dimen/card_submenu_margin_outer"
             android:layout_marginTop="@dimen/card_submenu_margin_inner"
             android:layout_weight="0.5"
-            android:id="@+id/card_submenu_bottomRight">
+            android:id="@+id/card_submenu_more">
 
             <RelativeLayout
                 style="@style/card_inner_background_ripple_style"

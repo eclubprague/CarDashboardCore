@@ -15,7 +15,7 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
  * <p/>
  * Interface for modules.
  */
-public interface IModule {
+public interface IModule extends IModuleListener, IQuickMenuListener {
 
     IModuleContext getModuleContext();
 
@@ -43,15 +43,18 @@ public interface IModule {
 
     ModuleId getId();
 
-    void onClickEvent(Context context);
-
-    void onLongClickEvent(Context context);
-
     View createView(Context context, ViewGroup parent);
 
     View getView();
 
     ViewWithHolder createViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent);
 
+    View createQuickMenuView(Context context, ViewGroup parent);
+
+    ViewWithHolder createQuickMenuViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent);
+
+    void saveHolder(ViewGroup holder);
+
+    ViewGroup loadHolder();
 
 }
