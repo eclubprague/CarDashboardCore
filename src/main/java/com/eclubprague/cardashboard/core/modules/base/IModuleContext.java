@@ -2,6 +2,8 @@ package com.eclubprague.cardashboard.core.modules.base;
 
 import android.content.Intent;
 
+import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+
 /**
  * Created by Michael on 15. 7. 2015.
  *
@@ -14,7 +16,9 @@ public interface IModuleContext {
 
     void toggleQuickMenu(IModule module, boolean activate);
 
-    void launchIntent(Intent intent);
+    void turnQuickMenusOff();
+
+    void launchIntent(Intent intent, StringResource errorMessage);
 
     void swapModules(IModule oldModule, IModule newModule, boolean animate);
 }

@@ -13,4 +13,6 @@ public interface IParentModule extends IModule {
     IParentModule addSubmodules(IModule... modules);
 
     IParentModule addSubmodules(List<IModule> modules);
+
+    void removeEmptyModules();
 }

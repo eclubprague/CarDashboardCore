@@ -11,6 +11,7 @@ import com.eclubprague.cardashboard.core.modules.base.models.ModuleId;
 import com.eclubprague.cardashboard.core.modules.base.models.ModuleUpdateEvent;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.modules.custom.GoogleMapsModule;
 import com.eclubprague.cardashboard.core.modules.predefined.SimpleParentModule;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class ModuleSupplier {
     private static final ModuleSupplier instance = new ModuleSupplier();
     private final Map<ModuleId, IModule> map = new HashMap<>();
     private final IParentModule homeScreenModule = new AbstractParentModule(
-            StringResource.fromResourceId(R.string.module_title_home),
+            StringResource.fromResourceId(R.string.module_home_title),
             IconResource.fromResourceId(R.drawable.ic_home_black_24dp)
     ) {
     };
@@ -56,12 +57,9 @@ public class ModuleSupplier {
                 StringResource.fromString("Voice input"),
                 IconResource.fromResourceId(R.drawable.ic_mic_black_24dp),
                 null, null));
-        modules.add(new TestSimpleModule(
+        modules.add(new GoogleMapsModule(
                 null,
-                homeScreenModule,
-                StringResource.fromString("Google maps"),
-                IconResource.fromResourceId(R.drawable.ic_map_black_24dp),
-                null, null));
+                homeScreenModule));
         modules.add(new TestSimpleModule(
                 null,
                 homeScreenModule,
@@ -74,16 +72,16 @@ public class ModuleSupplier {
                 StringResource.fromString("Email"),
                 IconResource.fromResourceId(R.drawable.ic_email_black_24dp),
                 null, null));
-        String gm = "Google maps";
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 10; i++) {
-            sb.append(gm.charAt(i % gm.length()));
-            modules.add(new TestSimpleModule(
-                    null,
-                    homeScreenModule, StringResource.fromString(sb.toString()),
-                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp),
-                    null, null));
-        }
+//        String gm = "Google maps";
+//        StringBuilder sb = new StringBuilder();
+//        for (int i = 0; i < 10; i++) {
+//            sb.append(gm.charAt(i % gm.length()));
+//            modules.add(new TestSimpleModule(
+//                    null,
+//                    homeScreenModule, StringResource.fromString(sb.toString()),
+//                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp),
+//                    null, null));
+//        }
         List<IModule> carModules = new ArrayList<>();
         TestDisplayModule testDisplayModule;
         carModules.add(testDisplayModule = new TestDisplayModule(

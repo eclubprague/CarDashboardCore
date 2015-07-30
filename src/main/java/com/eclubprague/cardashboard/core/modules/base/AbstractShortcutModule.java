@@ -17,7 +17,7 @@ import com.eclubprague.cardashboard.core.views.ModuleViewFactory;
  * Base implementation of shortcut module.
  * It leads to an external application through predefined Intent.
  */
-public class AbstractShortcutModule extends AbstractSimpleModule {
+abstract public class AbstractShortcutModule extends AbstractSimpleModule {
     private final Intent intent;
 
     public AbstractShortcutModule(StringResource titleResource, IconResource iconResource, Intent intent) {
@@ -37,7 +37,8 @@ public class AbstractShortcutModule extends AbstractSimpleModule {
 
     @Override
     public void onClickEvent(IModuleContext context) {
-        context.launchIntent(intent);
+        super.onClickEvent(context);
+        context.launchIntent(intent, getErrorMessage());
     }
 
     @Override
@@ -49,6 +50,8 @@ public class AbstractShortcutModule extends AbstractSimpleModule {
     public ViewWithHolder createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
         return ModuleViewFactory.createPassiveWithHolder(context, holderResourceId, holderParent, this, getModuleContext(), getIcon(), getTitle());
     }
+
+    protected abstract StringResource getErrorMessage();
 
     @Override
     public String toString() {

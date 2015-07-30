@@ -188,7 +188,13 @@ abstract public class AbstractSimpleModule implements IModule {
     }
 
     @Override
+    public void onClickEvent(IModuleContext context) {
+        context.turnQuickMenusOff();
+    }
+
+    @Override
     public void onLongClickEvent(IModuleContext context) {
+        context.turnQuickMenusOff();
         quickMenuActive = true;
         context.toggleQuickMenu(this, true);
     }

@@ -33,9 +33,4 @@ public class TestSimpleModule extends AbstractSimpleModule {
     public ViewWithHolder createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
         return ModuleViewFactory.createPassiveWithHolder(context, holderResourceId, holderParent, this, getModuleContext(), getIcon(), getTitle());
     }
-
-    @Override
-    public void onClickEvent(IModuleContext context) {
-
-    }
 }

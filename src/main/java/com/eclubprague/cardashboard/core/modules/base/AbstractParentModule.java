@@ -8,6 +8,7 @@ import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.modules.predefined.EmptyModule;
 import com.eclubprague.cardashboard.core.views.ModuleViewFactory;
 
 import java.util.ArrayList;
@@ -56,6 +57,15 @@ abstract public class AbstractParentModule extends AbstractSimpleModule implemen
     }
 
     @Override
+    public void removeEmptyModules() {
+        for (int i = submodules.size() - 1; i >= 0; i--) {
+            if (submodules.get(i) instanceof EmptyModule) {
+                submodules.remove(i);
+            }
+        }
+    }
+
+    @Override
     public View createNewView(Context context, ViewGroup parent) {
         return ModuleViewFactory.createPassive(context, parent, this, getModuleContext(), getIcon(), getTitle());
     }
@@ -67,6 +77,7 @@ abstract public class AbstractParentModule extends AbstractSimpleModule implemen
 
     @Override
     public void onClickEvent(IModuleContext moduleContext) {
+        super.onClickEvent(moduleContext);
 //        Log.d("SubmenuModule", "setting modules: " + getSubmodules().size());
         getModuleContext().goToSubmodules(this);
     }

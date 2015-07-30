@@ -30,6 +30,7 @@ public class TestDisplayModule extends AbstractDisplayModule {
 
     @Override
     public void onClickEvent(IModuleContext moduleContext) {
+        super.onClickEvent(moduleContext);
 //        new AlertDialog.Builder(context).setMessage("SHORT CLICK").create().show();
         try {
             Integer i = Integer.parseInt(getValue());
