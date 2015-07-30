@@ -19,20 +19,24 @@ import com.eclubprague.cardashboard.core.views.ModuleViewFactory;
  */
 abstract public class AbstractShortcutModule extends AbstractSimpleModule {
     private final Intent intent;
+    private final StringResource errorMessage;
 
-    public AbstractShortcutModule(StringResource titleResource, IconResource iconResource, Intent intent) {
+    public AbstractShortcutModule(StringResource titleResource, IconResource iconResource, Intent intent, StringResource errorMessage) {
         super(titleResource, iconResource);
         this.intent = intent;
+        this.errorMessage = errorMessage;
     }
 
-    public AbstractShortcutModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, Intent intent) {
+    public AbstractShortcutModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, Intent intent, StringResource errorMessage) {
         super(moduleContext, parent, titleResource, iconResource);
         this.intent = intent;
+        this.errorMessage = errorMessage;
     }
 
-    public AbstractShortcutModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource, Intent intent) {
+    public AbstractShortcutModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource, Intent intent, StringResource errorMessage) {
         super(moduleContext, parent, titleResource, iconResource, bgColorResource, fgColorResource);
         this.intent = intent;
+        this.errorMessage = errorMessage;
     }
 
     @Override
@@ -51,7 +55,9 @@ abstract public class AbstractShortcutModule extends AbstractSimpleModule {
         return ModuleViewFactory.createPassiveWithHolder(context, holderResourceId, holderParent, this, getModuleContext(), getIcon(), getTitle());
     }
 
-    protected abstract StringResource getErrorMessage();
+    public StringResource getErrorMessage() {
+        return errorMessage;
+    }
 
     @Override
     public String toString() {

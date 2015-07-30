@@ -19,25 +19,21 @@ public class GoogleMapsModule extends AbstractShortcutModule {
     private static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.module_maps_title);
     private static final IconResource ICON_RESOURCE = IconResource.fromResourceId(R.drawable.ic_map_black_24dp);
     private static final Intent INTENT = new Intent(Intent.ACTION_VIEW);
+    private static final StringResource ERROR_MESSAGE = StringResource.fromResourceId(R.string.module_maps_error);
 
     static {
         INTENT.setPackage("com.google.android.apps.maps");
     }
 
     public GoogleMapsModule() {
-        super(TITLE_RESOURCE, ICON_RESOURCE, INTENT);
+        super(TITLE_RESOURCE, ICON_RESOURCE, INTENT, ERROR_MESSAGE);
     }
 
     public GoogleMapsModule(IModuleContext moduleContext, IParentModule parent) {
-        super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, INTENT);
+        super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, INTENT, ERROR_MESSAGE);
     }
 
     public GoogleMapsModule(IModuleContext moduleContext, IParentModule parent, ColorResource bgColorResource, ColorResource fgColorResource) {
-        super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, INTENT);
-    }
-
-    @Override
-    protected StringResource getErrorMessage() {
-        return StringResource.fromResourceId(R.string.module_maps_error);
+        super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, INTENT, ERROR_MESSAGE);
     }
 }
