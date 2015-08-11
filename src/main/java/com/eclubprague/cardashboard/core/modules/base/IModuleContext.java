@@ -1,5 +1,6 @@
 package com.eclubprague.cardashboard.core.modules.base;
 
+import android.content.Context;
 import android.content.Intent;
 
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
@@ -21,4 +22,6 @@ public interface IModuleContext {
     void launchIntent(Intent intent, StringResource errorMessage);
 
     void swapModules(IModule oldModule, IModule newModule, boolean animate);
+
+    Context getContext();
 }
