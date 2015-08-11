@@ -5,4 +5,6 @@
     <string name="module_home_title">Homescreen</string>
     <string name="module_maps_title">Google Maps</string>
     <string name="module_maps_error">Google Maps required to run selected module. Please, install Google Maps first.</string>
+    <string name="module_others_clock_title">Clock</string>
+    <string name="module_others_clock_units">HH:MM</string>
 </resources>

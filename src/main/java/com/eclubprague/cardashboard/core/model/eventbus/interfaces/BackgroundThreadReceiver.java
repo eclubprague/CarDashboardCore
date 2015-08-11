@@ -9,7 +9,7 @@ import de.greenrobot.event.ThreadMode;
  * Receiver interface for background thread events.
  * Pay attention to the method annotation, it must be replicated in implementation!
  */
-public interface BackgroundThreadReciever<T extends Event> {
+public interface BackgroundThreadReceiver<T extends Event> {
 
     @Subscribe(threadMode = ThreadMode.BackgroundThread)
     void onEventBackgroundThread(T event);

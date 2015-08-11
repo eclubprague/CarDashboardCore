@@ -6,17 +6,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.eclubprague.cardashboard.core.R;
-import com.eclubprague.cardashboard.core.model.eventbus.interfaces.MainThreadReciever;
-import com.eclubprague.cardashboard.core.modules.base.models.ModuleUpdateEvent;
 import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.views.ModuleViewFactory;
-
-import de.greenrobot.event.EventBus;
-import de.greenrobot.event.Subscribe;
-import de.greenrobot.event.ThreadMode;
 
 /**
  * Created by Michael on 16. 7. 2015.
@@ -25,7 +19,7 @@ import de.greenrobot.event.ThreadMode;
  * Displays information. ATM it displays only String up to 4 characters.
  * Should launch simple menu on click (TODO)
  */
-abstract public class AbstractDisplayModule extends AbstractSimpleModule implements MainThreadReciever<ModuleUpdateEvent> {
+abstract public class AbstractDisplayModule extends AbstractSimpleModule {
     private String value = null;
     private TextView valueView = null;
     private StringResource unitResource;
@@ -34,19 +28,16 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule impleme
     public AbstractDisplayModule(StringResource titleResource, IconResource iconResource, StringResource unitResource) {
         super(titleResource, iconResource);
         this.unitResource = unitResource;
-        EventBus.getDefault().register(this);
     }
 
     public AbstractDisplayModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, StringResource unitResource) {
         super(moduleContext, parent, titleResource, iconResource);
         this.unitResource = unitResource;
-        EventBus.getDefault().register(this);
     }
 
     public AbstractDisplayModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource, StringResource unitResource) {
         super(moduleContext, parent, titleResource, iconResource, bgColorResource, fgColorResource);
         this.unitResource = unitResource;
-        EventBus.getDefault().register(this);
     }
 
     public StringResource getUnit() {
@@ -58,7 +49,7 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule impleme
         return this;
     }
 
-    protected void updateValue(String value) {
+    public void updateValue(String value) {
         this.value = value;
         if (valueView != null) {
             valueView.setText(value);
@@ -83,12 +74,6 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule impleme
             updateValue(value);
         }
         return viewWithHolder;
-    }
-
-    @Override
-    @Subscribe(threadMode = ThreadMode.MainThread)
-    public void onEventMainThread(ModuleUpdateEvent event) {
-        updateValue(event.getValue());
     }
 
     public String getValue() {

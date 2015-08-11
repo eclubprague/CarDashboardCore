@@ -8,9 +8,9 @@ import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.IParentModule;
 import com.eclubprague.cardashboard.core.modules.base.models.ModuleId;
-import com.eclubprague.cardashboard.core.modules.base.models.ModuleUpdateEvent;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.modules.custom.ClockModule;
 import com.eclubprague.cardashboard.core.modules.custom.GoogleMapsModule;
 import com.eclubprague.cardashboard.core.modules.predefined.SimpleParentModule;
 
@@ -103,7 +103,8 @@ public class ModuleSupplier {
                 null,
                 StringResource.fromString("clicks")
         ));
-        testDisplayModule.onEventMainThread(new ModuleUpdateEvent(Integer.toString(999)));
+        submenuModule.addSubmodules(new ClockModule());
+        testDisplayModule.updateValue(Integer.toString(999));
         submenuModule.addSubmodules(testDisplayModule);
         put(submenuModule.getSubmodules(null));
         homeScreenModule.addSubmodules(modules);
