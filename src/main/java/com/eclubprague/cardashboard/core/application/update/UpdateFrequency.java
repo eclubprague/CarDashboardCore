@@ -1,5 +1,6 @@
 package com.eclubprague.cardashboard.core.application.update;
 
+import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalExtraSlowUpdate;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalFastUpdateEvent;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalMediumUpdateEvent;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalSlowUpdateEvent;
@@ -25,6 +26,12 @@ public enum UpdateFrequency {
         @Override
         public GlobalUpdateEvent createNewEvent() {
             return GlobalSlowUpdateEvent.createNewEvent();
+        }
+    },
+    EXTRA_SLOW(1000 * 60 * 5) {
+        @Override
+        public GlobalUpdateEvent createNewEvent() {
+            return GlobalExtraSlowUpdate.createNewEvent();
         }
     };
 
