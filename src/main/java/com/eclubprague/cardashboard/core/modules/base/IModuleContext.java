@@ -24,4 +24,6 @@ public interface IModuleContext {
     void swapModules(IModule oldModule, IModule newModule, boolean animate);
 
     Context getContext();
+
+    void addListener(IActivityStateChangeListener listener);
 }

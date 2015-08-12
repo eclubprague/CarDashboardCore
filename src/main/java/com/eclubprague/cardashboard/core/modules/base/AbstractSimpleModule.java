@@ -39,6 +39,7 @@ abstract public class AbstractSimpleModule implements IModule {
     public AbstractSimpleModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource) {
         this.id = ModuleId.createNew();
         this.moduleContext = moduleContext;
+        this.moduleContext.addListener(this);
         this.parent = parent;
         this.titleResource = titleResource;
         this.iconResource = iconResource;
@@ -47,6 +48,7 @@ abstract public class AbstractSimpleModule implements IModule {
     public AbstractSimpleModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource) {
         this.id = ModuleId.createNew();
         this.moduleContext = moduleContext;
+        this.moduleContext.addListener(this);
         this.parent = parent;
         this.titleResource = titleResource;
         this.iconResource = iconResource;

@@ -15,7 +15,7 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
  * <p/>
  * Interface for modules.
  */
-public interface IModule extends IModuleListener, IQuickMenuListener {
+public interface IModule extends IModuleListener, IQuickMenuListener, IActivityStateChangeListener {
 
     IModuleContext getModuleContext();
 
