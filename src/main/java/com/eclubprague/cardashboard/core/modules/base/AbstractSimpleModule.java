@@ -66,7 +66,7 @@ abstract public class AbstractSimpleModule implements IModule {
     @Override
     public IconResource getIcon() {
         if (iconResource == null) {
-            throw new IllegalStateException("Icon requested, but is null.");
+            throw new IllegalStateException("Icon is null. Please, use setIcon method to set IconResource first.");
         }
         return iconResource;
     }
@@ -74,7 +74,7 @@ abstract public class AbstractSimpleModule implements IModule {
     @Override
     public StringResource getTitle() {
         if (titleResource == null) {
-            throw new IllegalStateException("Title requested, but is null.");
+            throw new IllegalStateException("Title is null. Please, use setTitle method to set title StringResource first.");
         }
         return titleResource;
     }
@@ -82,7 +82,7 @@ abstract public class AbstractSimpleModule implements IModule {
     @Override
     public ColorResource getBackgroundColor() {
         if (bgColorResource == null) {
-            throw new IllegalStateException("Background color requested, but is null.");
+            throw new IllegalStateException("Background color is null. Please, use setBackgroundColor method to set background ColorResource first.");
         }
         return bgColorResource;
     }
@@ -90,7 +90,7 @@ abstract public class AbstractSimpleModule implements IModule {
     @Override
     public ColorResource getForegroundColor() {
         if (fgColorResource == null) {
-            throw new IllegalStateException("Foreground color requested, but is null.");
+            throw new IllegalStateException("Foreground color is null. Please, use setForegroundColor method to set foreground ColorResource first.");
         }
         return fgColorResource;
     }
@@ -98,7 +98,7 @@ abstract public class AbstractSimpleModule implements IModule {
     @Override
     public IParentModule getParent() {
         if (parent == null) {
-            throw new IllegalStateException("Parent requested, but is null.");
+            throw new IllegalStateException("Parent is null. Please, use setParent method to set IParentModule first.");
         }
         return parent;
     }
@@ -172,6 +172,9 @@ abstract public class AbstractSimpleModule implements IModule {
 
     @Override
     public IModuleContext getModuleContext() {
+        if (moduleContext == null) {
+            throw new IllegalStateException("ModuleContext is null. Please, use setModuleContext method to set IModuleContext first.");
+        }
         return moduleContext;
     }
 
@@ -192,7 +195,7 @@ abstract public class AbstractSimpleModule implements IModule {
     @Override
     public ViewGroup loadHolder() {
         if (holderView == null) {
-            throw new IllegalStateException("Holder has not been saved");
+            throw new IllegalStateException("Holder has not been saved. Please, use saveHolder to save ViewGroup holder or use createViewWithHolder to create view including holder.");
         }
         return holderView;
     }
@@ -279,5 +282,9 @@ abstract public class AbstractSimpleModule implements IModule {
     @Override
     public void onStop() {
 
+    }
+
+    public boolean isInitialized() {
+        return moduleContext != null && parent != null;
     }
 }
