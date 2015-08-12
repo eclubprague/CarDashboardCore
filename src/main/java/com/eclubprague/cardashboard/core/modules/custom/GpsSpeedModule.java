@@ -1,5 +1,6 @@
 package com.eclubprague.cardashboard.core.modules.custom;
 
+import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -18,8 +19,6 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorReso
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 
-import java.util.Calendar;
-
 public class GpsSpeedModule extends AbstractDisplayModule implements MainThreadReceiver<GlobalMediumUpdateEvent>, LocationListener {
 
     private static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.module_others_gpsspeed_title);
@@ -29,36 +28,42 @@ public class GpsSpeedModule extends AbstractDisplayModule implements MainThreadR
     public GpsSpeedModule() {
         super(TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
         init();
-        FastEventBus.getInstance().register(this, GlobalSlowUpdateEvent.class);
     }
 
     public GpsSpeedModule(IModuleContext moduleContext, IParentModule parent) {
         super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
         init();
-        FastEventBus.getInstance().register(this, GlobalSlowUpdateEvent.class);
+
     }
 
     public GpsSpeedModule(IModuleContext moduleContext, IParentModule parent, ColorResource bgColorResource, ColorResource fgColorResource) {
         super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
         init();
-        FastEventBus.getInstance().register(this, GlobalSlowUpdateEvent.class);
+
     }
 
     LocationManager locationManager;
-    private void init(){
-        //TODO this.locationManager = (LocationListener)
+
+    private void init() {
+        FastEventBus.getInstance().register(this, GlobalMediumUpdateEvent.class);
+
+
     }
 
     @Override
     public void onEventMainThread(GlobalMediumUpdateEvent event) {
+        if (locationManager == null && getModuleContext() != null) {
+            locationManager = (LocationManager) getModuleContext().getContext().getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        }
 
 
-        updateValue(String.format("%02d:%02d", c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE)));
+
     }
 
     @Override
     public void onLocationChanged(Location location) {
-
+        updateValue(""+location.getSpeed());
     }
 
     @Override
@@ -77,4 +82,4 @@ public class GpsSpeedModule extends AbstractDisplayModule implements MainThreadR
     }
 }
 
-}
+
