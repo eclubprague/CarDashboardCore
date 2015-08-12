@@ -8,5 +8,5 @@
     <string name="module_others_clock_title">Clock</string>
     <string name="module_others_clock_units">HH:MM</string>
     <string name="module_others_gpsspeed_title">Speed (GPS)</string>
-    <string name="module_others_gpsspeed_units">m / s</string>
+    <string name="module_others_gpsspeed_units">m/s</string>
 </resources>

@@ -45,6 +45,7 @@ public class GpsSpeedModule extends AbstractDisplayModule implements MainThreadR
 
     private void init() {
         FastEventBus.getInstance().register(this, GlobalMediumUpdateEvent.class);
+        updateValue("- -");
 
 
     }
@@ -68,6 +69,7 @@ public class GpsSpeedModule extends AbstractDisplayModule implements MainThreadR
 
     @Override
     public void onResume() {
+        if(locationManager!=null)
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
     }
 
@@ -83,7 +85,7 @@ public class GpsSpeedModule extends AbstractDisplayModule implements MainThreadR
 
     @Override
     public void onProviderEnabled(String provider) {
-
+        // TODO: 12. 8. 2015 co se stane kdyz je GPS disabled
     }
 
     @Override
