@@ -26,16 +26,20 @@ public class ClockModule extends AbstractDisplayModule implements MainThreadRece
 
     public ClockModule() {
         super(TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
-        FastEventBus.getInstance().register(this, GlobalMediumUpdateEvent.class);
+        init();
     }
 
     public ClockModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent) {
         super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
-        FastEventBus.getInstance().register(this, GlobalMediumUpdateEvent.class);
+        init();
     }
 
     public ClockModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
         super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
+        init();
+    }
+
+    private void init() {
         FastEventBus.getInstance().register(this, GlobalMediumUpdateEvent.class);
     }
 

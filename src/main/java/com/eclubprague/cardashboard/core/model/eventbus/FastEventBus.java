@@ -24,7 +24,7 @@ public enum FastEventBus {
 
     private final Map<Class<? extends Event>, List<MainThreadReceiver>> listenersMap = new HashMap<>();
 
-    public <T extends Event> void register(MainThreadReceiver receiver, Class<T> eventClass) {
+    public <T extends Event> void register(MainThreadReceiver<T> receiver, Class<T> eventClass) {
         Log.d(TAG, "receiver registered: " + receiver.getClass().getSimpleName());
         List<MainThreadReceiver> eventListeners = listenersMap.get(eventClass);
         if (eventListeners == null) {
@@ -34,8 +34,8 @@ public enum FastEventBus {
         eventListeners.add(receiver);
     }
 
-    public void unregister(MainThreadReceiver receiver, Event event) {
-        List<MainThreadReceiver> eventListeners = listenersMap.get(event);
+    public <T extends Event> void unregister(MainThreadReceiver<T> receiver, Class<T> eventClass) {
+        List<MainThreadReceiver> eventListeners = listenersMap.get(eventClass);
         if (eventListeners != null) {
             eventListeners.remove(receiver);
         }
