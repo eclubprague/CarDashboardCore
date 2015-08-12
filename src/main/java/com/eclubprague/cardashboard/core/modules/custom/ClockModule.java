@@ -41,11 +41,16 @@ public class ClockModule extends AbstractDisplayModule implements MainThreadRece
 
     private void init() {
         FastEventBus.getInstance().register(this, GlobalMediumUpdateEvent.class);
+        updateTime();
+    }
+
+    private void updateTime() {
+        Calendar c = Calendar.getInstance();
+        updateValue(String.format("%02d:%02d", c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE)));
     }
 
     @Override
     public void onEventMainThread(GlobalMediumUpdateEvent event) {
-        Calendar c = Calendar.getInstance();
-        updateValue(String.format("%02d:%02d", c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE)));
+        updateTime();
     }
 }
