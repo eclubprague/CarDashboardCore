@@ -12,6 +12,7 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResou
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.custom.ClockModule;
 import com.eclubprague.cardashboard.core.modules.custom.GoogleMapsModule;
+import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
 import com.eclubprague.cardashboard.core.modules.predefined.SimpleParentModule;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class ModuleSupplier {
         put(homeScreenModule);
         List<IModule> modules = new ArrayList<>();
         AbstractParentModule submenuModule;
+        modules.add(new GpsSpeedModule());
         modules.add(new TestSimpleModule(
                 null,
                 homeScreenModule,

@@ -7,4 +7,6 @@
     <string name="module_maps_error">Google Maps required to run selected module. Please, install Google Maps first.</string>
     <string name="module_others_clock_title">Clock</string>
     <string name="module_others_clock_units">HH:MM</string>
+    <string name="module_others_gpsspeed_title">Speed (GPS)</string>
+    <string name="module_others_gpsspeed_units">m / s</string>
 </resources>
