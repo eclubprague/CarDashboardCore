@@ -5,12 +5,11 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.annotation.NonNull;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.model.eventbus.FastEventBus;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalMediumUpdateEvent;
-import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalSlowUpdateEvent;
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.MainThreadReceiver;
 import com.eclubprague.cardashboard.core.modules.base.AbstractDisplayModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
@@ -30,13 +29,13 @@ public class GpsSpeedModule extends AbstractDisplayModule implements MainThreadR
         init();
     }
 
-    public GpsSpeedModule(IModuleContext moduleContext, IParentModule parent) {
+    public GpsSpeedModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent) {
         super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
         init();
 
     }
 
-    public GpsSpeedModule(IModuleContext moduleContext, IParentModule parent, ColorResource bgColorResource, ColorResource fgColorResource) {
+    public GpsSpeedModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
         super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
         init();
 

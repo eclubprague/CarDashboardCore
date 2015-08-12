@@ -1,5 +1,7 @@
 package com.eclubprague.cardashboard.core.modules.custom;
 
+import android.support.annotation.NonNull;
+
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.model.eventbus.FastEventBus;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalMediumUpdateEvent;
@@ -27,12 +29,12 @@ public class ClockModule extends AbstractDisplayModule implements MainThreadRece
         FastEventBus.getInstance().register(this, GlobalMediumUpdateEvent.class);
     }
 
-    public ClockModule(IModuleContext moduleContext, IParentModule parent) {
+    public ClockModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent) {
         super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
         FastEventBus.getInstance().register(this, GlobalMediumUpdateEvent.class);
     }
 
-    public ClockModule(IModuleContext moduleContext, IParentModule parent, ColorResource bgColorResource, ColorResource fgColorResource) {
+    public ClockModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
         super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
         FastEventBus.getInstance().register(this, GlobalMediumUpdateEvent.class);
     }

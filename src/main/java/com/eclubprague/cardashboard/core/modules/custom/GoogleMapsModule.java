@@ -1,6 +1,7 @@
 package com.eclubprague.cardashboard.core.modules.custom;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.modules.base.AbstractShortcutModule;
@@ -29,11 +30,15 @@ public class GoogleMapsModule extends AbstractShortcutModule {
         super(TITLE_RESOURCE, ICON_RESOURCE, INTENT, ERROR_MESSAGE);
     }
 
-    public GoogleMapsModule(IModuleContext moduleContext, IParentModule parent) {
+    public GoogleMapsModule(@NonNull IParentModule parent) {
+        super(parent, TITLE_RESOURCE, ICON_RESOURCE, INTENT, ERROR_MESSAGE);
+    }
+
+    public GoogleMapsModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent) {
         super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, INTENT, ERROR_MESSAGE);
     }
 
-    public GoogleMapsModule(IModuleContext moduleContext, IParentModule parent, ColorResource bgColorResource, ColorResource fgColorResource) {
+    public GoogleMapsModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
         super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, INTENT, ERROR_MESSAGE);
     }
 }

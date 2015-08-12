@@ -30,13 +30,20 @@ abstract public class AbstractSimpleModule implements IModule {
     private ViewGroup holderView;
     private static final String TAG = AbstractSimpleModule.class.getSimpleName();
 
-    public AbstractSimpleModule(StringResource titleResource, IconResource iconResource) {
+    public AbstractSimpleModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource) {
         this.id = ModuleId.createNew();
         this.titleResource = titleResource;
         this.iconResource = iconResource;
     }
 
-    public AbstractSimpleModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource) {
+    public AbstractSimpleModule(@NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
+        this.id = ModuleId.createNew();
+        this.parent = parent;
+        this.titleResource = titleResource;
+        this.iconResource = iconResource;
+    }
+
+    public AbstractSimpleModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
         this.id = ModuleId.createNew();
         this.moduleContext = moduleContext;
         this.moduleContext.addListener(this);
@@ -45,7 +52,7 @@ abstract public class AbstractSimpleModule implements IModule {
         this.iconResource = iconResource;
     }
 
-    public AbstractSimpleModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource) {
+    public AbstractSimpleModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
         this.id = ModuleId.createNew();
         this.moduleContext = moduleContext;
         this.moduleContext.addListener(this);
