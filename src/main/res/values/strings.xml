@@ -9,4 +9,5 @@
     <string name="module_others_clock_units">HH:MM</string>
     <string name="module_others_gpsspeed_title">Speed (GPS)</string>
     <string name="module_others_gpsspeed_units">m/s</string>
+    <string name="title_activity_settings">Settings</string>
 </resources>
