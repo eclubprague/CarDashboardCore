@@ -14,7 +14,7 @@ import com.eclubprague.cardashboard.core.views.ModuleViewFactory;
 
 /**
  * Created by Michael on 9. 7. 2015.
- * <p>
+ * <p/>
  * Simple implementation of IModule interface.
  */
 abstract public class AbstractSimpleModule implements IModule {
@@ -188,14 +188,14 @@ abstract public class AbstractSimpleModule implements IModule {
     }
 
     @Override
-    public void saveHolder(ViewGroup holder) {
+    public void setHolder(ViewGroup holder) {
         holderView = holder;
     }
 
     @Override
-    public ViewGroup loadHolder() {
+    public ViewGroup getHolder() {
         if (holderView == null) {
-            throw new IllegalStateException("Holder has not been saved. Please, use saveHolder to save ViewGroup holder or use createViewWithHolder to create view including holder.");
+            throw new IllegalStateException("Holder has not been saved. Please, use setHolder to save ViewGroup holder or use createViewWithHolder to create view including holder.");
         }
         return holderView;
     }
@@ -215,24 +215,33 @@ abstract public class AbstractSimpleModule implements IModule {
     @Override
     public void onCancel(IModuleContext moduleContext) {
         if (quickMenuActive) {
-            moduleContext.toggleQuickMenu(this, false);
+            getModuleContext().onModuleEvent(this, ModuleEvent.CANCEL);
             quickMenuActive = false;
         }
     }
 
     @Override
     public void onDelete(IModuleContext moduleContext) {
-
+        if (quickMenuActive) {
+//            getParent().removeSubmodule(this);
+            getModuleContext().onModuleEvent(this, ModuleEvent.DELETE);
+            quickMenuActive = false;
+        }
     }
 
     @Override
     public void onMove(IModuleContext moduleContext) {
-
+        if (quickMenuActive) {
+            getModuleContext().onModuleEvent(this, ModuleEvent.MOVE);
+            quickMenuActive = false;
+        }
     }
 
     @Override
     public void onMore(IModuleContext moduleContext) {
-
+        if (quickMenuActive) {
+            quickMenuActive = false;
+        }
     }
 
     @Override
@@ -241,7 +250,7 @@ abstract public class AbstractSimpleModule implements IModule {
                 "id=" + id +
                 ", moduleContext=" + moduleContext +
                 ", parent=" + parent +
-                ", titleResource=" + titleResource +
+                ", titleResource=" + titleResource.getString(getModuleContext().getContext()) +
                 ", iconResource=" + iconResource +
                 ", bgColorResource=" + bgColorResource +
                 ", fgColorResource=" + fgColorResource +
