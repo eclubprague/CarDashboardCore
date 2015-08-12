@@ -69,8 +69,8 @@ public class GpsSpeedModule extends AbstractDisplayModule implements MainThreadR
 
     @Override
     public void onResume() {
-        if(locationManager!=null)
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        if (locationManager != null)
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
     }
 
     @Override
