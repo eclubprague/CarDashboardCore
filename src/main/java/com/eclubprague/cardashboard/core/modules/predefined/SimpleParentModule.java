@@ -14,6 +14,14 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
  */
 public class SimpleParentModule extends AbstractParentModule {
 
+    public SimpleParentModule(StringResource titleResource, IconResource iconResource) {
+        super(titleResource, iconResource);
+    }
+
+    public SimpleParentModule(IParentModule parent, StringResource titleResource, IconResource iconResource) {
+        super(parent, titleResource, iconResource);
+    }
+
     public SimpleParentModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource) {
         super(moduleContext, parent, titleResource, iconResource, bgColorResource, fgColorResource);
     }

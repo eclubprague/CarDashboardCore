@@ -42,38 +42,27 @@ public class ModuleSupplier {
         AbstractParentModule submenuModule;
         modules.add(new GpsSpeedModule());
         modules.add(new TestSimpleModule(
-                null,
                 homeScreenModule,
                 StringResource.fromString("Settings"),
-                IconResource.fromResourceId(R.drawable.ic_settings_black_24dp),
-                null, null));
+                IconResource.fromResourceId(R.drawable.ic_settings_black_24dp)));
         modules.add(submenuModule = new SimpleParentModule(
-                null,
                 homeScreenModule,
                 StringResource.fromString("OBD"),
-                IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp),
-                null, null));
+                IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp)));
         modules.add(new TestSimpleModule(
-                null,
                 homeScreenModule,
                 StringResource.fromString("Voice input"),
-                IconResource.fromResourceId(R.drawable.ic_mic_black_24dp),
-                null, null));
+                IconResource.fromResourceId(R.drawable.ic_mic_black_24dp)));
         modules.add(new GoogleMapsModule(
-                null,
                 homeScreenModule));
         modules.add(new TestSimpleModule(
-                null,
                 homeScreenModule,
                 StringResource.fromString("SMS"),
-                IconResource.fromResourceId(R.drawable.ic_chat_black_24dp),
-                null, null));
+                IconResource.fromResourceId(R.drawable.ic_chat_black_24dp)));
         modules.add(new TestSimpleModule(
-                null,
                 homeScreenModule,
                 StringResource.fromString("Email"),
-                IconResource.fromResourceId(R.drawable.ic_email_black_24dp),
-                null, null));
+                IconResource.fromResourceId(R.drawable.ic_email_black_24dp)));
 //        String gm = "Google maps";
 //        StringBuilder sb = new StringBuilder();
 //        for (int i = 0; i < 10; i++) {
@@ -87,28 +76,22 @@ public class ModuleSupplier {
         List<IModule> carModules = new ArrayList<>();
         TestDisplayModule testDisplayModule;
         carModules.add(testDisplayModule = new TestDisplayModule(
-                null,
                 submenuModule,
                 StringResource.fromString("Speed"),
                 IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp),
-                null,
-                null,
                 StringResource.fromString("kmph")
         ));
         submenuModule.addSubmodules(testDisplayModule);
         carModules.add(testDisplayModule = new TestDisplayModule(
-                null,
                 submenuModule,
                 StringResource.fromString("Click counter"),
                 IconResource.fromResourceId(R.drawable.ic_settings_black_24dp),
-                null,
-                null,
                 StringResource.fromString("clicks")
         ));
         submenuModule.addSubmodules(new ClockModule());
         testDisplayModule.updateValue(Integer.toString(999));
         submenuModule.addSubmodules(testDisplayModule);
-        put(submenuModule.getSubmodules(null));
+        put(submenuModule.getSubmodules());
         homeScreenModule.addSubmodules(modules);
         put(modules);
 

@@ -10,6 +10,8 @@ import java.util.List;
 public interface IParentModule extends IModule {
     List<IModule> getSubmodules(IModuleContext moduleContext);
 
+    List<IModule> getSubmodules();
+
     IParentModule addSubmodules(IModule... modules);
 
     IParentModule addSubmodules(List<IModule> modules);

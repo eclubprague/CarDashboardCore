@@ -1,6 +1,7 @@
 package com.eclubprague.cardashboard.core.modules.base;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,15 +25,19 @@ import java.util.List;
 abstract public class AbstractParentModule extends AbstractSimpleModule implements IParentModule {
     private final List<IModule> submodules = new ArrayList<>();
 
-    public AbstractParentModule(StringResource titleResource, IconResource iconResource) {
+    public AbstractParentModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource) {
         super(titleResource, iconResource);
     }
 
-    public AbstractParentModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource) {
+    public AbstractParentModule(@NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
+        super(parent, titleResource, iconResource);
+    }
+
+    public AbstractParentModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
         super(moduleContext, parent, titleResource, iconResource);
     }
 
-    public AbstractParentModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource) {
+    public AbstractParentModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
         super(moduleContext, parent, titleResource, iconResource, bgColorResource, fgColorResource);
     }
 
@@ -49,10 +54,15 @@ abstract public class AbstractParentModule extends AbstractSimpleModule implemen
     }
 
     @Override
-    public List<IModule> getSubmodules(IModuleContext moduleContext) {
+    public List<IModule> getSubmodules(@NonNull IModuleContext moduleContext) {
         for (IModule m : submodules) {
             m.setModuleContext(moduleContext);
         }
+        return submodules;
+    }
+
+    @Override
+    public List<IModule> getSubmodules() {
         return submodules;
     }
 

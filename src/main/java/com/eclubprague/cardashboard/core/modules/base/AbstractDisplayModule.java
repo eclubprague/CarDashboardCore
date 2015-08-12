@@ -1,6 +1,7 @@
 package com.eclubprague.cardashboard.core.modules.base;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -25,17 +26,22 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule {
     private StringResource unitResource;
 
 
-    public AbstractDisplayModule(StringResource titleResource, IconResource iconResource, StringResource unitResource) {
+    public AbstractDisplayModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull StringResource unitResource) {
         super(titleResource, iconResource);
         this.unitResource = unitResource;
     }
 
-    public AbstractDisplayModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, StringResource unitResource) {
+    public AbstractDisplayModule(@NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull StringResource unitResource) {
+        super(parent, titleResource, iconResource);
+        this.unitResource = unitResource;
+    }
+
+    public AbstractDisplayModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull StringResource unitResource) {
         super(moduleContext, parent, titleResource, iconResource);
         this.unitResource = unitResource;
     }
 
-    public AbstractDisplayModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource, StringResource unitResource) {
+    public AbstractDisplayModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, @NonNull StringResource unitResource) {
         super(moduleContext, parent, titleResource, iconResource, bgColorResource, fgColorResource);
         this.unitResource = unitResource;
     }
