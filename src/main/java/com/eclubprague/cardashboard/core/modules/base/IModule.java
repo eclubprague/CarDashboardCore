@@ -53,8 +53,8 @@ public interface IModule extends IModuleListener, IQuickMenuListener, IActivityS
 
     ViewWithHolder createQuickMenuViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent);
 
-    void saveHolder(ViewGroup holder);
+    void setHolder(ViewGroup holder);
 
-    ViewGroup loadHolder();
+    ViewGroup getHolder();
 
 }

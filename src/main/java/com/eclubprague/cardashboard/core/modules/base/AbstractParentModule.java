@@ -54,6 +54,12 @@ abstract public class AbstractParentModule extends AbstractSimpleModule implemen
     }
 
     @Override
+    public IParentModule removeSubmodule(IModule module) {
+        submodules.remove(module);
+        return this;
+    }
+
+    @Override
     public List<IModule> getSubmodules(@NonNull IModuleContext moduleContext) {
         for (IModule m : submodules) {
             m.setModuleContext(moduleContext);
@@ -67,12 +73,15 @@ abstract public class AbstractParentModule extends AbstractSimpleModule implemen
     }
 
     @Override
-    public void removeEmptyModules() {
+    public IParentModule removeTailEmptyModules() {
         for (int i = submodules.size() - 1; i >= 0; i--) {
             if (submodules.get(i) instanceof EmptyModule) {
                 submodules.remove(i);
+            } else {
+                break;
             }
         }
+        return this;
     }
 
     @Override
