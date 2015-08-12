@@ -11,4 +11,6 @@
     <string name="module_others_gpsspeed_units">m / s</string>
     <string name="module_others_battery_title">Battery</string>
     <string name="module_others_battery_units">%</string>
+    <string name="module_others_gpsspeed_units">m/s</string>
+    <string name="title_activity_settings">Settings</string>
 </resources>

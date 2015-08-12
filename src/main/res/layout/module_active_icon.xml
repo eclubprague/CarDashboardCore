@@ -35,7 +35,7 @@
             android:layout_above="@+id/module_active_bottom"
             android:gravity="center"
             android:singleLine="true"
-            android:text="74"
+            android:text="-1"
             android:textSize="@dimen/text_size_display_extra_large"
             app:layout_heightPercent="60%"
             app:layout_marginTopPercent="15%" />
