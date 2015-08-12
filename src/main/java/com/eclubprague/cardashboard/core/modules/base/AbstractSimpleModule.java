@@ -252,4 +252,24 @@ abstract public class AbstractSimpleModule implements IModule {
     public int hashCode() {
         return id.hashCode();
     }
+
+    @Override
+    public void onPause() {
+
+    }
+
+    @Override
+    public void onResume() {
+
+    }
+
+    @Override
+    public void onStart() {
+
+    }
+
+    @Override
+    public void onStop() {
+
+    }
 }
