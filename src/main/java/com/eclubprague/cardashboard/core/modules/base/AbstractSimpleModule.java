@@ -99,6 +99,7 @@ abstract public class AbstractSimpleModule implements IModule {
     @Override
     public IModule setModuleContext(@NonNull IModuleContext moduleContext) {
         this.moduleContext = moduleContext;
+        this.moduleContext.addListener(this);
         return this;
     }
 
