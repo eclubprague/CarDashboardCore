@@ -11,6 +11,7 @@ import com.eclubprague.cardashboard.core.modules.base.models.ModuleId;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.custom.ClockModule;
+import com.eclubprague.cardashboard.core.modules.custom.DeviceBatteryModule;
 import com.eclubprague.cardashboard.core.modules.custom.GoogleMapsModule;
 import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
 import com.eclubprague.cardashboard.core.modules.predefined.SimpleParentModule;
@@ -40,7 +41,8 @@ public class ModuleSupplier {
         put(homeScreenModule);
         List<IModule> modules = new ArrayList<>();
         AbstractParentModule submenuModule;
-        modules.add(new GpsSpeedModule());
+        modules.add(new DeviceBatteryModule(homeScreenModule));
+        modules.add(new GpsSpeedModule(homeScreenModule));
         modules.add(new TestSimpleModule(
                 homeScreenModule,
                 StringResource.fromString("Settings"),

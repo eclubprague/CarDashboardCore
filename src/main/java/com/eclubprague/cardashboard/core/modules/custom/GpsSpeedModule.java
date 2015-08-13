@@ -29,10 +29,14 @@ public class GpsSpeedModule extends AbstractDisplayModule implements MainThreadR
         init();
     }
 
+    public GpsSpeedModule(@NonNull IParentModule parent) {
+        super(parent, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
+        init();
+    }
+
     public GpsSpeedModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent) {
         super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
         init();
-
     }
 
     public GpsSpeedModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
@@ -46,8 +50,6 @@ public class GpsSpeedModule extends AbstractDisplayModule implements MainThreadR
     private void init() {
         FastEventBus.getInstance().register(this, GlobalMediumUpdateEvent.class);
         updateValue("- -");
-
-
     }
 
     @Override

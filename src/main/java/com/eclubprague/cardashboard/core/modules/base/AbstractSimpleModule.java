@@ -47,7 +47,6 @@ abstract public class AbstractSimpleModule implements IModule {
     public AbstractSimpleModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
         this.id = ModuleId.createNew();
         this.moduleContext = moduleContext;
-        this.moduleContext.addListener(this);
         this.parent = parent;
         this.titleResource = titleResource;
         this.iconResource = iconResource;
@@ -56,7 +55,6 @@ abstract public class AbstractSimpleModule implements IModule {
     public AbstractSimpleModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
         this.id = ModuleId.createNew();
         this.moduleContext = moduleContext;
-        this.moduleContext.addListener(this);
         this.parent = parent;
         this.titleResource = titleResource;
         this.iconResource = iconResource;
@@ -107,7 +105,6 @@ abstract public class AbstractSimpleModule implements IModule {
     @Override
     public IModule setModuleContext(@NonNull IModuleContext moduleContext) {
         this.moduleContext = moduleContext;
-        this.moduleContext.addListener(this);
         return this;
     }
 
