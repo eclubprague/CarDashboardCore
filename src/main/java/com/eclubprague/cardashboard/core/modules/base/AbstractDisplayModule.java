@@ -30,18 +30,13 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule {
         this.unitResource = unitResource;
     }
 
-    public AbstractDisplayModule(@NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull StringResource unitResource) {
-        super(parent, titleResource, iconResource);
+    public AbstractDisplayModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull StringResource unitResource) {
+        super(moduleContext, titleResource, iconResource);
         this.unitResource = unitResource;
     }
 
-    public AbstractDisplayModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull StringResource unitResource) {
-        super(moduleContext, parent, titleResource, iconResource);
-        this.unitResource = unitResource;
-    }
-
-    public AbstractDisplayModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, @NonNull StringResource unitResource) {
-        super(moduleContext, parent, titleResource, iconResource, bgColorResource, fgColorResource);
+    public AbstractDisplayModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, @NonNull StringResource unitResource) {
+        super(moduleContext, titleResource, iconResource, bgColorResource, fgColorResource);
         this.unitResource = unitResource;
     }
 

@@ -29,16 +29,12 @@ abstract public class AbstractParentModule extends AbstractSimpleModule implemen
         super(titleResource, iconResource);
     }
 
-    public AbstractParentModule(@NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
-        super(parent, titleResource, iconResource);
+    public AbstractParentModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
+        super(moduleContext, titleResource, iconResource);
     }
 
-    public AbstractParentModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
-        super(moduleContext, parent, titleResource, iconResource);
-    }
-
-    public AbstractParentModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(moduleContext, parent, titleResource, iconResource, bgColorResource, fgColorResource);
+    public AbstractParentModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
+        super(moduleContext, titleResource, iconResource, bgColorResource, fgColorResource);
     }
 
     @Override

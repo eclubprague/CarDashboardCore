@@ -21,7 +21,6 @@ import com.eclubprague.cardashboard.core.views.ModuleViewFactory;
 abstract public class AbstractSimpleModule implements IModule {
     private final ModuleId id;
     private IModuleContext moduleContext;
-    private IParentModule parent;
     private StringResource titleResource;
     private IconResource iconResource;
     private ColorResource bgColorResource;
@@ -37,25 +36,16 @@ abstract public class AbstractSimpleModule implements IModule {
         this.iconResource = iconResource;
     }
 
-    public AbstractSimpleModule(@NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
+    public AbstractSimpleModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
         this.id = ModuleId.createNew();
-        this.parent = parent;
+        this.moduleContext = moduleContext;
         this.titleResource = titleResource;
         this.iconResource = iconResource;
     }
 
-    public AbstractSimpleModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
+    public AbstractSimpleModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
         this.id = ModuleId.createNew();
         this.moduleContext = moduleContext;
-        this.parent = parent;
-        this.titleResource = titleResource;
-        this.iconResource = iconResource;
-    }
-
-    public AbstractSimpleModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        this.id = ModuleId.createNew();
-        this.moduleContext = moduleContext;
-        this.parent = parent;
         this.titleResource = titleResource;
         this.iconResource = iconResource;
         this.bgColorResource = bgColorResource;
@@ -95,22 +85,8 @@ abstract public class AbstractSimpleModule implements IModule {
     }
 
     @Override
-    public IParentModule getParent() {
-        if (parent == null) {
-            throw new IllegalStateException("Parent is null. Please, use setParent method to set IParentModule first.");
-        }
-        return parent;
-    }
-
-    @Override
     public IModule setModuleContext(@NonNull IModuleContext moduleContext) {
         this.moduleContext = moduleContext;
-        return this;
-    }
-
-    @Override
-    public IModule setParent(@NonNull IParentModule parent) {
-        this.parent = parent;
         return this;
     }
 
@@ -256,7 +232,6 @@ abstract public class AbstractSimpleModule implements IModule {
         return "AbstractSimpleModule{" +
                 "id=" + id +
                 ", moduleContext=" + moduleContext +
-                ", parent=" + parent +
                 ", titleResource=" + titleResource.getString(getModuleContext().getContext()) +
                 ", iconResource=" + iconResource +
                 ", bgColorResource=" + bgColorResource +
@@ -301,6 +276,6 @@ abstract public class AbstractSimpleModule implements IModule {
     }
 
     public boolean isInitialized() {
-        return moduleContext != null && parent != null;
+        return moduleContext != null;
     }
 }

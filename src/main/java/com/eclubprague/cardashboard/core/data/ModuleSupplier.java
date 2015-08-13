@@ -26,45 +26,60 @@ import java.util.Map;
  * <p/>
  * Supplies module hierarchy. Currently for testing purposes only.
  */
-public class ModuleSupplier {
+abstract public class ModuleSupplier {
     private static final String TAG = ModuleSupplier.class.getSimpleName();
 
-    private static final ModuleSupplier instance = new ModuleSupplier();
-    private final Map<ModuleId, IModule> map = new HashMap<>();
-    private final IParentModule homeScreenModule = new AbstractParentModule(
-            StringResource.fromResourceId(R.string.module_home_title),
-            IconResource.fromResourceId(R.drawable.ic_home_black_24dp)
-    ) {
+    private static final ModuleSupplier baseInstance = new ModuleSupplier() {
+        @Override
+        protected IParentModule createHomeScreenModule(IModuleContext moduleContext) {
+            IParentModule homeScreenModule = homeScreenModule();
+            IParentModule obdParent = new SimpleParentModule(
+                    StringResource.fromString("OBD"),
+                    IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp));
+            obdParent.addSubmodules(new TestDisplayModule(
+                    StringResource.fromString("Click counter"),
+                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp),
+                    StringResource.fromString("clicks")
+            ), new GpsSpeedModule());
+            IParentModule otherParent = new SimpleParentModule(
+                    StringResource.fromString("Other"),
+                    IconResource.fromResourceId(R.drawable.ic_open_with_black_24dp));
+            otherParent.addSubmodules(
+                    new ClockModule(),
+                    new DeviceBatteryModule()
+            );
+            IParentModule settingsParent = new SimpleParentModule(
+                    StringResource.fromString("Settings"),
+                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp));
+            homeScreenModule.addSubmodules(obdParent, otherParent, settingsParent);
+            putRecursively(homeScreenModule);
+            return homeScreenModule;
+        }
     };
-
-    private ModuleSupplier() {
-        put(homeScreenModule);
-        List<IModule> modules = new ArrayList<>();
-        AbstractParentModule submenuModule;
-        modules.add(new DeviceBatteryModule(homeScreenModule));
-        modules.add(new GpsSpeedModule(homeScreenModule));
-        modules.add(new TestSimpleModule(
-                homeScreenModule,
-                StringResource.fromString("Settings"),
-                IconResource.fromResourceId(R.drawable.ic_settings_black_24dp)));
-        modules.add(submenuModule = new SimpleParentModule(
-                homeScreenModule,
-                StringResource.fromString("OBD"),
-                IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp)));
-        modules.add(new TestSimpleModule(
-                homeScreenModule,
-                StringResource.fromString("Voice input"),
-                IconResource.fromResourceId(R.drawable.ic_mic_black_24dp)));
-        modules.add(new GoogleMapsModule(
-                homeScreenModule));
-        modules.add(new TestSimpleModule(
-                homeScreenModule,
-                StringResource.fromString("SMS"),
-                IconResource.fromResourceId(R.drawable.ic_chat_black_24dp)));
-        modules.add(new TestSimpleModule(
-                homeScreenModule,
-                StringResource.fromString("Email"),
-                IconResource.fromResourceId(R.drawable.ic_email_black_24dp)));
+    private static final ModuleSupplier personalInstance = new ModuleSupplier() {
+        @Override
+        protected IParentModule createHomeScreenModule(IModuleContext moduleContext) {
+            IParentModule homeScreenModule = homeScreenModule();
+            List<IModule> modules = new ArrayList<>();
+            AbstractParentModule submenuModule;
+            modules.add(new DeviceBatteryModule());
+            modules.add(new GpsSpeedModule());
+            modules.add(new TestSimpleModule(
+                    StringResource.fromString("Settings"),
+                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp)));
+            modules.add(submenuModule = new SimpleParentModule(
+                    StringResource.fromString("OBD"),
+                    IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp)));
+            modules.add(new TestSimpleModule(
+                    StringResource.fromString("Voice input"),
+                    IconResource.fromResourceId(R.drawable.ic_mic_black_24dp)));
+            modules.add(new GoogleMapsModule());
+            modules.add(new TestSimpleModule(
+                    StringResource.fromString("SMS"),
+                    IconResource.fromResourceId(R.drawable.ic_chat_black_24dp)));
+            modules.add(new TestSimpleModule(
+                    StringResource.fromString("Email"),
+                    IconResource.fromResourceId(R.drawable.ic_email_black_24dp)));
 //        String gm = "Google maps";
 //        StringBuilder sb = new StringBuilder();
 //        for (int i = 0; i < 10; i++) {
@@ -75,32 +90,41 @@ public class ModuleSupplier {
 //                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp),
 //                    null, null));
 //        }
-        List<IModule> carModules = new ArrayList<>();
-        TestDisplayModule testDisplayModule;
-        carModules.add(testDisplayModule = new TestDisplayModule(
-                submenuModule,
-                StringResource.fromString("Speed"),
-                IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp),
-                StringResource.fromString("kmph")
-        ));
-        submenuModule.addSubmodules(testDisplayModule);
-        carModules.add(testDisplayModule = new TestDisplayModule(
-                submenuModule,
-                StringResource.fromString("Click counter"),
-                IconResource.fromResourceId(R.drawable.ic_settings_black_24dp),
-                StringResource.fromString("clicks")
-        ));
-        submenuModule.addSubmodules(new ClockModule());
-        testDisplayModule.updateValue(Integer.toString(999));
-        submenuModule.addSubmodules(testDisplayModule);
-        put(submenuModule.getSubmodules());
-        homeScreenModule.addSubmodules(modules);
-        put(modules);
+            List<IModule> carModules = new ArrayList<>();
+            TestDisplayModule testDisplayModule;
+            carModules.add(testDisplayModule = new TestDisplayModule(
+                    StringResource.fromString("Speed"),
+                    IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp),
+                    StringResource.fromString("kmph")
+            ));
+            submenuModule.addSubmodules(testDisplayModule);
+            carModules.add(testDisplayModule = new TestDisplayModule(
+                    StringResource.fromString("Click counter"),
+                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp),
+                    StringResource.fromString("clicks")
+            ));
+            submenuModule.addSubmodules(new ClockModule());
+            testDisplayModule.updateValue(Integer.toString(999));
+            submenuModule.addSubmodules(testDisplayModule);
+            homeScreenModule.addSubmodules(modules);
+            putRecursively(homeScreenModule);
+            return homeScreenModule;
+        }
+    };
 
+
+    private static final Map<ModuleId, IModule> map = new HashMap<>();
+    private IParentModule homeScreenModule;
+
+    protected ModuleSupplier() {
     }
 
-    public static ModuleSupplier getInstance() {
-        return instance;
+    public static ModuleSupplier getPersonalInstance() {
+        return personalInstance;
+    }
+
+    public static ModuleSupplier getBaseInstance() {
+        return baseInstance;
     }
 
     public IModule findModule(IModuleContext moduleContext, ModuleId id) {
@@ -128,6 +152,29 @@ public class ModuleSupplier {
     }
 
     public IParentModule getHomeScreenModule(IModuleContext moduleContext) {
+        if (homeScreenModule == null) {
+            homeScreenModule = createHomeScreenModule(moduleContext);
+        }
         return (IParentModule) homeScreenModule.setModuleContext(moduleContext);
     }
+
+    protected void putRecursively(IParentModule parentModule) {
+        put(parentModule);
+        for (IModule m : parentModule.getSubmodules()) {
+            if (m instanceof IParentModule) {
+                putRecursively((IParentModule) m);
+            } else {
+                put(m);
+            }
+        }
+    }
+
+    protected IParentModule homeScreenModule() {
+        return new SimpleParentModule(
+                StringResource.fromResourceId(R.string.module_home_title),
+                IconResource.fromResourceId(R.drawable.ic_home_black_24dp)
+        );
+    }
+
+    protected abstract IParentModule createHomeScreenModule(IModuleContext moduleContext);
 }

@@ -20,4 +20,13 @@
     <dimen name="card_size_half_negative">-125dp</dimen>
     <dimen name="card_submenu_margin_inner">12.5dp</dimen>
     <dimen name="card_submenu_margin_outer">25dp</dimen>
+    <dimen name="applist_left_icon_padding_horizontal">16dp</dimen>
+    <dimen name="applist_left_icon_padding_vertical">8dp</dimen>
+    <dimen name="applist_right_icon_padding_horizontal">16dp</dimen>
+    <dimen name="applist_left_icon_size">40dp</dimen>
+    <dimen name="applist_item_height">56dp</dimen>
+    <dimen name="applist_padding_vertical">8dp</dimen>
+    <dimen name="applist_text_padding_left">72dp</dimen>
+    <dimen name="applist_text_padding_top">20dp</dimen>
+    <dimen name="applist_text_padding_bottom">24dp</dimen>
 </resources>

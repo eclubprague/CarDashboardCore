@@ -6,7 +6,6 @@ import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalMediumUpdateEvent;
 import com.eclubprague.cardashboard.core.modules.base.AbstractTimedUpdateDisplayModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
-import com.eclubprague.cardashboard.core.modules.base.IParentModule;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
@@ -27,13 +26,13 @@ public class ClockModule extends AbstractTimedUpdateDisplayModule<GlobalMediumUp
         init();
     }
 
-    public ClockModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent) {
-        super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
+    public ClockModule(@NonNull IModuleContext moduleContext) {
+        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
         init();
     }
 
-    public ClockModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
+    public ClockModule(@NonNull IModuleContext moduleContext, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
+        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
         init();
     }
 

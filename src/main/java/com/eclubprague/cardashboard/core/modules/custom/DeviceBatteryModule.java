@@ -9,12 +9,9 @@ import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalSlowUpdateEvent;
 import com.eclubprague.cardashboard.core.modules.base.AbstractTimedUpdateDisplayModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
-import com.eclubprague.cardashboard.core.modules.base.IParentModule;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
-
-import java.util.Random;
 
 /**
  * Created by Michael on 12.08.2015.
@@ -32,18 +29,13 @@ public class DeviceBatteryModule extends AbstractTimedUpdateDisplayModule<Global
         init();
     }
 
-    public DeviceBatteryModule(@NonNull IParentModule parent) {
-        super(parent, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
+    public DeviceBatteryModule(@NonNull IModuleContext moduleContext) {
+        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
         init();
     }
 
-    public DeviceBatteryModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent) {
-        super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
-        init();
-    }
-
-    public DeviceBatteryModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
+    public DeviceBatteryModule(@NonNull IModuleContext moduleContext, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
+        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
         init();
     }
 
@@ -72,8 +64,8 @@ public class DeviceBatteryModule extends AbstractTimedUpdateDisplayModule<Global
         int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
         int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
         int batteryPct = (int) (100 * level / (float) scale);
-        Random r = new Random();
-        batteryPct = r.nextInt(101);
+//        Random r = new Random();
+//        batteryPct = r.nextInt(101);
         updateValue(Integer.toString(batteryPct));
         if (isCharging) {
             if (batteryPct < 20) {

@@ -23,19 +23,14 @@ public abstract class AbstractTimedUpdateDisplayModule<T extends Event> extends 
         init();
     }
 
-    public AbstractTimedUpdateDisplayModule(@NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull StringResource unitResource) {
-        super(parent, titleResource, iconResource, unitResource);
-        init();
-    }
-
-    public AbstractTimedUpdateDisplayModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull StringResource unitResource) {
-        super(moduleContext, parent, titleResource, iconResource, unitResource);
+    public AbstractTimedUpdateDisplayModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull StringResource unitResource) {
+        super(moduleContext, titleResource, iconResource, unitResource);
         moduleContext.addListener(this);
         init();
     }
 
-    public AbstractTimedUpdateDisplayModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, @NonNull StringResource unitResource) {
-        super(moduleContext, parent, titleResource, iconResource, bgColorResource, fgColorResource, unitResource);
+    public AbstractTimedUpdateDisplayModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, @NonNull StringResource unitResource) {
+        super(moduleContext, titleResource, iconResource, bgColorResource, fgColorResource, unitResource);
         moduleContext.addListener(this);
         init();
     }
@@ -43,7 +38,6 @@ public abstract class AbstractTimedUpdateDisplayModule<T extends Event> extends 
     private void init() {
         clazz = ((Class) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
 //        Log.d(getClass().getSimpleName(), "found class: " + clazz.getSimpleName());
-        FastEventBus.getInstance().register(this, clazz);
     }
 
     @Override

@@ -17,22 +17,21 @@ import com.eclubprague.cardashboard.core.views.ModuleViewFactory;
 /**
  * Created by Michael on 20. 7. 2015.
  * <p/>
- * Module leading back to parent.
+ * Module leading back to topModule.
  */
 public class BackModule extends AbstractSimpleModule {
     private static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.appmenu_module_up_title);
     private static final IconResource ICON_RESOURCE = IconResource.fromResourceId(R.drawable.ic_reply_black_24dp);
+    private final IParentModule topModule;
 
-    public BackModule() {
-        super(TITLE_RESOURCE, ICON_RESOURCE);
+    public BackModule(IModuleContext moduleContext, IParentModule topModule) {
+        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE);
+        this.topModule = topModule;
     }
 
-    public BackModule(IModuleContext moduleContext, IParentModule parent) {
-        super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE);
-    }
-
-    public BackModule(IModuleContext moduleContext, IParentModule parent, ColorResource bgColorResource, ColorResource fgColorResource) {
-        super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource);
+    public BackModule(IModuleContext moduleContext, IParentModule topModule, ColorResource bgColorResource, ColorResource fgColorResource) {
+        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource);
+        this.topModule = topModule;
     }
 
     @Override
@@ -48,7 +47,7 @@ public class BackModule extends AbstractSimpleModule {
     @Override
     public void onClickEvent(IModuleContext context) {
 //        Log.d("BackModule", getParent().toString());
-        getModuleContext().goBackFromSubmodules(getParent().getParent());
+        getModuleContext().goBackFromSubmodules(topModule);
     }
 
     @Override

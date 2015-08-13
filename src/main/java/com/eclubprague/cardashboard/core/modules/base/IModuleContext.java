@@ -13,7 +13,7 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
 public interface IModuleContext {
     void goToSubmodules(IParentModule parentModule);
 
-    void goBackFromSubmodules(IParentModule parentModule);
+    void goBackFromSubmodules(IParentModule previousParentModule);
 
     void toggleQuickMenu(IModule module, boolean activate);
 

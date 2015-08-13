@@ -13,7 +13,6 @@ import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalMediumUpdat
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.MainThreadReceiver;
 import com.eclubprague.cardashboard.core.modules.base.AbstractDisplayModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
-import com.eclubprague.cardashboard.core.modules.base.IParentModule;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
@@ -29,18 +28,13 @@ public class GpsSpeedModule extends AbstractDisplayModule implements MainThreadR
         init();
     }
 
-    public GpsSpeedModule(@NonNull IParentModule parent) {
-        super(parent, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
+    public GpsSpeedModule(@NonNull IModuleContext moduleContext) {
+        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
         init();
     }
 
-    public GpsSpeedModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent) {
-        super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
-        init();
-    }
-
-    public GpsSpeedModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
+    public GpsSpeedModule(@NonNull IModuleContext moduleContext, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
+        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
         init();
 
     }
@@ -54,7 +48,7 @@ public class GpsSpeedModule extends AbstractDisplayModule implements MainThreadR
 
     @Override
     public void onEventMainThread(GlobalMediumUpdateEvent event) {
-        if (locationManager == null && getModuleContext() != null) {
+        if (locationManager == null && isInitialized()) {
             locationManager = (LocationManager) getModuleContext().getContext().getSystemService(Context.LOCATION_SERVICE);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         }

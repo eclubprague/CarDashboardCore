@@ -28,20 +28,14 @@ abstract public class AbstractShortcutModule extends AbstractSimpleModule {
         this.errorMessage = errorMessage;
     }
 
-    public AbstractShortcutModule(@NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull Intent intent, @NonNull StringResource errorMessage) {
-        super(parent, titleResource, iconResource);
+    public AbstractShortcutModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull Intent intent, @NonNull StringResource errorMessage) {
+        super(moduleContext, titleResource, iconResource);
         this.intent = intent;
         this.errorMessage = errorMessage;
     }
 
-    public AbstractShortcutModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull Intent intent, @NonNull StringResource errorMessage) {
-        super(moduleContext, parent, titleResource, iconResource);
-        this.intent = intent;
-        this.errorMessage = errorMessage;
-    }
-
-    public AbstractShortcutModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, @NonNull Intent intent, @NonNull StringResource errorMessage) {
-        super(moduleContext, parent, titleResource, iconResource, bgColorResource, fgColorResource);
+    public AbstractShortcutModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, @NonNull Intent intent, @NonNull StringResource errorMessage) {
+        super(moduleContext, titleResource, iconResource, bgColorResource, fgColorResource);
         this.intent = intent;
         this.errorMessage = errorMessage;
     }

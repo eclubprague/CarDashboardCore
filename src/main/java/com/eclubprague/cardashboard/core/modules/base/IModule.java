@@ -22,10 +22,6 @@ public interface IModule extends IModuleListener, IQuickMenuListener, IActivityS
 
     IModule setModuleContext(IModuleContext moduleContext);
 
-    IParentModule getParent();
-
-    IModule setParent(IParentModule parent);
-
     IconResource getIcon();
 
     IModule setIcon(IconResource iconResource);

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.eclubprague.cardashboard.core.views.ApplistItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/applist_item_height">
+
+    <ImageView
+        android:layout_width="@dimen/applist_left_icon_size"
+        android:layout_height="@dimen/applist_left_icon_size"
+        android:paddingLeft="@dimen/applist_left_icon_padding_horizontal"
+        android:paddingRight="@dimen/applist_left_icon_padding_horizontal"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/applist_item_left_icon" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/applist_text_padding_top"
+        android:paddingBottom="@dimen/applist_text_padding_bottom"
+        android:id="@+id/applist_item_text" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="@dimen/applist_right_icon_padding_horizontal"
+        android:paddingLeft="@dimen/applist_right_icon_padding_horizontal"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/applist_item_right_icon" />
+
+
+</com.eclubprague.cardashboard.core.views.ApplistItemView>
