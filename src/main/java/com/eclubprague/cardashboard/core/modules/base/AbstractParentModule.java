@@ -2,7 +2,6 @@ package com.eclubprague.cardashboard.core.modules.base;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
@@ -10,6 +9,7 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorReso
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.predefined.EmptyModule;
+import com.eclubprague.cardashboard.core.views.ModuleView;
 import com.eclubprague.cardashboard.core.views.ModuleViewFactory;
 
 import java.util.ArrayList;
@@ -85,12 +85,12 @@ abstract public class AbstractParentModule extends AbstractSimpleModule implemen
     }
 
     @Override
-    public View createNewView(Context context, ViewGroup parent) {
+    public ModuleView createNewView(Context context, ViewGroup parent) {
         return ModuleViewFactory.createPassive(context, parent, this, getModuleContext(), getIcon(), getTitle());
     }
 
     @Override
-    public ViewWithHolder createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
+    public ViewWithHolder<ModuleView> createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
         return ModuleViewFactory.createPassiveWithHolder(context, holderResourceId, holderParent, this, getModuleContext(), getIcon(), getTitle());
     }
 

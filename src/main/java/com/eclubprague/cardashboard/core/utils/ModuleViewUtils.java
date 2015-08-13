@@ -10,6 +10,8 @@ import com.eclubprague.cardashboard.core.modules.base.IModuleListener;
 import com.eclubprague.cardashboard.core.modules.base.IQuickMenuListener;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.views.ModuleActiveView;
+import com.eclubprague.cardashboard.core.views.ModuleView;
 
 /**
  * Utility class containing tools for module views
@@ -18,7 +20,7 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
  */
 public class ModuleViewUtils {
 
-    public static View preparePassive(View moduleView, IModuleListener listener, IModuleContext moduleContext, IconResource iconResource, StringResource titleResource) {
+    public static ModuleView preparePassive(ModuleView moduleView, IModuleListener listener, IModuleContext moduleContext, IconResource iconResource, StringResource titleResource) {
         TextView titleView = (TextView) moduleView.findViewById(R.id.module_title);
         titleResource.setInView(titleView);
         ImageView iconView = (ImageView) moduleView.findViewById(R.id.module_icon);
@@ -26,17 +28,17 @@ public class ModuleViewUtils {
         return setModuleListeners(moduleView, listener, moduleContext);
     }
 
-    public static View prepareActive(View moduleView, IModuleListener listener, IModuleContext moduleContext, IconResource iconResource, StringResource titleResource, StringResource unitResource) {
+    public static ModuleActiveView prepareActive(ModuleActiveView moduleView, IModuleListener listener, IModuleContext moduleContext, IconResource iconResource, StringResource titleResource, StringResource unitResource) {
         TextView titleView = (TextView) moduleView.findViewById(R.id.module_title);
         titleResource.setInView(titleView);
         ImageView iconView = (ImageView) moduleView.findViewById(R.id.module_icon);
         iconResource.setInView(iconView);
         TextView unitView = (TextView) moduleView.findViewById(R.id.module_unit);
         unitResource.setInView(unitView);
-        return setModuleListeners(moduleView, listener, moduleContext);
+        return (ModuleActiveView) setModuleListeners(moduleView, listener, moduleContext);
     }
 
-    private static View setModuleListeners(View moduleView, final IModuleListener listener, final IModuleContext moduleContext) {
+    private static ModuleView setModuleListeners(ModuleView moduleView, final IModuleListener listener, final IModuleContext moduleContext) {
         final ClickHolder clickHolder = new ClickHolder();
         moduleView.setOnClickListener(new View.OnClickListener() {
             @Override

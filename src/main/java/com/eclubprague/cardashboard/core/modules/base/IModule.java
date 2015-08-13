@@ -9,6 +9,7 @@ import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.views.ModuleView;
 
 /**
  * Created by Michael on 9. 7. 2015.
@@ -43,11 +44,11 @@ public interface IModule extends IModuleListener, IQuickMenuListener, IActivityS
 
     ModuleId getId();
 
-    View createView(Context context, ViewGroup parent);
+    ModuleView createView(Context context, ViewGroup parent);
 
-    View getView();
+    ModuleView getView();
 
-    ViewWithHolder createViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent);
+    ViewWithHolder<ModuleView> createViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent);
 
     View createQuickMenuView(Context context, ViewGroup parent);
 
