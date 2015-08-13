@@ -88,7 +88,7 @@ public class ModuleListAdapter extends BaseExpandableListAdapter {
         ApplistItemView applistItemView = (ApplistItemView) convertView;
         IModule module = (IModule) getChild(groupPosition, childPosition);
         applistItemView.setText(module.getTitle());
-        applistItemView.setLeftIcon(module.getIcon());
+//        applistItemView.setLeftIcon(module.getIcon());
         return convertView;
     }
 

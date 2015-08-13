@@ -34,7 +34,21 @@ public class ModuleListDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View listView = inflater.inflate(R.layout.fragment_application_list, container, false);
         ExpandableListView list = (ExpandableListView) listView.findViewById(R.id.applist_list_view);
+//        list.setGroupIndicator(null);
         list.setAdapter(new ModuleListAdapter(moduleContext));
+
+        int width = getResources().getDisplayMetrics().widthPixels;
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            list.setIndicatorBounds(width - getPixelValue(40), width - getPixelValue(10));
+        } else {
+            list.setIndicatorBoundsRelative(width - getPixelValue(40), width - getPixelValue(10));
+        }
+
         return listView;
+    }
+
+    public int getPixelValue(int dp) {
+        final float scale = moduleContext.getContext().getResources().getDisplayMetrics().density;
+        return (int) (dp * scale + 0.5f);
     }
 }

@@ -23,7 +23,7 @@
     <dimen name="applist_left_icon_padding_horizontal">16dp</dimen>
     <dimen name="applist_left_icon_padding_vertical">8dp</dimen>
     <dimen name="applist_right_icon_padding_horizontal">16dp</dimen>
-    <dimen name="applist_left_icon_size">40dp</dimen>
+    <dimen name="applist_left_icon_size">72dp</dimen>
     <dimen name="applist_item_height">56dp</dimen>
     <dimen name="applist_padding_vertical">8dp</dimen>
     <dimen name="applist_text_padding_left">72dp</dimen>
