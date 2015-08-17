@@ -8,11 +8,11 @@ import android.view.ViewGroup;
  * <p/>
  * Messenger for view and its holder.
  */
-public class ViewWithHolder {
-    public final View view;
+public class ViewWithHolder<T extends View> {
+    public final T view;
     public final ViewGroup holder;
 
-    public ViewWithHolder(View view, ViewGroup holder) {
+    public ViewWithHolder(T view, ViewGroup holder) {
         this.view = view;
         this.holder = holder;
     }

@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.modules.base.AbstractShortcutModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
-import com.eclubprague.cardashboard.core.modules.base.IParentModule;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
@@ -30,15 +29,11 @@ public class GoogleMapsModule extends AbstractShortcutModule {
         super(TITLE_RESOURCE, ICON_RESOURCE, INTENT, ERROR_MESSAGE);
     }
 
-    public GoogleMapsModule(@NonNull IParentModule parent) {
-        super(parent, TITLE_RESOURCE, ICON_RESOURCE, INTENT, ERROR_MESSAGE);
+    public GoogleMapsModule(@NonNull IModuleContext moduleContext) {
+        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE, INTENT, ERROR_MESSAGE);
     }
 
-    public GoogleMapsModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent) {
-        super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, INTENT, ERROR_MESSAGE);
-    }
-
-    public GoogleMapsModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, INTENT, ERROR_MESSAGE);
+    public GoogleMapsModule(@NonNull IModuleContext moduleContext, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
+        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, INTENT, ERROR_MESSAGE);
     }
 }

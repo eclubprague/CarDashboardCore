@@ -10,6 +10,7 @@ import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.views.ModuleView;
 import com.eclubprague.cardashboard.core.views.ModuleViewFactory;
 
 /**
@@ -20,13 +21,12 @@ import com.eclubprague.cardashboard.core.views.ModuleViewFactory;
 abstract public class AbstractSimpleModule implements IModule {
     private final ModuleId id;
     private IModuleContext moduleContext;
-    private IParentModule parent;
     private StringResource titleResource;
     private IconResource iconResource;
     private ColorResource bgColorResource;
     private ColorResource fgColorResource;
     private boolean quickMenuActive = false;
-    private View view;
+    private ModuleView view;
     private ViewGroup holderView;
     private static final String TAG = AbstractSimpleModule.class.getSimpleName();
 
@@ -36,27 +36,16 @@ abstract public class AbstractSimpleModule implements IModule {
         this.iconResource = iconResource;
     }
 
-    public AbstractSimpleModule(@NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
+    public AbstractSimpleModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
         this.id = ModuleId.createNew();
-        this.parent = parent;
+        this.moduleContext = moduleContext;
         this.titleResource = titleResource;
         this.iconResource = iconResource;
     }
 
-    public AbstractSimpleModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
+    public AbstractSimpleModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
         this.id = ModuleId.createNew();
         this.moduleContext = moduleContext;
-        this.moduleContext.addListener(this);
-        this.parent = parent;
-        this.titleResource = titleResource;
-        this.iconResource = iconResource;
-    }
-
-    public AbstractSimpleModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        this.id = ModuleId.createNew();
-        this.moduleContext = moduleContext;
-        this.moduleContext.addListener(this);
-        this.parent = parent;
         this.titleResource = titleResource;
         this.iconResource = iconResource;
         this.bgColorResource = bgColorResource;
@@ -96,35 +85,26 @@ abstract public class AbstractSimpleModule implements IModule {
     }
 
     @Override
-    public IParentModule getParent() {
-        if (parent == null) {
-            throw new IllegalStateException("Parent is null. Please, use setParent method to set IParentModule first.");
-        }
-        return parent;
-    }
-
-    @Override
     public IModule setModuleContext(@NonNull IModuleContext moduleContext) {
         this.moduleContext = moduleContext;
-        this.moduleContext.addListener(this);
-        return this;
-    }
-
-    @Override
-    public IModule setParent(@NonNull IParentModule parent) {
-        this.parent = parent;
         return this;
     }
 
     @Override
     public IModule setTitle(@NonNull StringResource titleResource) {
         this.titleResource = titleResource;
+        if (view != null) {
+            view.setTitle(titleResource);
+        }
         return this;
     }
 
     @Override
     public IModule setIcon(@NonNull IconResource iconResource) {
         this.iconResource = iconResource;
+        if (view != null) {
+            view.setIcon(iconResource);
+        }
         return this;
     }
 
@@ -146,14 +126,14 @@ abstract public class AbstractSimpleModule implements IModule {
     }
 
     @Override
-    public View createView(final Context context, ViewGroup parent) {
+    public ModuleView createView(final Context context, ViewGroup parent) {
         view = createNewView(context, parent);
         return view;
     }
 
     @Override
-    public ViewWithHolder createViewWithHolder(final Context context, int holderResourceId, ViewGroup holderParent) {
-        ViewWithHolder viewWithHolder = createNewViewWithHolder(context, holderResourceId, holderParent);
+    public ViewWithHolder<ModuleView> createViewWithHolder(final Context context, int holderResourceId, ViewGroup holderParent) {
+        ViewWithHolder<ModuleView> viewWithHolder = createNewViewWithHolder(context, holderResourceId, holderParent);
         view = viewWithHolder.view;
         holderView = viewWithHolder.holder;
         return viewWithHolder;
@@ -178,12 +158,15 @@ abstract public class AbstractSimpleModule implements IModule {
         return moduleContext;
     }
 
-    abstract protected View createNewView(Context context, ViewGroup parent);
+    abstract protected ModuleView createNewView(Context context, ViewGroup parent);
 
-    abstract protected ViewWithHolder createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent);
+    abstract protected ViewWithHolder<ModuleView> createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent);
 
     @Override
-    public View getView() {
+    public ModuleView getView() {
+        if (view == null) {
+            throw new IllegalStateException("ModuleView is null. Please, use createNewView or createNewViewWithHolder method to set ModuleView first.");
+        }
         return view;
     }
 
@@ -249,7 +232,6 @@ abstract public class AbstractSimpleModule implements IModule {
         return "AbstractSimpleModule{" +
                 "id=" + id +
                 ", moduleContext=" + moduleContext +
-                ", parent=" + parent +
                 ", titleResource=" + titleResource.getString(getModuleContext().getContext()) +
                 ", iconResource=" + iconResource +
                 ", bgColorResource=" + bgColorResource +
@@ -294,6 +276,6 @@ abstract public class AbstractSimpleModule implements IModule {
     }
 
     public boolean isInitialized() {
-        return moduleContext != null && parent != null;
+        return moduleContext != null;
     }
 }

@@ -2,7 +2,6 @@ package com.eclubprague.cardashboard.core.modules.predefined;
 
 import com.eclubprague.cardashboard.core.modules.base.AbstractParentModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
-import com.eclubprague.cardashboard.core.modules.base.IParentModule;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
@@ -18,11 +17,7 @@ public class SimpleParentModule extends AbstractParentModule {
         super(titleResource, iconResource);
     }
 
-    public SimpleParentModule(IParentModule parent, StringResource titleResource, IconResource iconResource) {
-        super(parent, titleResource, iconResource);
-    }
-
-    public SimpleParentModule(IModuleContext moduleContext, IParentModule parent, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource) {
-        super(moduleContext, parent, titleResource, iconResource, bgColorResource, fgColorResource);
+    public SimpleParentModule(IModuleContext moduleContext, StringResource titleResource, IconResource iconResource, ColorResource bgColorResource, ColorResource fgColorResource) {
+        super(moduleContext, titleResource, iconResource, bgColorResource, fgColorResource);
     }
 }

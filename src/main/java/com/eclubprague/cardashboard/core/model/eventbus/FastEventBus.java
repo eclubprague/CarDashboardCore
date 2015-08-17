@@ -1,7 +1,5 @@
 package com.eclubprague.cardashboard.core.model.eventbus;
 
-import android.util.Log;
-
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.Event;
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.MainThreadReceiver;
 
@@ -25,19 +23,25 @@ public enum FastEventBus {
     private final Map<Class<? extends Event>, List<MainThreadReceiver>> listenersMap = new HashMap<>();
 
     public <T extends Event> void register(MainThreadReceiver<T> receiver, Class<T> eventClass) {
-        Log.d(TAG, "receiver registered: " + receiver.getClass().getSimpleName());
+//        Log.d(TAG, "receiver registered: " + receiver.getClass().getSimpleName());
         List<MainThreadReceiver> eventListeners = listenersMap.get(eventClass);
         if (eventListeners == null) {
             eventListeners = new ArrayList<>();
             listenersMap.put(eventClass, eventListeners);
         }
-        eventListeners.add(receiver);
+        if (!eventListeners.contains(receiver)) {
+            eventListeners.add(receiver);
+        }
     }
 
     public <T extends Event> void unregister(MainThreadReceiver<T> receiver, Class<T> eventClass) {
         List<MainThreadReceiver> eventListeners = listenersMap.get(eventClass);
         if (eventListeners != null) {
             eventListeners.remove(receiver);
+//            Log.d(TAG, "remaining listeners:");
+//            for(MainThreadReceiver<T> r : eventListeners){
+//                Log.d(TAG, r.getClass().getSimpleName());
+//            }
         }
     }
 

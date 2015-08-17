@@ -3,12 +3,9 @@ package com.eclubprague.cardashboard.core.modules.custom;
 import android.support.annotation.NonNull;
 
 import com.eclubprague.cardashboard.core.R;
-import com.eclubprague.cardashboard.core.model.eventbus.FastEventBus;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalMediumUpdateEvent;
-import com.eclubprague.cardashboard.core.model.eventbus.interfaces.MainThreadReceiver;
-import com.eclubprague.cardashboard.core.modules.base.AbstractDisplayModule;
+import com.eclubprague.cardashboard.core.modules.base.AbstractTimedUpdateDisplayModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
-import com.eclubprague.cardashboard.core.modules.base.IParentModule;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
@@ -18,7 +15,7 @@ import java.util.Calendar;
 /**
  * Created by Michael on 11. 8. 2015.
  */
-public class ClockModule extends AbstractDisplayModule implements MainThreadReceiver<GlobalMediumUpdateEvent> {
+public class ClockModule extends AbstractTimedUpdateDisplayModule<GlobalMediumUpdateEvent> {
 
     private static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.module_others_clock_title);
     private static final IconResource ICON_RESOURCE = IconResource.fromResourceId(R.drawable.ic_clock_black_24dp);
@@ -29,18 +26,17 @@ public class ClockModule extends AbstractDisplayModule implements MainThreadRece
         init();
     }
 
-    public ClockModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent) {
-        super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
+    public ClockModule(@NonNull IModuleContext moduleContext) {
+        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
         init();
     }
 
-    public ClockModule(@NonNull IModuleContext moduleContext, @NonNull IParentModule parent, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(moduleContext, parent, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
+    public ClockModule(@NonNull IModuleContext moduleContext, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
+        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
         init();
     }
 
     private void init() {
-        FastEventBus.getInstance().register(this, GlobalMediumUpdateEvent.class);
         updateTime();
     }
 
