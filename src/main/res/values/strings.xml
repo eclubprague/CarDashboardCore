@@ -2,7 +2,7 @@
     <string name="app_name">CarDashboardCore</string>
     <string name="appmenu_module_up_title">Back</string>
     <string name="appmenu_module_add_title">Add</string>
-    <string name="module_home_title">Homescreen</string>
+    <string name="module_home_title">Car Dashboard</string>
     <string name="module_maps_title">Google Maps</string>
     <string name="module_maps_error">Google Maps required to run selected module. Please, install Google Maps first.</string>
     <string name="module_others_clock_title">Clock</string>
