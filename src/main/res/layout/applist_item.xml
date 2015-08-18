@@ -2,7 +2,8 @@
 <com.eclubprague.cardashboard.core.views.ApplistItemView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/applist_item_height">
+    android:layout_height="@dimen/applist_item_height"
+    android:background="?android:attr/selectableItemBackground">
 
     <ImageView
         android:layout_width="@dimen/applist_left_icon_size"
@@ -26,7 +27,7 @@
         android:text="testovaci text"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/applist_item_left_icon"
-        android:layout_toStartOf="@+id/applist_item_right_icon" />
+        android:layout_toStartOf="@+id/applist_item_checkbox" />
 
     <CheckBox
         android:layout_width="@dimen/applist_item_height"
@@ -34,7 +35,7 @@
         android:paddingRight="@dimen/applist_right_icon_padding_horizontal"
         android:paddingLeft="@dimen/applist_right_icon_padding_horizontal"
         android:layout_gravity="center_vertical"
-        android:id="@+id/applist_item_right_icon"
+        android:id="@+id/applist_item_checkbox"
         android:layout_alignTop="@+id/applist_item_text"
         android:layout_alignBottom="@+id/applist_item_text"
         android:layout_alignParentEnd="true"

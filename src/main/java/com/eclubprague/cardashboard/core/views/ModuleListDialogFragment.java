@@ -26,10 +26,23 @@ public class ModuleListDialogFragment extends DialogFragment {
 
     private IModuleContext moduleContext;
     private final List<IModule> insertModules = new ArrayList<>();
+    private boolean multiInsert = false;
+    private OnMultiAddModuleListener onMultiAddModuleListener = null;
+    private OnAddModuleListener onAddModuleListener = null;
 
-    public static ModuleListDialogFragment newInstance(IModuleContext moduleContext) {
+    public static ModuleListDialogFragment newInstance(IModuleContext moduleContext, OnMultiAddModuleListener onMultiAddModuleListener) {
         ModuleListDialogFragment f = new ModuleListDialogFragment();
         f.setModuleContext(moduleContext);
+        f.multiInsert = true;
+        f.onMultiAddModuleListener = onMultiAddModuleListener;
+        return f;
+    }
+
+    public static ModuleListDialogFragment newInstance(IModuleContext moduleContext, OnAddModuleListener onAddModuleListener) {
+        ModuleListDialogFragment f = new ModuleListDialogFragment();
+        f.setModuleContext(moduleContext);
+        f.multiInsert = false;
+        f.onAddModuleListener = onAddModuleListener;
         return f;
     }
 
@@ -43,18 +56,30 @@ public class ModuleListDialogFragment extends DialogFragment {
         final View listView = inflater.inflate(R.layout.fragment_application_list, container, false);
         final ExpandableListView list = (ExpandableListView) listView.findViewById(R.id.applist_list_view);
         list.setGroupIndicator(null);
-        list.setAdapter(new ModuleListAdapter(moduleContext, new ModuleListAdapter.OnModuleCheckListener() {
 
-            @Override
-            public void onInsert(IModule module) {
-                insertModules.add(module);
-            }
+        ModuleListAdapter adapter;
+        if (multiInsert) {
+            adapter = new ModuleListAdapter(moduleContext, new ModuleListAdapter.OnModuleCheckListener() {
+                @Override
+                public void onInsert(IModule module) {
+                    insertModules.add(module);
+                }
 
-            @Override
-            public void onRemove(IModule module) {
-                insertModules.remove(module);
-            }
-        }));
+                @Override
+                public void onRemove(IModule module) {
+                    insertModules.remove(module);
+                }
+            });
+        } else {
+            adapter = new ModuleListAdapter(moduleContext, new ModuleListAdapter.OnModuleSelectListener() {
+
+                @Override
+                public void onSelected(IModule module) {
+                    onAddModuleListener.addModule(module);
+                }
+            });
+        }
+        list.setAdapter(adapter);
         TextView cancelView = (TextView) listView.findViewById(R.id.applist_button_cancel);
         cancelView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,12 +88,16 @@ public class ModuleListDialogFragment extends DialogFragment {
             }
         });
         TextView addView = (TextView) listView.findViewById(R.id.applist_button_add);
-        addView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        if (multiInsert) {
+            addView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onMultiAddModuleListener.addModules(insertModules);
+                }
+            });
+        } else {
+            addView.setVisibility(View.GONE);
+        }
 
 //        int width = getResources().getDisplayMetrics().widthPixels;
 //        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
@@ -118,5 +147,13 @@ public class ModuleListDialogFragment extends DialogFragment {
     public int getPixelValue(int dp) {
         final float scale = moduleContext.getContext().getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
+    }
+
+    public interface OnMultiAddModuleListener {
+        void addModules(List<IModule> modules);
+    }
+
+    public interface OnAddModuleListener {
+        void addModule(IModule module);
     }
 }

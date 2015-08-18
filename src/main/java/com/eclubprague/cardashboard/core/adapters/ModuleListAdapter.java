@@ -26,10 +26,23 @@ public class ModuleListAdapter extends BaseExpandableListAdapter {
     private final ModuleSupplier moduleSupplier;
     private final IParentModule baseModule;
     private final OnModuleCheckListener onModuleCheckListener;
+    private final OnModuleSelectListener onModuleSelectListener;
+    private final boolean multiInsert;
 
     public ModuleListAdapter(IModuleContext moduleContext, OnModuleCheckListener onModuleCheckListener) {
         this.moduleContext = moduleContext;
         this.onModuleCheckListener = onModuleCheckListener;
+        this.onModuleSelectListener = null;
+        this.multiInsert = true;
+        this.moduleSupplier = ModuleSupplier.getBaseInstance();
+        this.baseModule = this.moduleSupplier.getHomeScreenModule(moduleContext);
+    }
+
+    public ModuleListAdapter(IModuleContext moduleContext, OnModuleSelectListener onModuleSelectListener) {
+        this.moduleContext = moduleContext;
+        this.onModuleCheckListener = null;
+        this.onModuleSelectListener = onModuleSelectListener;
+        this.multiInsert = false;
         this.moduleSupplier = ModuleSupplier.getBaseInstance();
         this.baseModule = this.moduleSupplier.getHomeScreenModule(moduleContext);
     }
@@ -92,24 +105,35 @@ public class ModuleListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(moduleContext.getContext()).inflate(R.layout.applist_item, null);
         }
-        ApplistItemView applistItemView = (ApplistItemView) convertView;
+        final ApplistItemView applistItemView = (ApplistItemView) convertView;
         final IModule module = (IModule) getChild(groupPosition, childPosition);
         applistItemView.setText(module.getTitle());
         applistItemView.setLeftIcon(module.getIcon());
-        applistItemView.setOnCheckListener(new ApplistItemView.OnCheckListener() {
-            @Override
-            public void onCheck(boolean check) {
-                if (check) {
-                    onModuleCheckListener.onInsert(module);
-                } else {
-                    onModuleCheckListener.onRemove(module);
+        if (multiInsert) {
+            applistItemView.setCheckBoxVisible(true);
+            applistItemView.setOnCheckListener(new ApplistItemView.OnCheckListener() {
+                @Override
+                public void onCheck(boolean check) {
+                    if (check) {
+                        onModuleCheckListener.onInsert(module);
+                    } else {
+                        onModuleCheckListener.onRemove(module);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            applistItemView.setCheckBoxVisible(false);
+            applistItemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onModuleSelectListener.onSelected(module);
+                }
+            });
+        }
         return convertView;
     }
 
@@ -122,6 +146,10 @@ public class ModuleListAdapter extends BaseExpandableListAdapter {
         void onInsert(IModule module);
 
         void onRemove(IModule module);
+    }
+
+    public interface OnModuleSelectListener {
+        void onSelected(IModule module);
     }
 
 }
