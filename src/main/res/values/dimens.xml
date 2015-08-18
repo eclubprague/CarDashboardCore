@@ -23,10 +23,14 @@
     <dimen name="applist_left_icon_padding_horizontal">16dp</dimen>
     <dimen name="applist_left_icon_padding_vertical">8dp</dimen>
     <dimen name="applist_right_icon_padding_horizontal">16dp</dimen>
+    <dimen name="applist_right_icon_size">24dp</dimen>
     <dimen name="applist_left_icon_size">72dp</dimen>
     <dimen name="applist_item_height">56dp</dimen>
     <dimen name="applist_padding_vertical">8dp</dimen>
     <dimen name="applist_text_padding_left">72dp</dimen>
     <dimen name="applist_text_padding_top">20dp</dimen>
     <dimen name="applist_text_padding_bottom">24dp</dimen>
+    <dimen name="applist_button_height">36dp</dimen>
+    <dimen name="applist_button_margin_right">8dp</dimen>
+    <dimen name="applist_button_margin_vertical">8dp</dimen>
 </resources>

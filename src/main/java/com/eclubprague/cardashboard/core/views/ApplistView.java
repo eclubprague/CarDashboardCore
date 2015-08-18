@@ -15,7 +15,6 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
  */
 public class ApplistView extends RelativeLayout {
     private ImageView leftIconView;
-    private ImageView rightIconView;
     private TextView textView;
 
     public ApplistView(Context context) {
@@ -47,14 +46,6 @@ public class ApplistView extends RelativeLayout {
             textView = (TextView) findViewById(R.id.applist_item_text);
         }
         textResource.setInView(textView);
-        return this;
-    }
-
-    public ApplistView setRightIcon(IconResource iconResource) {
-        if (rightIconView == null) {
-            rightIconView = (ImageView) findViewById(R.id.applist_item_right_icon);
-        }
-        iconResource.setInView(rightIconView);
         return this;
     }
 }

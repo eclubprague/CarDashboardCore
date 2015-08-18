@@ -22,12 +22,13 @@
         android:paddingTop="@dimen/applist_text_padding_top"
         android:paddingBottom="@dimen/applist_text_padding_bottom"
         android:id="@+id/applist_item_text"
+        android:textSize="@dimen/text_size_display_small"
         android:text="testovaci text"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/applist_item_left_icon"
         android:layout_toStartOf="@+id/applist_item_right_icon" />
 
-    <ImageView
+    <CheckBox
         android:layout_width="@dimen/applist_item_height"
         android:layout_height="@dimen/applist_item_height"
         android:paddingRight="@dimen/applist_right_icon_padding_horizontal"

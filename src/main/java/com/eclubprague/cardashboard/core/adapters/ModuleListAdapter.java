@@ -10,6 +10,7 @@ import com.eclubprague.cardashboard.core.data.ModuleSupplier;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.IParentModule;
+import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.views.ApplistGroupView;
 import com.eclubprague.cardashboard.core.views.ApplistItemView;
 
@@ -18,12 +19,17 @@ import com.eclubprague.cardashboard.core.views.ApplistItemView;
  */
 public class ModuleListAdapter extends BaseExpandableListAdapter {
 
+    private static final IconResource ICON_EXPAND = IconResource.fromResourceId(R.drawable.ic_expand_more_black_24dp);
+    private static final IconResource ICON_COLLAPSE = IconResource.fromResourceId(R.drawable.ic_expand_less_black_24dp);
+
     private final IModuleContext moduleContext;
     private final ModuleSupplier moduleSupplier;
     private final IParentModule baseModule;
+    private final OnModuleCheckListener onModuleCheckListener;
 
-    public ModuleListAdapter(IModuleContext moduleContext) {
+    public ModuleListAdapter(IModuleContext moduleContext, OnModuleCheckListener onModuleCheckListener) {
         this.moduleContext = moduleContext;
+        this.onModuleCheckListener = onModuleCheckListener;
         this.moduleSupplier = ModuleSupplier.getBaseInstance();
         this.baseModule = this.moduleSupplier.getHomeScreenModule(moduleContext);
     }
@@ -77,6 +83,11 @@ public class ModuleListAdapter extends BaseExpandableListAdapter {
         IParentModule parentModule = (IParentModule) getGroup(groupPosition);
         applistGroupView.setText(parentModule.getTitle());
         applistGroupView.setLeftIcon(parentModule.getIcon());
+        if (isExpanded) {
+            applistGroupView.setRightIcon(ICON_EXPAND);
+        } else {
+            applistGroupView.setRightIcon(ICON_COLLAPSE);
+        }
         return convertView;
     }
 
@@ -86,9 +97,19 @@ public class ModuleListAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(moduleContext.getContext()).inflate(R.layout.applist_item, null);
         }
         ApplistItemView applistItemView = (ApplistItemView) convertView;
-        IModule module = (IModule) getChild(groupPosition, childPosition);
+        final IModule module = (IModule) getChild(groupPosition, childPosition);
         applistItemView.setText(module.getTitle());
-//        applistItemView.setLeftIcon(module.getIcon());
+        applistItemView.setLeftIcon(module.getIcon());
+        applistItemView.setOnCheckListener(new ApplistItemView.OnCheckListener() {
+            @Override
+            public void onCheck(boolean check) {
+                if (check) {
+                    onModuleCheckListener.onInsert(module);
+                } else {
+                    onModuleCheckListener.onRemove(module);
+                }
+            }
+        });
         return convertView;
     }
 
@@ -96,4 +117,11 @@ public class ModuleListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
+    public interface OnModuleCheckListener {
+        void onInsert(IModule module);
+
+        void onRemove(IModule module);
+    }
+
 }

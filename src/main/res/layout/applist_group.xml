@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.eclubprague.cardashboard.core.views.ApplistGroupView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:orientation="horizontal"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#808080"
+        android:id="@+id/applist_group_line"></LinearLayout>
 
     <ImageView
         android:layout_width="@dimen/applist_left_icon_size"
@@ -22,11 +31,24 @@
         android:paddingTop="@dimen/applist_text_padding_top"
         android:paddingBottom="@dimen/applist_text_padding_bottom"
         android:id="@+id/applist_item_text"
+        android:textSize="@dimen/text_size_display_small"
         android:text="testovaci text"
         android:layout_centerVertical="true"
+        android:layout_below="@id/applist_group_line"
         android:layout_toEndOf="@+id/applist_item_left_icon"
         android:layout_toStartOf="@+id/applist_item_right_icon" />
 
+    <ImageView
+        android:layout_width="@dimen/applist_item_height"
+        android:layout_height="@dimen/applist_item_height"
+        android:paddingRight="@dimen/applist_right_icon_padding_horizontal"
+        android:paddingLeft="@dimen/applist_right_icon_padding_horizontal"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/applist_item_right_icon"
+        android:layout_alignTop="@+id/applist_item_text"
+        android:layout_alignBottom="@+id/applist_item_text"
+        android:layout_alignParentEnd="true"
+        style="@style/card_icon" />
 
 
 </com.eclubprague.cardashboard.core.views.ApplistGroupView>

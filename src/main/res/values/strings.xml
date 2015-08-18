@@ -12,4 +12,6 @@
     <string name="module_others_battery_units">%</string>
     <string name="module_others_gpsspeed_units">m/s</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="applist_cancel">Cancel</string>
+    <string name="applist_add">Add</string>
 </resources>
