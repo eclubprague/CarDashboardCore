@@ -158,6 +158,10 @@ abstract public class ModuleSupplier {
         return (IParentModule) homeScreenModule.setModuleContext(moduleContext);
     }
 
+    public List<IModule> getAll() {
+        return new ArrayList<>(map.values());
+    }
+
     protected void putRecursively(IParentModule parentModule) {
         put(parentModule);
         for (IModule m : parentModule.getSubmodules()) {

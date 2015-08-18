@@ -25,7 +25,6 @@ abstract public class AbstractSimpleModule implements IModule {
     private IconResource iconResource;
     private ColorResource bgColorResource;
     private ColorResource fgColorResource;
-    private boolean quickMenuActive = false;
     private ModuleView view;
     private ViewGroup holderView;
     private static final String TAG = AbstractSimpleModule.class.getSimpleName();
@@ -191,40 +190,27 @@ abstract public class AbstractSimpleModule implements IModule {
     @Override
     public void onLongClickEvent(IModuleContext context) {
         context.turnQuickMenusOff();
-        quickMenuActive = true;
         context.toggleQuickMenu(this, true);
     }
 
     @Override
     public void onCancel(IModuleContext moduleContext) {
-        if (quickMenuActive) {
-            getModuleContext().onModuleEvent(this, ModuleEvent.CANCEL);
-            quickMenuActive = false;
-        }
+        getModuleContext().onModuleEvent(this, ModuleEvent.CANCEL);
     }
 
     @Override
     public void onDelete(IModuleContext moduleContext) {
-        if (quickMenuActive) {
 //            getParent().removeSubmodule(this);
-            getModuleContext().onModuleEvent(this, ModuleEvent.DELETE);
-            quickMenuActive = false;
-        }
+        getModuleContext().onModuleEvent(this, ModuleEvent.DELETE);
     }
 
     @Override
     public void onMove(IModuleContext moduleContext) {
-        if (quickMenuActive) {
-            getModuleContext().onModuleEvent(this, ModuleEvent.MOVE);
-            quickMenuActive = false;
-        }
+        getModuleContext().onModuleEvent(this, ModuleEvent.MOVE);
     }
 
     @Override
     public void onMore(IModuleContext moduleContext) {
-        if (quickMenuActive) {
-            quickMenuActive = false;
-        }
     }
 
     @Override
