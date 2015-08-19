@@ -11,6 +11,7 @@ import com.eclubprague.cardashboard.core.modules.base.models.ModuleId;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.custom.ClockModule;
+import com.eclubprague.cardashboard.core.modules.custom.CompassModule;
 import com.eclubprague.cardashboard.core.modules.custom.DeviceBatteryModule;
 import com.eclubprague.cardashboard.core.modules.custom.GoogleMapsModule;
 import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
@@ -34,7 +35,7 @@ abstract public class ModuleSupplier {
         protected IParentModule createHomeScreenModule(IModuleContext moduleContext) {
             IParentModule homeScreenModule = homeScreenModule();
             IParentModule obdParent = new SimpleParentModule(
-                    StringResource.fromString("OBD"),
+                    StringResource.fromString("OBD data"),
                     IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp));
             obdParent.addSubmodules(new TestDisplayModule(
                     StringResource.fromString("Click counter"),
@@ -51,7 +52,8 @@ abstract public class ModuleSupplier {
             IParentModule settingsParent = new SimpleParentModule(
                     StringResource.fromString("Settings"),
                     IconResource.fromResourceId(R.drawable.ic_settings_black_24dp));
-            homeScreenModule.addSubmodules(obdParent, otherParent, settingsParent);
+            IModule compass = new CompassModule();
+            homeScreenModule.addSubmodules(compass, obdParent, otherParent, settingsParent);
             putRecursively(homeScreenModule);
             return homeScreenModule;
         }
@@ -63,7 +65,7 @@ abstract public class ModuleSupplier {
             List<IModule> modules = new ArrayList<>();
             AbstractParentModule submenuModule;
             modules.add(new DeviceBatteryModule());
-            modules.add(new GpsSpeedModule());
+            modules.add(new CompassModule());
             modules.add(new TestSimpleModule(
                     StringResource.fromString("Settings"),
                     IconResource.fromResourceId(R.drawable.ic_settings_black_24dp)));
