@@ -87,17 +87,9 @@ public class CompassModule extends AbstractDisplayModule implements MainThreadRe
                 float I[] = new float[9];
 
                 if (SensorManager.getRotationMatrix(R, I, mGravity, mGeomagnetic)) {
-
-                    // orientation contains azimut, pitch and roll
                     float orientation[] = new float[3];
                     SensorManager.getOrientation(R, orientation);
-
                     azimut = orientation[0];
-
-                    Log.d("azimut", "" + azimut);
-                    Log.d("north", "" + NORTH);
-                    Log.d("tolerance", "" + TOLERANCE);
-                    Log.d("PI", "" + Math.PI);
                     if (azimut > NORTH - TOLERANCE && azimut < NORTH + TOLERANCE) {
                         dir = "N";
                     } else if (azimut > NORTH_WEST - TOLERANCE && azimut < NORTH_WEST + TOLERANCE) {
@@ -116,18 +108,14 @@ public class CompassModule extends AbstractDisplayModule implements MainThreadRe
                         dir = "NE";
                     }
                     currentValue = dir;
-
-
                 }
             }
         }
-
 
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
     };
     private String currentValue = "-";
-
 
     @Override
     public void onEventMainThread(GlobalExtraFastUpdateEvent event) {
