@@ -1,9 +1,7 @@
 package com.eclubprague.cardashboard.core.data;
 
 import com.eclubprague.cardashboard.core.R;
-import com.eclubprague.cardashboard.core.modules.TestDisplayModule;
-import com.eclubprague.cardashboard.core.modules.TestSimpleModule;
-import com.eclubprague.cardashboard.core.modules.base.AbstractParentModule;
+import com.eclubprague.cardashboard.core.data.database.ModuleDAO;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.IParentModule;
@@ -12,10 +10,10 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResou
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.custom.ClockModule;
 import com.eclubprague.cardashboard.core.modules.custom.DeviceBatteryModule;
-import com.eclubprague.cardashboard.core.modules.custom.GoogleMapsModule;
 import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
 import com.eclubprague.cardashboard.core.modules.predefined.SimpleParentModule;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,11 +34,7 @@ abstract public class ModuleSupplier {
             IParentModule obdParent = new SimpleParentModule(
                     StringResource.fromString("OBD"),
                     IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp));
-            obdParent.addSubmodules(new TestDisplayModule(
-                    StringResource.fromString("Click counter"),
-                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp),
-                    StringResource.fromString("clicks")
-            ), new GpsSpeedModule());
+            obdParent.addSubmodules(new GpsSpeedModule());
             IParentModule otherParent = new SimpleParentModule(
                     StringResource.fromString("Other"),
                     IconResource.fromResourceId(R.drawable.ic_open_with_black_24dp));
@@ -59,55 +53,92 @@ abstract public class ModuleSupplier {
     private static final ModuleSupplier personalInstance = new ModuleSupplier() {
         @Override
         protected IParentModule createHomeScreenModule(IModuleContext moduleContext) {
-            IParentModule homeScreenModule = homeScreenModule();
-            List<IModule> modules = new ArrayList<>();
-            AbstractParentModule submenuModule;
-            modules.add(new DeviceBatteryModule());
-            modules.add(new GpsSpeedModule());
-            modules.add(new TestSimpleModule(
-                    StringResource.fromString("Settings"),
-                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp)));
-            modules.add(submenuModule = new SimpleParentModule(
-                    StringResource.fromString("OBD"),
-                    IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp)));
-            modules.add(new TestSimpleModule(
-                    StringResource.fromString("Voice input"),
-                    IconResource.fromResourceId(R.drawable.ic_mic_black_24dp)));
-            modules.add(new GoogleMapsModule());
-            modules.add(new TestSimpleModule(
-                    StringResource.fromString("SMS"),
-                    IconResource.fromResourceId(R.drawable.ic_chat_black_24dp)));
-            modules.add(new TestSimpleModule(
-                    StringResource.fromString("Email"),
-                    IconResource.fromResourceId(R.drawable.ic_email_black_24dp)));
-//        String gm = "Google maps";
-//        StringBuilder sb = new StringBuilder();
-//        for (int i = 0; i < 10; i++) {
-//            sb.append(gm.charAt(i % gm.length()));
+//            IParentModule homeScreenModule = homeScreenModule();
+//            List<IModule> modules = new ArrayList<>();
+//            AbstractParentModule submenuModule;
+//            modules.add(new DeviceBatteryModule());
+//            modules.add(new GpsSpeedModule());
 //            modules.add(new TestSimpleModule(
-//                    null,
-//                    homeScreenModule, StringResource.fromString(sb.toString()),
+//                    StringResource.fromString("Settings"),
+//                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp)));
+//            modules.add(submenuModule = new SimpleParentModule(
+//                    StringResource.fromString("OBD"),
+//                    IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp)));
+//            modules.add(new TestSimpleModule(
+//                    StringResource.fromString("Voice input"),
+//                    IconResource.fromResourceId(R.drawable.ic_mic_black_24dp)));
+//            modules.add(new GoogleMapsModule());
+//            modules.add(new TestSimpleModule(
+//                    StringResource.fromString("SMS"),
+//                    IconResource.fromResourceId(R.drawable.ic_chat_black_24dp)));
+//            modules.add(new TestSimpleModule(
+//                    StringResource.fromString("Email"),
+//                    IconResource.fromResourceId(R.drawable.ic_email_black_24dp)));
+////        String gm = "Google maps";
+////        StringBuilder sb = new StringBuilder();
+////        for (int i = 0; i < 10; i++) {
+////            sb.append(gm.charAt(i % gm.length()));
+////            modules.add(new TestSimpleModule(
+////                    null,
+////                    homeScreenModule, StringResource.fromString(sb.toString()),
+////                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp),
+////                    null, null));
+////        }
+//            List<IModule> carModules = new ArrayList<>();
+//            TestDisplayModule testDisplayModule;
+//            carModules.add(testDisplayModule = new TestDisplayModule(
+//                    StringResource.fromString("Speed"),
+//                    IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp),
+//                    StringResource.fromString("kmph")
+//            ));
+//            submenuModule.addSubmodules(testDisplayModule);
+//            carModules.add(testDisplayModule = new TestDisplayModule(
+//                    StringResource.fromString("Click counter"),
 //                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp),
-//                    null, null));
-//        }
-            List<IModule> carModules = new ArrayList<>();
-            TestDisplayModule testDisplayModule;
-            carModules.add(testDisplayModule = new TestDisplayModule(
-                    StringResource.fromString("Speed"),
-                    IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp),
-                    StringResource.fromString("kmph")
-            ));
-            submenuModule.addSubmodules(testDisplayModule);
-            carModules.add(testDisplayModule = new TestDisplayModule(
-                    StringResource.fromString("Click counter"),
-                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp),
-                    StringResource.fromString("clicks")
-            ));
-            submenuModule.addSubmodules(new ClockModule());
-            testDisplayModule.updateValue(Integer.toString(999));
-            submenuModule.addSubmodules(testDisplayModule);
-            homeScreenModule.addSubmodules(modules);
+//                    StringResource.fromString("clicks")
+//            ));
+//            submenuModule.addSubmodules(new ClockModule());
+//            testDisplayModule.updateValue(Integer.toString(999));
+//            submenuModule.addSubmodules(testDisplayModule);
+//            homeScreenModule.addSubmodules(modules);
+//            putRecursively(homeScreenModule);
+
+
+            IParentModule homeScreenModule = homeScreenModule();
+            IParentModule obdParent = new SimpleParentModule(
+                    StringResource.fromString("OBD"),
+                    IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp));
+            obdParent.addSubmodules(new GpsSpeedModule());
+            IParentModule otherParent = new SimpleParentModule(
+                    StringResource.fromString("Other"),
+                    IconResource.fromResourceId(R.drawable.ic_open_with_black_24dp));
+            otherParent.addSubmodules(
+                    new ClockModule(),
+                    new DeviceBatteryModule()
+            );
+            IParentModule settingsParent = new SimpleParentModule(
+                    StringResource.fromString("Settings"),
+                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp));
+            homeScreenModule.addSubmodules(obdParent, otherParent, settingsParent);
+
+
             putRecursively(homeScreenModule);
+
+//            IParentModule homeScreenModule;
+            ModuleDAO moduleDAO = new ModuleDAO(moduleContext);
+            try {
+                String data = moduleDAO.writeParentModule(homeScreenModule);
+//                Log.d(TAG, "data length: " + data.length() );
+                homeScreenModule = moduleDAO.readParentModule(data);
+//                homeScreenModule = moduleDAO.loadParentModule();
+                moduleDAO.saveParentModule(homeScreenModule);
+            } catch (IOException e) {
+                e.printStackTrace();
+//                throw new IllegalStateException("FUCK YOU");
+            }
+            putRecursively(homeScreenModule);
+
+
             return homeScreenModule;
         }
     };

@@ -69,6 +69,12 @@ abstract public class AbstractParentModule extends AbstractSimpleModule implemen
     }
 
     @Override
+    public IParentModule removeAllSubmodules() {
+        submodules.clear();
+        return this;
+    }
+
+    @Override
     public IParentModule removeTailEmptyModules() {
         for (int i = submodules.size() - 1; i >= 0; i--) {
             if (submodules.get(i) instanceof EmptyModule) {
