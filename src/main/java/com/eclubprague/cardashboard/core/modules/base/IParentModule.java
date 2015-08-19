@@ -18,5 +18,7 @@ public interface IParentModule extends IModule {
 
     IParentModule removeSubmodule(IModule module);
 
+    IParentModule removeAllSubmodules();
+
     IParentModule removeTailEmptyModules();
 }
