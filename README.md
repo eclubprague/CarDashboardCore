@@ -2,7 +2,7 @@
 
 CarDashboard is a set of two applications - CarDashboard Phone and CarDashboard Tablet focused mainly on the experienced drivers and advanced users in automotive environment.
 
-CarDashboard offers innovative user interface with huge emphasis on lower the congnitive load of the user (at most cases the driver). Combined with the big set of additional modules it offers the unique set of tools that improves the driver's awareness of the current situation in the car and eases many kinds of repetitive tasks.
+CarDashboard offers innovative user interface with huge emphasis on lowering the congnitive load of the user (in most cases the driver). Combined with the big set of additional modules it offers the unique set of tools that improves the driver's awareness of the current situation in the car and eases many kinds of repetitive tasks.
 
 The basic features of CarDashboard are:
 - Clock
