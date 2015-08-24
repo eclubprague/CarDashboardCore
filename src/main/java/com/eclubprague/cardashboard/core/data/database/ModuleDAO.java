@@ -11,6 +11,7 @@ import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.IParentModule;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.modules.predefined.BackModule;
 import com.eclubprague.cardashboard.core.modules.predefined.EmptyModule;
 import com.eclubprague.cardashboard.core.modules.predefined.SimpleParentModule;
 
@@ -44,26 +45,34 @@ public class ModuleDAO {
 
     public static final String EXCEPTION_START = "JSON file error: ";
 
-    private final Map<Class, IModule> map = new HashMap<>();
+    private static Map<Class, IModule> map;
     private final IModuleContext moduleContext;
 
     public ModuleDAO(IModuleContext moduleContext) {
         this.moduleContext = moduleContext;
-        ModuleSupplier.getBaseInstance().getHomeScreenModule(moduleContext);
-        for (IModule module : ModuleSupplier.getBaseInstance().getAll()) {
-            put(module.getClass(), module);
-            Log.d(TAG, "inserting module into map:" + module.getClass().getName());
+        if (map == null) {
+            map = new HashMap<>();
+            ModuleSupplier.getDefaultInstance().getHomeScreenModule(moduleContext); // initializes modules
+            for (IModule module : ModuleSupplier.getDefaultInstance().getAll()) {
+                put(module.getClass(), module);
+            }
+            ModuleSupplier.getDefaultInstance().clear();
         }
     }
 
     public IParentModule loadParentModule() throws IOException {
         File file = new File(moduleContext.getContext().getFilesDir(), Constants.FILE_PERSONAL_UI);
+        if (!file.exists()) {
+            return ModuleSupplier.getBaseInstance().getHomeScreenModule(moduleContext);
+        }
+        Log.d(TAG, "Input file exists: " + file.exists());
         BufferedReader br = new BufferedReader(new FileReader(file));
         StringBuilder sb = new StringBuilder();
         String line;
         while ((line = br.readLine()) != null) {
             sb.append(line);
         }
+        Log.d(TAG, "Input file content: " + sb);
         br.close();
         return readParentModule(sb.toString());
     }
@@ -86,7 +95,7 @@ public class ModuleDAO {
     public String writeParentModule(IParentModule parentModule) throws IOException {
         try {
             JSONObject jsonObject = getParentJsonObject(moduleContext.getContext(), parentModule);
-            Log.d(TAG, jsonObject.toString(4));
+//            Log.d(TAG, jsonObject.toString(4));
             return jsonObject.toString();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -222,10 +231,14 @@ public class ModuleDAO {
     }
 
     private JSONObject getParentJsonObject(Context context, IParentModule parentModule) throws JSONException {
-        JSONObject jsonObject = fillJsonObject(context, new JSONObject(), parentModule);
+        IParentModule copyParentModyle = parentModule.copy();
+        copyParentModyle.removeTailEmptyModules();
+        JSONObject jsonObject = fillJsonObject(context, new JSONObject(), copyParentModyle);
         JSONArray jsonSubmodulesArray = new JSONArray();
-        for (IModule m : parentModule.getSubmodules()) {
-            if (m instanceof IParentModule) {
+        for (IModule m : copyParentModyle.getSubmodules()) {
+            if (m instanceof BackModule) {
+                // skip it
+            } else if (m instanceof IParentModule) {
                 jsonSubmodulesArray.put(getParentJsonObject(context, (IParentModule) m));
             } else {
                 jsonSubmodulesArray.put(fillJsonObject(context, new JSONObject(), m));
@@ -269,16 +282,28 @@ public class ModuleDAO {
 
         @Override
         protected Void doInBackground(SaveMessenger... params) {
+            Log.d(TAG, "Executing saving task");
             SaveMessenger msg = params[0];
             File file = new File(msg.context.getContext().getFilesDir(), Constants.FILE_PERSONAL_UI);
-            BufferedWriter bw = null;
+            BufferedWriter bw;
             try {
                 bw = new BufferedWriter(new FileWriter(file));
                 ModuleDAO moduleDAO = new ModuleDAO(msg.context);
-                bw.write(moduleDAO.writeParentModule(msg.parentModule));
+                String data = moduleDAO.writeParentModule(msg.parentModule);
+                Log.d(TAG, "write parent module = " + data);
+                bw.write(data);
+                bw.close();
+
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+                while ((line = br.readLine()) != null) {
+                    Log.d(TAG, "file: " + line);
+                }
+                br.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
+
             return null;
         }
 

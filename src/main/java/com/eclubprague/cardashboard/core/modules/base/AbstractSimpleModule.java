@@ -264,4 +264,12 @@ abstract public class AbstractSimpleModule implements IModule {
     public boolean isInitialized() {
         return moduleContext != null;
     }
+
+    public boolean hasForegroundColor() {
+        return fgColorResource != null;
+    }
+
+    public boolean hasBackgroundColor() {
+        return bgColorResource != null;
+    }
 }

@@ -11,6 +11,7 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
 import com.eclubprague.cardashboard.core.modules.custom.ClockModule;
 import com.eclubprague.cardashboard.core.modules.custom.CompassModule;
 import com.eclubprague.cardashboard.core.modules.custom.DeviceBatteryModule;
+import com.eclubprague.cardashboard.core.modules.custom.FolderModule;
 import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
 import com.eclubprague.cardashboard.core.modules.predefined.SimpleParentModule;
 
@@ -38,16 +39,27 @@ abstract public class ModuleSupplier {
             obdParent.addSubmodules(new GpsSpeedModule());
             IParentModule otherParent = new SimpleParentModule(
                     StringResource.fromString("Other"),
-                    IconResource.fromResourceId(R.drawable.ic_open_with_black_24dp));
+                    IconResource.fromResourceId(R.drawable.ic_apps_black_24dp));
             otherParent.addSubmodules(
+                    new FolderModule(),
                     new ClockModule(),
-                    new DeviceBatteryModule()
+                    new DeviceBatteryModule(),
+                    new CompassModule()
             );
             IParentModule settingsParent = new SimpleParentModule(
                     StringResource.fromString("Settings"),
-                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp));
-            IModule compass = new CompassModule();
-            homeScreenModule.addSubmodules(compass, obdParent, otherParent, settingsParent);
+                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp)
+            );
+            IParentModule shortcutsParent = new SimpleParentModule(
+                    StringResource.fromString("Shortcuts"),
+                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp)
+            );
+            homeScreenModule.addSubmodules(
+                    obdParent,
+                    otherParent,
+                    settingsParent,
+                    shortcutsParent
+            );
             putRecursively(homeScreenModule);
             return homeScreenModule;
         }
@@ -106,41 +118,74 @@ abstract public class ModuleSupplier {
 //            putRecursively(homeScreenModule);
 
 
+//            IParentModule homeScreenModule = homeScreenModule();
+//            IParentModule obdParent = new SimpleParentModule(
+//                    StringResource.fromString("OBD"),
+//                    IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp));
+//            obdParent.addSubmodules(new GpsSpeedModule());
+//            IParentModule otherParent = new SimpleParentModule(
+//                    StringResource.fromString("Other"),
+//                    IconResource.fromResourceId(R.drawable.ic_open_with_black_24dp));
+//            otherParent.addSubmodules(
+//                    new ClockModule(),
+//                    new DeviceBatteryModule()
+//            );
+//            IParentModule settingsParent = new SimpleParentModule(
+//                    StringResource.fromString("Settings"),
+//                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp));
+//            homeScreenModule.addSubmodules(obdParent, otherParent, settingsParent);
+//            putRecursively(homeScreenModule);
+//
+//            ModuleDAO moduleDAO = new ModuleDAO(moduleContext);
+//            try {
+//                String data = moduleDAO.writeParentModule(homeScreenModule);
+////                Log.d(TAG, "data length: " + data.length() );
+//                homeScreenModule = moduleDAO.readParentModule(data);
+//                moduleDAO.saveParentModule(homeScreenModule);
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//            putRecursively(homeScreenModule);
+
+            IParentModule homeScreenModule = null;
+            ModuleDAO moduleDAO = new ModuleDAO(moduleContext);
+            try {
+                homeScreenModule = moduleDAO.loadParentModule();
+            } catch (IOException e) {
+                // should be prompt with file error
+//                throw new RuntimeException(e);
+            }
+            if (homeScreenModule == null) {
+                homeScreenModule = ModuleSupplier.defaultInstance.getHomeScreenModule(moduleContext).copyDeep();
+            }
+            putRecursively(homeScreenModule);
+
+
+            return homeScreenModule;
+        }
+    };
+
+    private static final ModuleSupplier defaultInstance = new ModuleSupplier() {
+        @Override
+        protected IParentModule createHomeScreenModule(IModuleContext moduleContext) {
             IParentModule homeScreenModule = homeScreenModule();
             IParentModule obdParent = new SimpleParentModule(
-                    StringResource.fromString("OBD"),
+                    StringResource.fromString("OBD data"),
                     IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp));
             obdParent.addSubmodules(new GpsSpeedModule());
             IParentModule otherParent = new SimpleParentModule(
                     StringResource.fromString("Other"),
-                    IconResource.fromResourceId(R.drawable.ic_open_with_black_24dp));
+                    IconResource.fromResourceId(R.drawable.ic_apps_black_24dp));
             otherParent.addSubmodules(
                     new ClockModule(),
-                    new DeviceBatteryModule()
+                    new DeviceBatteryModule(),
+                    new CompassModule()
             );
             IParentModule settingsParent = new SimpleParentModule(
                     StringResource.fromString("Settings"),
                     IconResource.fromResourceId(R.drawable.ic_settings_black_24dp));
             homeScreenModule.addSubmodules(obdParent, otherParent, settingsParent);
-
-
             putRecursively(homeScreenModule);
-
-//            IParentModule homeScreenModule;
-            ModuleDAO moduleDAO = new ModuleDAO(moduleContext);
-            try {
-                String data = moduleDAO.writeParentModule(homeScreenModule);
-//                Log.d(TAG, "data length: " + data.length() );
-                homeScreenModule = moduleDAO.readParentModule(data);
-//                homeScreenModule = moduleDAO.loadParentModule();
-                moduleDAO.saveParentModule(homeScreenModule);
-            } catch (IOException e) {
-                e.printStackTrace();
-//                throw new IllegalStateException("FUCK YOU");
-            }
-            putRecursively(homeScreenModule);
-
-
             return homeScreenModule;
         }
     };
@@ -158,6 +203,10 @@ abstract public class ModuleSupplier {
 
     public static ModuleSupplier getBaseInstance() {
         return baseInstance;
+    }
+
+    public static ModuleSupplier getDefaultInstance() {
+        return defaultInstance;
     }
 
     public IModule findModule(IModuleContext moduleContext, ModuleId id) {
@@ -193,6 +242,15 @@ abstract public class ModuleSupplier {
 
     public List<IModule> getAll() {
         return new ArrayList<>(map.values());
+    }
+
+    public void save(IModuleContext moduleContext) throws IOException {
+        ModuleDAO moduleDAO = new ModuleDAO(moduleContext);
+        moduleDAO.saveParentModule(getHomeScreenModule(moduleContext));
+    }
+
+    public void clear() {
+        homeScreenModule = null;
     }
 
     protected void putRecursively(IParentModule parentModule) {

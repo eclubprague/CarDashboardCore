@@ -1,7 +1,8 @@
-package com.eclubprague.cardashboard.core.modules.predefined;
+package com.eclubprague.cardashboard.core.modules.custom;
 
 import android.support.annotation.NonNull;
 
+import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.modules.base.AbstractParentModule;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
@@ -11,27 +12,31 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResou
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 
 /**
- * Created by Michael on 20. 7. 2015.
- * <p/>
- * Simple implementation of submenu module.
+ * Created by Michael on 20.08.2015.
  */
-public class SimpleParentModule extends AbstractParentModule {
+public class FolderModule extends AbstractParentModule {
 
-    public SimpleParentModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
-        super(moduleContext, titleResource, iconResource);
+    private static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.module_others_folder_new);
+    private static final IconResource ICON_RESOURCE = IconResource.fromResourceId(R.drawable.ic_folder_black_24dp);
+
+
+    public FolderModule(@NonNull IModuleContext moduleContext) {
+        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE);
     }
 
-    public SimpleParentModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(moduleContext, titleResource, iconResource, bgColorResource, fgColorResource);
+    public FolderModule(@NonNull IModuleContext moduleContext, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
+        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource);
     }
 
-    public SimpleParentModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource) {
-        super(titleResource, iconResource);
+    public FolderModule() {
+        super(TITLE_RESOURCE, ICON_RESOURCE);
     }
 
     @Override
     public IParentModule copy() {
-        SimpleParentModule newParent = new SimpleParentModule(getTitle(), getIcon());
+        FolderModule newParent = new FolderModule();
+        newParent.setTitle(getTitle());
+        newParent.setIcon(getIcon());
         if (hasBackgroundColor()) {
             newParent.setBackgroundColor(getBackgroundColor());
         }
@@ -44,7 +49,9 @@ public class SimpleParentModule extends AbstractParentModule {
 
     @Override
     public IParentModule copyDeep() {
-        SimpleParentModule newParent = new SimpleParentModule(getTitle(), getIcon());
+        FolderModule newParent = new FolderModule();
+        newParent.setTitle(getTitle());
+        newParent.setIcon(getIcon());
         if (hasBackgroundColor()) {
             newParent.setBackgroundColor(getBackgroundColor());
         }

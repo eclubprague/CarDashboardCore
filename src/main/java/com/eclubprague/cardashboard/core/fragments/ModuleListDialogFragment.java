@@ -1,4 +1,4 @@
-package com.eclubprague.cardashboard.core.views;
+package com.eclubprague.cardashboard.core.fragments;
 
 import android.app.DialogFragment;
 import android.os.Bundle;
@@ -11,8 +11,10 @@ import android.widget.TextView;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.adapters.ModuleListAdapter;
+import com.eclubprague.cardashboard.core.data.ModuleSupplier;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
+import com.eclubprague.cardashboard.core.modules.custom.FolderModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +77,14 @@ public class ModuleListDialogFragment extends DialogFragment {
 
                 @Override
                 public void onSelected(IModule module) {
-                    onAddModuleListener.addModule(module);
+                    if (module instanceof FolderModule) {
+                        FolderModule folderModule = (FolderModule) module;
+                        FolderModule copyFolderModule = (FolderModule) folderModule.copy().removeAllSubmodules();
+                        ModuleSupplier.getPersonalInstance().put(copyFolderModule);
+                        onAddModuleListener.addModule(copyFolderModule);
+                    } else {
+                        onAddModuleListener.addModule(module);
+                    }
                 }
             });
         }

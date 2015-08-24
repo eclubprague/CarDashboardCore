@@ -16,4 +16,5 @@
     <string name="applist_add">Add</string>
     <string name="module_others_compass_title">Compass</string>
     <string name="module_others_compass_units" />
+    <string name="module_others_folder_new">New folder</string>
 </resources>
