@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.modules.base.AbstractParentModule;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
-import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.IParentModule;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
@@ -20,16 +19,12 @@ public class FolderModule extends AbstractParentModule {
     private static final IconResource ICON_RESOURCE = IconResource.fromResourceId(R.drawable.ic_folder_black_24dp);
 
 
-    public FolderModule(@NonNull IModuleContext moduleContext) {
-        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE);
-    }
-
-    public FolderModule(@NonNull IModuleContext moduleContext, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource);
-    }
-
     public FolderModule() {
         super(TITLE_RESOURCE, ICON_RESOURCE);
+    }
+
+    public FolderModule(@NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
+        super(TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource);
     }
 
     @Override

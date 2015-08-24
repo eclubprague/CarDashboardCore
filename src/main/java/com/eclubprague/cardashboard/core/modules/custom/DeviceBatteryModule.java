@@ -1,14 +1,15 @@
 package com.eclubprague.cardashboard.core.modules.custom;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.support.annotation.NonNull;
 
 import com.eclubprague.cardashboard.core.R;
+import com.eclubprague.cardashboard.core.application.GlobalApplication;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalSlowUpdateEvent;
 import com.eclubprague.cardashboard.core.modules.base.AbstractTimedUpdateDisplayModule;
-import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
@@ -29,13 +30,8 @@ public class DeviceBatteryModule extends AbstractTimedUpdateDisplayModule<Global
         init();
     }
 
-    public DeviceBatteryModule(@NonNull IModuleContext moduleContext) {
-        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
-        init();
-    }
-
-    public DeviceBatteryModule(@NonNull IModuleContext moduleContext, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
+    public DeviceBatteryModule(@NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
+        super(TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
         init();
     }
 
@@ -51,13 +47,14 @@ public class DeviceBatteryModule extends AbstractTimedUpdateDisplayModule<Global
 
     private void update() {
 //        Log.d(DeviceBatteryModule.class.getSimpleName(), "updating");
-        if (!isInitialized()) {
+        Context context = GlobalApplication.getInstance().getContext();
+        if (context == null) {
             updateValue("?");
             setIconIfChange(R.drawable.ic_battery_unknown_black_24dp);
             return;
         }
         IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        Intent batteryStatus = getModuleContext().getContext().registerReceiver(null, ifilter);
+        Intent batteryStatus = context.registerReceiver(null, ifilter);
         int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
         boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
                 status == BatteryManager.BATTERY_STATUS_FULL;

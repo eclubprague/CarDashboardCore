@@ -1,13 +1,16 @@
 package com.eclubprague.cardashboard.core.modules.base;
 
 import android.support.annotation.NonNull;
+import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.model.eventbus.FastEventBus;
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.Event;
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.MainThreadReceiver;
+import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.views.ModuleView;
 
 import java.lang.reflect.ParameterizedType;
 
@@ -23,15 +26,8 @@ public abstract class AbstractTimedUpdateDisplayModule<T extends Event> extends 
         init();
     }
 
-    public AbstractTimedUpdateDisplayModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull StringResource unitResource) {
-        super(moduleContext, titleResource, iconResource, unitResource);
-        moduleContext.addListener(this);
-        init();
-    }
-
-    public AbstractTimedUpdateDisplayModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, @NonNull StringResource unitResource) {
-        super(moduleContext, titleResource, iconResource, bgColorResource, fgColorResource, unitResource);
-        moduleContext.addListener(this);
+    public AbstractTimedUpdateDisplayModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, @NonNull StringResource unitResource) {
+        super(titleResource, iconResource, bgColorResource, fgColorResource, unitResource);
         init();
     }
 
@@ -41,16 +37,23 @@ public abstract class AbstractTimedUpdateDisplayModule<T extends Event> extends 
     }
 
     @Override
-    public IModule setModuleContext(@NonNull IModuleContext moduleContext) {
-        super.setModuleContext(moduleContext);
+    public ModuleView createView(IModuleContext moduleContext, ViewGroup parent) {
         moduleContext.addListener(this);
-        return this;
+        return super.createView(moduleContext, parent);
     }
 
     @Override
-    public void onDelete(IModuleContext moduleContext) {
-        moduleContext.removeListener(this);
-        super.onDelete(moduleContext);
+    public ViewWithHolder<ModuleView> createViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
+        moduleContext.addListener(this);
+        return super.createViewWithHolder(moduleContext, holderResourceId, holderParent);
+    }
+
+    @Override
+    public void onEvent(ModuleEvent event, IModuleContext moduleContext) {
+        super.onEvent(event, moduleContext);
+        if (event.equals(ModuleEvent.DELETE)) {
+            moduleContext.removeListener(this);
+        }
     }
 
     @Override

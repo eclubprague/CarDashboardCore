@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.eclubprague.cardashboard.core.views.QuickMenuView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -12,7 +12,7 @@
         android:orientation="horizontal">
 
 
-        <RelativeLayout
+        <com.eclubprague.cardashboard.core.views.QuickMenuButton
             style="@style/card_mini_style"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -21,7 +21,7 @@
             android:layout_marginRight="@dimen/card_submenu_margin_inner"
             android:layout_marginTop="@dimen/card_submenu_margin_outer"
             android:layout_weight="0.5"
-            android:id="@+id/card_submenu_cancel">
+            android:id="@+id/card_submenu_top_left">
 
             <RelativeLayout
                 style="@style/card_inner_background_ripple_style"
@@ -32,12 +32,13 @@
                     style="@style/card_icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_close_black_24dp" />
+                    android:src="@drawable/ic_close_black_24dp"
+                    android:id="@+id/card_submenu_icon_1" />
             </RelativeLayout>
 
-        </RelativeLayout>
+        </com.eclubprague.cardashboard.core.views.QuickMenuButton>
 
-        <RelativeLayout
+        <com.eclubprague.cardashboard.core.views.QuickMenuButton
             style="@style/card_mini_style"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -46,7 +47,7 @@
             android:layout_marginRight="@dimen/card_submenu_margin_outer"
             android:layout_marginTop="@dimen/card_submenu_margin_outer"
             android:layout_weight="0.5"
-            android:id="@+id/card_submenu_move">
+            android:id="@+id/card_submenu_top_right">
 
             <RelativeLayout
                 style="@style/card_inner_background_ripple_style"
@@ -57,9 +58,10 @@
                     style="@style/card_icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_open_with_black_24dp" />
+                    android:src="@drawable/ic_open_with_black_24dp"
+                    android:id="@+id/card_submenu_icon_2" />
             </RelativeLayout>
-        </RelativeLayout>
+        </com.eclubprague.cardashboard.core.views.QuickMenuButton>
     </LinearLayout>
 
 
@@ -70,7 +72,7 @@
         android:orientation="horizontal">
 
 
-        <RelativeLayout
+        <com.eclubprague.cardashboard.core.views.QuickMenuButton
             style="@style/card_mini_style"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -79,7 +81,7 @@
             android:layout_marginRight="@dimen/card_submenu_margin_inner"
             android:layout_marginTop="@dimen/card_submenu_margin_inner"
             android:layout_weight="0.5"
-            android:id="@+id/card_submenu_delete">
+            android:id="@+id/card_submenu_bottom_left">
 
             <RelativeLayout
                 style="@style/card_inner_background_ripple_style"
@@ -90,11 +92,12 @@
                     style="@style/card_icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_delete_black_24dp" />
+                    android:src="@drawable/ic_delete_black_24dp"
+                    android:id="@+id/card_submenu_icon_3" />
             </RelativeLayout>
-        </RelativeLayout>
+        </com.eclubprague.cardashboard.core.views.QuickMenuButton>
 
-        <RelativeLayout
+        <com.eclubprague.cardashboard.core.views.QuickMenuButton
             style="@style/card_mini_style"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -103,7 +106,7 @@
             android:layout_marginRight="@dimen/card_submenu_margin_outer"
             android:layout_marginTop="@dimen/card_submenu_margin_inner"
             android:layout_weight="0.5"
-            android:id="@+id/card_submenu_more">
+            android:id="@+id/card_submenu_bottom_right">
 
             <RelativeLayout
                 style="@style/card_inner_background_ripple_style"
@@ -114,8 +117,9 @@
                     style="@style/card_icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_more_horiz_black_24dp" />
+                    android:src="@drawable/ic_more_horiz_black_24dp"
+                    android:id="@+id/card_submenu_icon_4" />
             </RelativeLayout>
-        </RelativeLayout>
+        </com.eclubprague.cardashboard.core.views.QuickMenuButton>
     </LinearLayout>
-</LinearLayout>
+</com.eclubprague.cardashboard.core.views.QuickMenuView>

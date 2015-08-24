@@ -210,11 +210,11 @@ abstract public class ModuleSupplier {
     }
 
     public IModule findModule(IModuleContext moduleContext, ModuleId id) {
-        return map.get(id).setModuleContext(moduleContext);
+        return map.get(id);
     }
 
     public IParentModule findSubmenuModule(IModuleContext moduleContext, ModuleId id) {
-        return (IParentModule) map.get(id).setModuleContext(moduleContext);
+        return (IParentModule) map.get(id);
     }
 
     public void put(IModule module) {
@@ -237,7 +237,7 @@ abstract public class ModuleSupplier {
         if (homeScreenModule == null) {
             homeScreenModule = createHomeScreenModule(moduleContext);
         }
-        return (IParentModule) homeScreenModule.setModuleContext(moduleContext);
+        return (IParentModule) homeScreenModule;
     }
 
     public List<IModule> getAll() {

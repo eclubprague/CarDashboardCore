@@ -8,7 +8,6 @@ import java.util.List;
  * An interface for submenu modules (modules containing more modules).
  */
 public interface IParentModule extends IModule {
-    List<IModule> getSubmodules(IModuleContext moduleContext);
 
     List<IModule> getSubmodules();
 

@@ -21,8 +21,6 @@ public interface IModuleContext {
 
     void launchIntent(Intent intent, StringResource errorMessage);
 
-    void swapModules(IModule oldModule, IModule newModule, boolean animate);
-
     Context getContext();
 
     void addListener(IActivityStateChangeListener listener);

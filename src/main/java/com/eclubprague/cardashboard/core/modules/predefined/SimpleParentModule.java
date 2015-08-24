@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 
 import com.eclubprague.cardashboard.core.modules.base.AbstractParentModule;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
-import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.IParentModule;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
@@ -17,16 +16,12 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
  */
 public class SimpleParentModule extends AbstractParentModule {
 
-    public SimpleParentModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
-        super(moduleContext, titleResource, iconResource);
-    }
-
-    public SimpleParentModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(moduleContext, titleResource, iconResource, bgColorResource, fgColorResource);
-    }
-
     public SimpleParentModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource) {
         super(titleResource, iconResource);
+    }
+
+    public SimpleParentModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
+        super(titleResource, iconResource, bgColorResource, fgColorResource);
     }
 
     @Override

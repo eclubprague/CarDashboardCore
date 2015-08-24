@@ -1,6 +1,5 @@
 package com.eclubprague.cardashboard.core.modules.base;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
@@ -8,9 +7,9 @@ import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.utils.ModuleViewFactory;
 import com.eclubprague.cardashboard.core.views.ModuleActiveView;
 import com.eclubprague.cardashboard.core.views.ModuleView;
-import com.eclubprague.cardashboard.core.views.ModuleViewFactory;
 
 /**
  * Created by Michael on 16. 7. 2015.
@@ -30,13 +29,8 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule {
         this.unitResource = unitResource;
     }
 
-    public AbstractDisplayModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull StringResource unitResource) {
-        super(moduleContext, titleResource, iconResource);
-        this.unitResource = unitResource;
-    }
-
-    public AbstractDisplayModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, @NonNull StringResource unitResource) {
-        super(moduleContext, titleResource, iconResource, bgColorResource, fgColorResource);
+    public AbstractDisplayModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, @NonNull StringResource unitResource) {
+        super(titleResource, iconResource, bgColorResource, fgColorResource);
         this.unitResource = unitResource;
     }
 
@@ -58,15 +52,15 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule {
     }
 
     @Override
-    public ModuleView createNewView(Context context, ViewGroup parent) {
-        view = ModuleViewFactory.createActive(context, parent, this, getModuleContext(), getIcon(), getTitle(), getUnit());
+    public ModuleView createNewView(IModuleContext moduleContext, ViewGroup parent) {
+        view = ModuleViewFactory.createActive(moduleContext, parent, this, getIcon(), getTitle(), getUnit());
         updateValue(value);
         return view;
     }
 
     @Override
-    public ViewWithHolder<ModuleView> createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
-        ViewWithHolder<ModuleActiveView> viewWithHolder = ModuleViewFactory.createActiveWithHolder(context, holderResourceId, holderParent, this, getModuleContext(), getIcon(), getTitle(), getUnit());
+    public ViewWithHolder<ModuleView> createNewViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
+        ViewWithHolder<ModuleActiveView> viewWithHolder = ModuleViewFactory.createActiveWithHolder(moduleContext, holderResourceId, holderParent, this, getIcon(), getTitle(), getUnit());
         view = viewWithHolder.view;
         updateValue(value);
         return new ViewWithHolder<ModuleView>(viewWithHolder.view, viewWithHolder.holder);

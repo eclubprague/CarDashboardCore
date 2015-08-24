@@ -1,6 +1,5 @@
 package com.eclubprague.cardashboard.core.modules.base;
 
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,10 +16,6 @@ import com.eclubprague.cardashboard.core.views.ModuleView;
  * Interface for modules.
  */
 public interface IModule extends IModuleListener, IQuickMenuListener, IActivityStateChangeListener {
-
-    IModuleContext getModuleContext();
-
-    IModule setModuleContext(IModuleContext moduleContext);
 
     IconResource getIcon();
 
@@ -40,15 +35,15 @@ public interface IModule extends IModuleListener, IQuickMenuListener, IActivityS
 
     ModuleId getId();
 
-    ModuleView createView(Context context, ViewGroup parent);
+    ModuleView createView(IModuleContext moduleContext, ViewGroup parent);
 
     ModuleView getView();
 
-    ViewWithHolder<ModuleView> createViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent);
+    ViewWithHolder<ModuleView> createViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent);
 
-    View createQuickMenuView(Context context, ViewGroup parent);
+    View createQuickMenuView(IModuleContext moduleContext, ViewGroup parent);
 
-    ViewWithHolder createQuickMenuViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent);
+    ViewWithHolder createQuickMenuViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent);
 
     void setHolder(ViewGroup holder);
 

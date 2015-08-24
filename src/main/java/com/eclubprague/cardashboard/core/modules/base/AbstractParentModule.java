@@ -1,6 +1,5 @@
 package com.eclubprague.cardashboard.core.modules.base;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
@@ -9,8 +8,8 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorReso
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.predefined.EmptyModule;
+import com.eclubprague.cardashboard.core.utils.ModuleViewFactory;
 import com.eclubprague.cardashboard.core.views.ModuleView;
-import com.eclubprague.cardashboard.core.views.ModuleViewFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,12 +28,8 @@ abstract public class AbstractParentModule extends AbstractSimpleModule implemen
         super(titleResource, iconResource);
     }
 
-    public AbstractParentModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
-        super(moduleContext, titleResource, iconResource);
-    }
-
-    public AbstractParentModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(moduleContext, titleResource, iconResource, bgColorResource, fgColorResource);
+    public AbstractParentModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
+        super(titleResource, iconResource, bgColorResource, fgColorResource);
     }
 
     @Override
@@ -56,16 +51,8 @@ abstract public class AbstractParentModule extends AbstractSimpleModule implemen
     }
 
     @Override
-    public List<IModule> getSubmodules(@NonNull IModuleContext moduleContext) {
-        for (IModule m : submodules) {
-            m.setModuleContext(moduleContext);
-        }
-        return submodules;
-    }
-
-    @Override
     public List<IModule> getSubmodules() {
-        return submodules;
+        return new ArrayList<>(submodules);
     }
 
     @Override
@@ -87,20 +74,20 @@ abstract public class AbstractParentModule extends AbstractSimpleModule implemen
     }
 
     @Override
-    public ModuleView createNewView(Context context, ViewGroup parent) {
-        return ModuleViewFactory.createPassive(context, parent, this, getModuleContext(), getIcon(), getTitle());
+    public ModuleView createNewView(IModuleContext moduleContext, ViewGroup parent) {
+        return ModuleViewFactory.createPassive(moduleContext, parent, this, getIcon(), getTitle());
     }
 
     @Override
-    public ViewWithHolder<ModuleView> createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
-        return ModuleViewFactory.createPassiveWithHolder(context, holderResourceId, holderParent, this, getModuleContext(), getIcon(), getTitle());
+    public ViewWithHolder<ModuleView> createNewViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
+        return ModuleViewFactory.createPassiveWithHolder(moduleContext, holderResourceId, holderParent, this, getIcon(), getTitle());
     }
 
     @Override
     public void onClickEvent(IModuleContext moduleContext) {
         super.onClickEvent(moduleContext);
 //        Log.d("SubmenuModule", "setting modules: " + getSubmodules().size());
-        getModuleContext().goToSubmodules(this);
+        moduleContext.goToSubmodules(this);
     }
 
     @Override

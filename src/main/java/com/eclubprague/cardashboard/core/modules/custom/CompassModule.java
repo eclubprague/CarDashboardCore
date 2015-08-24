@@ -6,19 +6,16 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.eclubprague.cardashboard.core.R;
+import com.eclubprague.cardashboard.core.application.GlobalApplication;
 import com.eclubprague.cardashboard.core.model.eventbus.FastEventBus;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalExtraFastUpdateEvent;
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.MainThreadReceiver;
 import com.eclubprague.cardashboard.core.modules.base.AbstractDisplayModule;
-import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
-
-import java.util.Arrays;
 
 public class CompassModule extends AbstractDisplayModule implements MainThreadReceiver<GlobalExtraFastUpdateEvent> {
     private static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.module_others_compass_title);
@@ -40,13 +37,8 @@ public class CompassModule extends AbstractDisplayModule implements MainThreadRe
         init();
     }
 
-    public CompassModule(@NonNull IModuleContext moduleContext) {
-        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
-        init();
-    }
-
-    public CompassModule(@NonNull IModuleContext moduleContext, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
+    public CompassModule(@NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
+        super(TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
         init();
     }
 
@@ -119,8 +111,9 @@ public class CompassModule extends AbstractDisplayModule implements MainThreadRe
 
     @Override
     public void onEventMainThread(GlobalExtraFastUpdateEvent event) {
-        if (mSensorManager == null && isInitialized()) {
-            mSensorManager = (SensorManager) this.getModuleContext().getContext().getSystemService(Context.SENSOR_SERVICE);
+        Context context = GlobalApplication.getInstance().getContext();
+        if (mSensorManager == null && context != null) {
+            mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
             if (mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) != null) {
                 mSensorManager.registerListener(orientListener, mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_NORMAL);
                 mSensorManager.registerListener(orientListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);

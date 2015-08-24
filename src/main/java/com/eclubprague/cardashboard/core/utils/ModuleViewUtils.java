@@ -8,10 +8,12 @@ import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.IModuleListener;
 import com.eclubprague.cardashboard.core.modules.base.IQuickMenuListener;
+import com.eclubprague.cardashboard.core.modules.base.ModuleEvent;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.views.ModuleActiveView;
 import com.eclubprague.cardashboard.core.views.ModuleView;
+import com.eclubprague.cardashboard.core.views.QuickMenuView;
 
 /**
  * Utility class containing tools for module views
@@ -61,31 +63,24 @@ public class ModuleViewUtils {
         return moduleView;
     }
 
-    public static View prepareQuickMenu(View quickMenuView, final IQuickMenuListener listener, final IModuleContext moduleContext) {
-        quickMenuView.findViewById(R.id.card_submenu_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onCancel(moduleContext);
-            }
-        });
-        quickMenuView.findViewById(R.id.card_submenu_move).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onMove(moduleContext);
-            }
-        });
-        quickMenuView.findViewById(R.id.card_submenu_delete).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onDelete(moduleContext);
-            }
-        });
-        quickMenuView.findViewById(R.id.card_submenu_more).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onMore(moduleContext);
-            }
-        });
+    public static View prepareQuickMenu(QuickMenuView quickMenuView, final IQuickMenuListener listener, final IModuleContext moduleContext) {
+        final ModuleEvent[] moduleEvents = listener.getAvailableActions().toArray(new ModuleEvent[0]);
+        if (moduleEvents.length > 0) {
+            quickMenuView.getButtonTopLeft().setEvent(listener, moduleContext, moduleEvents[0]);
+        }
+        if (moduleEvents.length > 1) {
+            quickMenuView.getButtonTopRight().setEvent(listener, moduleContext, moduleEvents[1]);
+        }
+        if (moduleEvents.length > 2) {
+            quickMenuView.getButtonBottomLeft().setEvent(listener, moduleContext, moduleEvents[2]);
+        }
+        if (moduleEvents.length == 4) {
+            quickMenuView.getButtonBottomRight().setEvent(listener, moduleContext, moduleEvents[3]);
+        }
+        if (moduleEvents.length > 4) {
+            quickMenuView.getButtonBottomRight().setEvent(listener, moduleContext, ModuleEvent.MORE);
+        }
+
         return quickMenuView;
     }
 

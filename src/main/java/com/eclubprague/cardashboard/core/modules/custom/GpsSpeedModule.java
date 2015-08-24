@@ -8,11 +8,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.eclubprague.cardashboard.core.R;
+import com.eclubprague.cardashboard.core.application.GlobalApplication;
 import com.eclubprague.cardashboard.core.model.eventbus.FastEventBus;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalMediumUpdateEvent;
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.MainThreadReceiver;
 import com.eclubprague.cardashboard.core.modules.base.AbstractDisplayModule;
-import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
@@ -28,13 +28,8 @@ public class GpsSpeedModule extends AbstractDisplayModule implements MainThreadR
         init();
     }
 
-    public GpsSpeedModule(@NonNull IModuleContext moduleContext) {
-        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
-        init();
-    }
-
-    public GpsSpeedModule(@NonNull IModuleContext moduleContext, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(moduleContext, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
+    public GpsSpeedModule(@NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
+        super(TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
         init();
 
     }
@@ -48,8 +43,9 @@ public class GpsSpeedModule extends AbstractDisplayModule implements MainThreadR
 
     @Override
     public void onEventMainThread(GlobalMediumUpdateEvent event) {
-        if (locationManager == null && isInitialized()) {
-            locationManager = (LocationManager) getModuleContext().getContext().getSystemService(Context.LOCATION_SERVICE);
+        Context context = GlobalApplication.getInstance().getContext();
+        if (locationManager == null && context != null) {
+            locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         }
 

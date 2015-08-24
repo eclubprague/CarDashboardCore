@@ -17,4 +17,9 @@
     <string name="module_others_compass_title">Compass</string>
     <string name="module_others_compass_units" />
     <string name="module_others_folder_new">New folder</string>
+    <string name="event_move">Move</string>
+    <string name="event_delete">Delete</string>
+    <string name="event_cancel">Cancel</string>
+    <string name="event_add">Add</string>
+    <string name="event_more">More</string>
 </resources>

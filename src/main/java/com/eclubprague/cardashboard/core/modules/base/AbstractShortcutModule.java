@@ -1,6 +1,5 @@
 package com.eclubprague.cardashboard.core.modules.base;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
@@ -9,8 +8,8 @@ import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.utils.ModuleViewFactory;
 import com.eclubprague.cardashboard.core.views.ModuleView;
-import com.eclubprague.cardashboard.core.views.ModuleViewFactory;
 
 /**
  * Created by Michael on 16. 7. 2015.
@@ -28,14 +27,8 @@ abstract public class AbstractShortcutModule extends AbstractSimpleModule {
         this.errorMessage = errorMessage;
     }
 
-    public AbstractShortcutModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull Intent intent, @NonNull StringResource errorMessage) {
-        super(moduleContext, titleResource, iconResource);
-        this.intent = intent;
-        this.errorMessage = errorMessage;
-    }
-
-    public AbstractShortcutModule(@NonNull IModuleContext moduleContext, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, @NonNull Intent intent, @NonNull StringResource errorMessage) {
-        super(moduleContext, titleResource, iconResource, bgColorResource, fgColorResource);
+    public AbstractShortcutModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, @NonNull Intent intent, @NonNull StringResource errorMessage) {
+        super(titleResource, iconResource, bgColorResource, fgColorResource);
         this.intent = intent;
         this.errorMessage = errorMessage;
     }
@@ -47,13 +40,13 @@ abstract public class AbstractShortcutModule extends AbstractSimpleModule {
     }
 
     @Override
-    public ModuleView createNewView(Context context, ViewGroup parent) {
-        return ModuleViewFactory.createPassive(context, parent, this, getModuleContext(), getIcon(), getTitle());
+    public ModuleView createNewView(IModuleContext moduleContext, ViewGroup parent) {
+        return ModuleViewFactory.createPassive(moduleContext, parent, this, getIcon(), getTitle());
     }
 
     @Override
-    public ViewWithHolder<ModuleView> createNewViewWithHolder(Context context, int holderResourceId, ViewGroup holderParent) {
-        return ModuleViewFactory.createPassiveWithHolder(context, holderResourceId, holderParent, this, getModuleContext(), getIcon(), getTitle());
+    public ViewWithHolder<ModuleView> createNewViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
+        return ModuleViewFactory.createPassiveWithHolder(moduleContext, holderResourceId, holderParent, this, getIcon(), getTitle());
     }
 
     public StringResource getErrorMessage() {
