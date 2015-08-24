@@ -10,56 +10,53 @@ import com.eclubprague.cardashboard.core.R;
  * Created by Michael on 24.08.2015.
  */
 public class QuickMenuView extends LinearLayout {
-    private final QuickMenuButton BUTTON_TOP_LEFT;
-    private final QuickMenuButton BUTTON_TOP_RIGHT;
-    private final QuickMenuButton BUTTON_BOTTOM_LEFT;
-    private final QuickMenuButton BUTTON_BOTTOM_RIGHT;
+    private QuickMenuButton buttonTopLeft;
+    private QuickMenuButton buttonTopRight;
+    private QuickMenuButton buttonBottomLeft;
+    private QuickMenuButton buttonBottomRight;
 
     public QuickMenuView(Context context) {
         super(context);
-        BUTTON_TOP_LEFT = (QuickMenuButton) findViewById(R.id.card_submenu_top_left);
-        BUTTON_TOP_RIGHT = (QuickMenuButton) findViewById(R.id.card_submenu_top_right);
-        BUTTON_BOTTOM_LEFT = (QuickMenuButton) findViewById(R.id.card_submenu_bottom_left);
-        BUTTON_BOTTOM_RIGHT = (QuickMenuButton) findViewById(R.id.card_submenu_bottom_right);
     }
 
     public QuickMenuView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        BUTTON_TOP_LEFT = (QuickMenuButton) findViewById(R.id.card_submenu_top_left);
-        BUTTON_TOP_RIGHT = (QuickMenuButton) findViewById(R.id.card_submenu_top_right);
-        BUTTON_BOTTOM_LEFT = (QuickMenuButton) findViewById(R.id.card_submenu_bottom_left);
-        BUTTON_BOTTOM_RIGHT = (QuickMenuButton) findViewById(R.id.card_submenu_bottom_right);
     }
 
     public QuickMenuView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        BUTTON_TOP_LEFT = (QuickMenuButton) findViewById(R.id.card_submenu_top_left);
-        BUTTON_TOP_RIGHT = (QuickMenuButton) findViewById(R.id.card_submenu_top_right);
-        BUTTON_BOTTOM_LEFT = (QuickMenuButton) findViewById(R.id.card_submenu_bottom_left);
-        BUTTON_BOTTOM_RIGHT = (QuickMenuButton) findViewById(R.id.card_submenu_bottom_right);
     }
 
     public QuickMenuView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        BUTTON_TOP_LEFT = (QuickMenuButton) findViewById(R.id.card_submenu_top_left);
-        BUTTON_TOP_RIGHT = (QuickMenuButton) findViewById(R.id.card_submenu_top_right);
-        BUTTON_BOTTOM_LEFT = (QuickMenuButton) findViewById(R.id.card_submenu_bottom_left);
-        BUTTON_BOTTOM_RIGHT = (QuickMenuButton) findViewById(R.id.card_submenu_bottom_right);
+        buttonBottomLeft = (QuickMenuButton) findViewById(R.id.card_submenu_bottom_left);
     }
 
     public QuickMenuButton getButtonBottomLeft() {
-        return BUTTON_BOTTOM_LEFT;
+        if (buttonBottomLeft == null) {
+            buttonBottomLeft = (QuickMenuButton) findViewById(R.id.card_submenu_bottom_left);
+        }
+        return buttonBottomLeft;
     }
 
     public QuickMenuButton getButtonBottomRight() {
-        return BUTTON_BOTTOM_RIGHT;
+        if (buttonBottomRight == null) {
+            buttonBottomRight = (QuickMenuButton) findViewById(R.id.card_submenu_bottom_right);
+        }
+        return buttonBottomRight;
     }
 
     public QuickMenuButton getButtonTopLeft() {
-        return BUTTON_TOP_LEFT;
+        if (buttonTopLeft == null) {
+            buttonTopLeft = (QuickMenuButton) findViewById(R.id.card_submenu_top_left);
+        }
+        return buttonTopLeft;
     }
 
     public QuickMenuButton getButtonTopRight() {
-        return BUTTON_TOP_RIGHT;
+        if (buttonTopRight == null) {
+            buttonTopRight = (QuickMenuButton) findViewById(R.id.card_submenu_top_right);
+        }
+        return buttonTopRight;
     }
 }

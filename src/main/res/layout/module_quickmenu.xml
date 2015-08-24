@@ -32,7 +32,6 @@
                     style="@style/card_icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_close_black_24dp"
                     android:id="@+id/card_submenu_icon_1" />
             </RelativeLayout>
 
@@ -58,7 +57,6 @@
                     style="@style/card_icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_open_with_black_24dp"
                     android:id="@+id/card_submenu_icon_2" />
             </RelativeLayout>
         </com.eclubprague.cardashboard.core.views.QuickMenuButton>
@@ -92,7 +90,6 @@
                     style="@style/card_icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_delete_black_24dp"
                     android:id="@+id/card_submenu_icon_3" />
             </RelativeLayout>
         </com.eclubprague.cardashboard.core.views.QuickMenuButton>
@@ -117,7 +114,6 @@
                     style="@style/card_icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_more_horiz_black_24dp"
                     android:id="@+id/card_submenu_icon_4" />
             </RelativeLayout>
         </com.eclubprague.cardashboard.core.views.QuickMenuButton>
