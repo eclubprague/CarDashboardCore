@@ -22,4 +22,17 @@
     <string name="event_cancel">Cancel</string>
     <string name="event_add">Add</string>
     <string name="event_more">More</string>
+    <string name="preferences">Preferences</string>
+    <string name="title_pref_bluetooth">Bluetooth</string>
+    <string name="pref_bluetooth_title">Enable Bluetooth</string>
+    <string name="pref_bluetooth_summaryOn">TODO</string>
+    <string name="pref_bluetooth_summaryOff">TODO</string>
+    <string name="pref_bluetooth_list_devices_title">Bluetooth devices</string>
+    <string name="pref_bluetooth_list_devices_summary">Bluetooth devices summary</string>
+    <string name="title_pref_obd">OBD II Settings</string>
+    <string name="pref_obd_protocols_title">OBD Protocols</string>
+    <string name="pref_obd_protocols_summary">TODO</string>
+    <string name="pref_imperial_units_title">Use imperial units</string>
+    <string name="pref_imperial_units_summaryOff">off todo</string>
+    <string name="pref_imperial_units_summaryOn">on todo</string>
 </resources>
