@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.modules.base.AbstractSimpleModule;
+import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.ModuleEvent;
 import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
@@ -49,5 +50,15 @@ public class EmptyModule extends AbstractSimpleModule {
 
     @Override
     public void onLongClickEvent(IModuleContext context) {
+    }
+
+    @Override
+    public IModule onCopy(IModule newInstance) throws ReflectiveOperationException {
+        return newInstance;
+    }
+
+    @Override
+    public IModule onDeepCopy(IModule newInstance) throws ReflectiveOperationException {
+        return newInstance;
     }
 }

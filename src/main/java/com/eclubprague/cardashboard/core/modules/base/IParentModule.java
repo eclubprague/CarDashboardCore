@@ -20,8 +20,4 @@ public interface IParentModule extends IModule {
     IParentModule removeAllSubmodules();
 
     IParentModule removeTailEmptyModules();
-
-    IParentModule copy();
-
-    IParentModule copyDeep();
 }

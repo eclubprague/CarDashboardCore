@@ -11,10 +11,8 @@ import android.widget.TextView;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.adapters.ModuleListAdapter;
-import com.eclubprague.cardashboard.core.data.ModuleSupplier;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
-import com.eclubprague.cardashboard.core.modules.custom.FolderModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,14 +75,7 @@ public class ModuleListDialogFragment extends DialogFragment {
 
                 @Override
                 public void onSelected(IModule module) {
-                    if (module instanceof FolderModule) {
-                        FolderModule folderModule = (FolderModule) module;
-                        FolderModule copyFolderModule = (FolderModule) folderModule.copy().removeAllSubmodules();
-                        ModuleSupplier.getPersonalInstance().put(copyFolderModule);
-                        onAddModuleListener.addModule(copyFolderModule);
-                    } else {
-                        onAddModuleListener.addModule(module);
-                    }
+                    onAddModuleListener.addModule(module);
                 }
             });
         }

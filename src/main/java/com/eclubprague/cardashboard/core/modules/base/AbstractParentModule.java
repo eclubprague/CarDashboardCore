@@ -52,7 +52,7 @@ abstract public class AbstractParentModule extends AbstractSimpleModule implemen
 
     @Override
     public List<IModule> getSubmodules() {
-        return new ArrayList<>(submodules);
+        return submodules;
     }
 
     @Override
@@ -96,5 +96,26 @@ abstract public class AbstractParentModule extends AbstractSimpleModule implemen
                 super.toString() + ", " +
                 "submodules=" + submodules.size() +
                 '}';
+    }
+
+    @Override
+    public IModule onCopy(IModule newInstance) throws ReflectiveOperationException {
+        IParentModule newParent = (IParentModule) newInstance;
+        newParent.addSubmodules(getSubmodules());
+        return newParent;
+    }
+
+    @Override
+    public IModule onDeepCopy(IModule newInstance) throws ReflectiveOperationException {
+        IParentModule newParent = (IParentModule) newInstance;
+        for (IModule m : getSubmodules()) {
+//            if (m instanceof IParentModule) {
+//                IParentModule parentModule = (IParentModule) m;
+//                newParent.addSubmodules(parentModule.copyDeep());
+//            } else {
+            newParent.addSubmodules(m.copyDeep());
+//            }
+        }
+        return newParent;
     }
 }

@@ -10,6 +10,7 @@ import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.application.GlobalApplication;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalSlowUpdateEvent;
 import com.eclubprague.cardashboard.core.modules.base.AbstractTimedUpdateDisplayModule;
+import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
@@ -108,5 +109,19 @@ public class DeviceBatteryModule extends AbstractTimedUpdateDisplayModule<Global
             setIcon(IconResource.fromResourceId(iconResourceId));
             previousIconId = iconResourceId;
         }
+    }
+
+    @Override
+    public IModule onCopy(IModule newInstance) throws ReflectiveOperationException {
+        DeviceBatteryModule m = (DeviceBatteryModule) super.onDeepCopy(newInstance);
+        m.setIconIfChange(getIcon().getResourceId());
+        return m;
+    }
+
+    @Override
+    public IModule onDeepCopy(IModule newInstance) throws ReflectiveOperationException {
+        DeviceBatteryModule m = (DeviceBatteryModule) super.onDeepCopy(newInstance);
+        m.setIconIfChange(getIcon().getResourceId());
+        return m;
     }
 }

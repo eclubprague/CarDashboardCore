@@ -31,10 +31,18 @@ public class ModuleActiveView extends ModuleView {
     }
 
     public ModuleActiveView setValue(String value) {
+//        Log.d(getClass().getSimpleName(),"Setting value: " + value);
         if (valueView == null) {
             valueView = (TextView) findViewById(R.id.module_value);
         }
         valueView.setText(value);
         return this;
+    }
+
+    public String getValue() {
+        if (valueView == null) {
+            return "";
+        }
+        return valueView.getText().toString();
     }
 }

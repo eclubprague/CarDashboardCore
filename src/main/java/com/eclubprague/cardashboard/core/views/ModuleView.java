@@ -17,6 +17,9 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
  * Module view containing a single Module.
  */
 public class ModuleView extends RelativeLayout {
+
+    private static int ID = 0;
+    public final int thisId = ID++;
     private ImageView iconView;
     private TextView titleView;
 

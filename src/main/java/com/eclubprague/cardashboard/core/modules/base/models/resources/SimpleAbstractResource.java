@@ -2,7 +2,7 @@ package com.eclubprague.cardashboard.core.modules.base.models.resources;
 
 /**
  * Created by Michael on 9. 7. 2015.
- *
+ * <p/>
  * Simple implementation of IResource interface.
  */
 abstract public class SimpleAbstractResource implements IResource {
@@ -19,7 +19,7 @@ abstract public class SimpleAbstractResource implements IResource {
 
     @Override
     public String toString() {
-        return "SimpleAbstractResource{" +
+        return getClass().getSimpleName() + "{" +
                 "resourceId=" + resourceId +
                 '}';
     }

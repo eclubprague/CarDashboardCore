@@ -1,6 +1,7 @@
 package com.eclubprague.cardashboard.core.modules.base;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -13,8 +14,8 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
 import com.eclubprague.cardashboard.core.utils.ModuleViewFactory;
 import com.eclubprague.cardashboard.core.views.ModuleView;
 
-import java.util.EnumSet;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Michael on 9. 7. 2015.
@@ -22,7 +23,7 @@ import java.util.Set;
  * Simple implementation of IModule interface.
  */
 abstract public class AbstractSimpleModule implements IModule {
-    private final ModuleId id;
+    private final ModuleId id = ModuleId.createNew();
     private StringResource titleResource;
     private IconResource iconResource;
     private ColorResource bgColorResource;
@@ -32,13 +33,11 @@ abstract public class AbstractSimpleModule implements IModule {
     private static final String TAG = AbstractSimpleModule.class.getSimpleName();
 
     public AbstractSimpleModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource) {
-        this.id = ModuleId.createNew();
         this.titleResource = titleResource;
         this.iconResource = iconResource;
     }
 
     public AbstractSimpleModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        this.id = ModuleId.createNew();
         this.titleResource = titleResource;
         this.iconResource = iconResource;
         this.bgColorResource = bgColorResource;
@@ -115,6 +114,7 @@ abstract public class AbstractSimpleModule implements IModule {
     @Override
     public ModuleView createView(IModuleContext moduleContext, ViewGroup parent) {
         view = createNewView(moduleContext, parent);
+        Log.d(TAG, getId() + ": creating new view: " + view.thisId);
         return view;
     }
 
@@ -123,6 +123,7 @@ abstract public class AbstractSimpleModule implements IModule {
         ViewWithHolder<ModuleView> viewWithHolder = createNewViewWithHolder(moduleContext, holderResourceId, holderParent);
         view = viewWithHolder.view;
         holderView = viewWithHolder.holder;
+        Log.d(TAG, getId() + ": creating new view: " + view.thisId);
         return viewWithHolder;
     }
 
@@ -180,7 +181,7 @@ abstract public class AbstractSimpleModule implements IModule {
 
     @Override
     public String toString() {
-        return "AbstractSimpleModule{" +
+        return getClass().getSimpleName() + "{" +
                 "id=" + id +
                 ", titleResource=" + titleResource.getString(GlobalApplication.getInstance().getModuleContext().getContext()) +
                 ", iconResource=" + iconResource +
@@ -226,8 +227,8 @@ abstract public class AbstractSimpleModule implements IModule {
     }
 
     @Override
-    public Set<ModuleEvent> getAvailableActions() {
-        return EnumSet.of(ModuleEvent.CANCEL, ModuleEvent.DELETE);
+    public List<ModuleEvent> getAvailableActions() {
+        return Arrays.asList(ModuleEvent.CANCEL, ModuleEvent.DELETE);
     }
 
     public boolean hasForegroundColor() {
@@ -237,4 +238,47 @@ abstract public class AbstractSimpleModule implements IModule {
     public boolean hasBackgroundColor() {
         return bgColorResource != null;
     }
+
+    @Override
+    public final IModule copy() throws ReflectiveOperationException {
+        IModule newModule = null;
+        try {
+            newModule = getClass().newInstance();
+        } catch (IllegalAccessException | InstantiationException e) {
+            throw new ReflectiveOperationException("Unable to create instance of: " + getClass().getName(), e.getCause());
+        }
+        newModule.setTitle(getTitle());
+        newModule.setIcon(getIcon());
+        if (hasBackgroundColor()) {
+            newModule.setBackgroundColor(getBackgroundColor());
+        }
+        if (hasForegroundColor()) {
+            newModule.setForegroundColor(getForegroundColor());
+        }
+        Log.d(TAG, "Creating new copy: " + newModule.getClass().getSimpleName() + " with id = " + newModule.getId() + " and view = " + view);
+        return onCopy(newModule);
+    }
+
+    @Override
+    public final IModule copyDeep() throws ReflectiveOperationException {
+        IModule newModule = null;
+        try {
+            newModule = getClass().newInstance();
+        } catch (IllegalAccessException | InstantiationException e) {
+            throw new ReflectiveOperationException("Unable to create instance of: " + getClass().getName(), e.getCause());
+        }
+        newModule.setTitle(getTitle());
+        newModule.setIcon(getIcon());
+        if (hasBackgroundColor()) {
+            newModule.setBackgroundColor(getBackgroundColor());
+        }
+        if (hasForegroundColor()) {
+            newModule.setForegroundColor(getForegroundColor());
+        }
+        return onDeepCopy(newModule);
+    }
+
+    abstract public IModule onCopy(IModule newInstance) throws ReflectiveOperationException;
+
+    abstract public IModule onDeepCopy(IModule newInstance) throws ReflectiveOperationException;
 }

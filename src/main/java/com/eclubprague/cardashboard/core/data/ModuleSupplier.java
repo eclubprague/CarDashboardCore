@@ -14,6 +14,7 @@ import com.eclubprague.cardashboard.core.modules.custom.DeviceBatteryModule;
 import com.eclubprague.cardashboard.core.modules.custom.FolderModule;
 import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
 import com.eclubprague.cardashboard.core.modules.predefined.SimpleParentModule;
+import com.eclubprague.cardashboard.core.utils.ErrorReporter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -154,9 +155,20 @@ abstract public class ModuleSupplier {
             } catch (IOException e) {
                 // should be prompt with file error
 //                throw new RuntimeException(e);
+//                ErrorReporter.reportApplicationError(null,
+//                        ErrorReporter.ERROR_INTERNAL,
+//                        StringResource.fromString(e.getMessage()),
+//                        StringResource.fromString("Sorry, our fault. Report this."));
             }
             if (homeScreenModule == null) {
-                homeScreenModule = ModuleSupplier.defaultInstance.getHomeScreenModule(moduleContext).copyDeep();
+                try {
+                    homeScreenModule = (IParentModule) ModuleSupplier.defaultInstance.getHomeScreenModule(moduleContext).copyDeep();
+                } catch (ReflectiveOperationException e) {
+                    ErrorReporter.reportApplicationError(null,
+                            ErrorReporter.ERROR_INTERNAL,
+                            StringResource.fromString(e.getMessage()),
+                            StringResource.fromString("Sorry, our fault. Report this."));
+                }
             }
             putRecursively(homeScreenModule);
 
@@ -237,7 +249,7 @@ abstract public class ModuleSupplier {
         if (homeScreenModule == null) {
             homeScreenModule = createHomeScreenModule(moduleContext);
         }
-        return (IParentModule) homeScreenModule;
+        return homeScreenModule;
     }
 
     public List<IModule> getAll() {

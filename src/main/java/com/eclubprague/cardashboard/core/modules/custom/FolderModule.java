@@ -4,8 +4,6 @@ import android.support.annotation.NonNull;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.modules.base.AbstractParentModule;
-import com.eclubprague.cardashboard.core.modules.base.IModule;
-import com.eclubprague.cardashboard.core.modules.base.IParentModule;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
@@ -25,42 +23,5 @@ public class FolderModule extends AbstractParentModule {
 
     public FolderModule(@NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
         super(TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource);
-    }
-
-    @Override
-    public IParentModule copy() {
-        FolderModule newParent = new FolderModule();
-        newParent.setTitle(getTitle());
-        newParent.setIcon(getIcon());
-        if (hasBackgroundColor()) {
-            newParent.setBackgroundColor(getBackgroundColor());
-        }
-        if (hasForegroundColor()) {
-            newParent.setForegroundColor(getForegroundColor());
-        }
-        newParent.addSubmodules(getSubmodules());
-        return newParent;
-    }
-
-    @Override
-    public IParentModule copyDeep() {
-        FolderModule newParent = new FolderModule();
-        newParent.setTitle(getTitle());
-        newParent.setIcon(getIcon());
-        if (hasBackgroundColor()) {
-            newParent.setBackgroundColor(getBackgroundColor());
-        }
-        if (hasForegroundColor()) {
-            newParent.setForegroundColor(getForegroundColor());
-        }
-        for (IModule m : getSubmodules()) {
-            if (m instanceof IParentModule) {
-                IParentModule parentModule = (IParentModule) m;
-                newParent.addSubmodules(parentModule.copyDeep());
-            } else {
-                newParent.addSubmodules(m);
-            }
-        }
-        return newParent;
     }
 }

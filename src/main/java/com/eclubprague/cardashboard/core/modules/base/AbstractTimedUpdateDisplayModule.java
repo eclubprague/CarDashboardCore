@@ -39,12 +39,14 @@ public abstract class AbstractTimedUpdateDisplayModule<T extends Event> extends 
     @Override
     public ModuleView createView(IModuleContext moduleContext, ViewGroup parent) {
         moduleContext.addListener(this);
+        FastEventBus.getInstance().register(this, clazz);
         return super.createView(moduleContext, parent);
     }
 
     @Override
     public ViewWithHolder<ModuleView> createViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
         moduleContext.addListener(this);
+        FastEventBus.getInstance().register(this, clazz);
         return super.createViewWithHolder(moduleContext, holderResourceId, holderParent);
     }
 
@@ -79,5 +81,19 @@ public abstract class AbstractTimedUpdateDisplayModule<T extends Event> extends 
         super.onStop();
 //        Log.d(getClass().getSimpleName(), "stopping");
         FastEventBus.getInstance().unregister(this, clazz);
+    }
+
+    @Override
+    public IModule onCopy(IModule newInstance) throws ReflectiveOperationException {
+        AbstractTimedUpdateDisplayModule<T> newModule = (AbstractTimedUpdateDisplayModule<T>) super.onCopy(newInstance);
+        newModule.init();
+        return newModule;
+    }
+
+    @Override
+    public IModule onDeepCopy(IModule newInstance) throws ReflectiveOperationException {
+        AbstractTimedUpdateDisplayModule<T> newModule = (AbstractTimedUpdateDisplayModule<T>) super.onDeepCopy(newInstance);
+        newModule.init();
+        return newModule;
     }
 }

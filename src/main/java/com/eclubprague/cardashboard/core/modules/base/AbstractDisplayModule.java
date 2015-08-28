@@ -46,8 +46,10 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule {
     public void updateValue(String value) {
         this.value = value;
         if (value == null || view == null) {
+//            Log.d(getClass().getSimpleName(), "View is null");
             return;
         }
+//        Log.d(getClass().getSimpleName(), "View is NOT null and updating: " + getId() + " to " + value);
         view.setValue(value);
     }
 
@@ -72,11 +74,23 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule {
 
     @Override
     public String toString() {
-        return "AbstractDisplayModule{" +
+        return getClass().getSimpleName() + "{" +
                 super.toString() + ", " +
                 "value='" + value + '\'' +
                 ", valueView=" + view +
                 ", unitResource=" + unitResource +
                 '}';
+    }
+
+    @Override
+    public IModule onCopy(IModule newInstance) throws ReflectiveOperationException {
+        ((AbstractDisplayModule) newInstance).updateValue(getValue());
+        return newInstance;
+    }
+
+    @Override
+    public IModule onDeepCopy(IModule newInstance) throws ReflectiveOperationException {
+        ((AbstractDisplayModule) newInstance).updateValue(getValue());
+        return newInstance;
     }
 }

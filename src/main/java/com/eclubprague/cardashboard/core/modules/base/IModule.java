@@ -49,4 +49,8 @@ public interface IModule extends IModuleListener, IQuickMenuListener, IActivityS
 
     ViewGroup getHolder();
 
+    IModule copy() throws ReflectiveOperationException;
+
+    IModule copyDeep() throws ReflectiveOperationException;
+
 }

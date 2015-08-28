@@ -1,20 +1,22 @@
 package com.eclubprague.cardashboard.core.modules.custom;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.eclubprague.cardashboard.core.R;
-import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalMediumUpdateEvent;
+import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalSlowUpdateEvent;
 import com.eclubprague.cardashboard.core.modules.base.AbstractTimedUpdateDisplayModule;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.views.ModuleActiveView;
 
 import java.util.Calendar;
 
 /**
  * Created by Michael on 11. 8. 2015.
  */
-public class ClockModule extends AbstractTimedUpdateDisplayModule<GlobalMediumUpdateEvent> {
+public class ClockModule extends AbstractTimedUpdateDisplayModule<GlobalSlowUpdateEvent> {
 
     private static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.module_others_clock_title);
     private static final IconResource ICON_RESOURCE = IconResource.fromResourceId(R.drawable.ic_clock_black_24dp);
@@ -32,15 +34,23 @@ public class ClockModule extends AbstractTimedUpdateDisplayModule<GlobalMediumUp
 
     private void init() {
         updateTime();
+        Log.d(getClass().getSimpleName(), "creating new with id: " + getId());
     }
 
     private void updateTime() {
         Calendar c = Calendar.getInstance();
-        updateValue(String.format("%02d:%02d", c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE)));
+        String newValue = String.format("%02d:%02d", c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
+        updateValue(newValue);
+        try {
+            Log.d(getClass().getSimpleName(), "updating with id: " + getId() + " to value: " + newValue + " using view: " + getView().thisId + " which has value: " + ((ModuleActiveView)getView()).getValue());
+
+        } catch(IllegalStateException e){
+            // do nothing
+        }
     }
 
     @Override
-    public void onEventMainThread(GlobalMediumUpdateEvent event) {
+    public void onEventMainThread(GlobalSlowUpdateEvent event) {
         updateTime();
     }
 }

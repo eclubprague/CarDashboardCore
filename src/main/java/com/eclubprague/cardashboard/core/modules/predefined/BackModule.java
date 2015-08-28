@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.modules.base.AbstractSimpleModule;
+import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.IParentModule;
 import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
@@ -22,7 +23,7 @@ import com.eclubprague.cardashboard.core.views.ModuleView;
 public class BackModule extends AbstractSimpleModule {
     private static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.appmenu_module_up_title);
     private static final IconResource ICON_RESOURCE = IconResource.fromResourceId(R.drawable.ic_reply_black_24dp);
-    private final IParentModule topModule;
+    private IParentModule topModule;
 
     public BackModule(IParentModule topModule) {
         super(TITLE_RESOURCE, ICON_RESOURCE);
@@ -54,5 +55,19 @@ public class BackModule extends AbstractSimpleModule {
     public void onLongClickEvent(IModuleContext context) {
         onClickEvent(context);
         //super.onLongClickEvent(context);
+    }
+
+    @Override
+    public IModule onCopy(IModule newInstance) throws ReflectiveOperationException {
+        BackModule m = (BackModule) newInstance;
+        m.topModule = topModule;
+        return m;
+    }
+
+    @Override
+    public IModule onDeepCopy(IModule newInstance) throws ReflectiveOperationException {
+        BackModule m = (BackModule) newInstance;
+        m.topModule = topModule;
+        return m;
     }
 }

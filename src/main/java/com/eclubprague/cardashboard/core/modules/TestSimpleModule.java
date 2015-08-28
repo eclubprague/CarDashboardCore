@@ -3,6 +3,7 @@ package com.eclubprague.cardashboard.core.modules;
 import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.modules.base.AbstractSimpleModule;
+import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
@@ -29,5 +30,15 @@ public class TestSimpleModule extends AbstractSimpleModule {
     @Override
     public ViewWithHolder<ModuleView> createNewViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
         return ModuleViewFactory.createPassiveWithHolder(moduleContext, holderResourceId, holderParent, this, getIcon(), getTitle());
+    }
+
+    @Override
+    public IModule onCopy(IModule newInstance) throws ReflectiveOperationException {
+        return newInstance;
+    }
+
+    @Override
+    public IModule onDeepCopy(IModule newInstance) throws ReflectiveOperationException {
+        return newInstance;
     }
 }

@@ -18,8 +18,8 @@ import com.eclubprague.cardashboard.core.views.ModuleView;
  * It leads to an external application through predefined Intent.
  */
 abstract public class AbstractShortcutModule extends AbstractSimpleModule {
-    private final Intent intent;
-    private final StringResource errorMessage;
+    private Intent intent;
+    private StringResource errorMessage;
 
     public AbstractShortcutModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull Intent intent, @NonNull StringResource errorMessage) {
         super(titleResource, iconResource);
@@ -59,5 +59,21 @@ abstract public class AbstractShortcutModule extends AbstractSimpleModule {
                 super.toString() + ", " +
                 "intent=" + intent +
                 '}';
+    }
+
+    @Override
+    public IModule onCopy(IModule newInstance) throws ReflectiveOperationException {
+        AbstractShortcutModule newModule = (AbstractShortcutModule) newInstance;
+        newModule.intent = intent;
+        newModule.errorMessage = errorMessage;
+        return newModule;
+    }
+
+    @Override
+    public IModule onDeepCopy(IModule newInstance) throws ReflectiveOperationException {
+        AbstractShortcutModule newModule = (AbstractShortcutModule) newInstance;
+        newModule.intent = intent;
+        newModule.errorMessage = errorMessage;
+        return newModule;
     }
 }

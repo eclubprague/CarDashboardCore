@@ -12,7 +12,6 @@ import com.eclubprague.cardashboard.core.modules.base.IParentModule;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.predefined.BackModule;
-import com.eclubprague.cardashboard.core.modules.predefined.EmptyModule;
 import com.eclubprague.cardashboard.core.modules.predefined.SimpleParentModule;
 
 import org.json.JSONArray;
@@ -25,8 +24,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Michael on 18.08.2015.
@@ -45,19 +42,19 @@ public class ModuleDAO {
 
     public static final String EXCEPTION_START = "JSON file error: ";
 
-    private static Map<Class, IModule> map;
+    //    private static Map<Class, IModule> map;
     private final IModuleContext moduleContext;
 
     public ModuleDAO(IModuleContext moduleContext) {
         this.moduleContext = moduleContext;
-        if (map == null) {
-            map = new HashMap<>();
-            ModuleSupplier.getDefaultInstance().getHomeScreenModule(moduleContext); // initializes modules
-            for (IModule module : ModuleSupplier.getDefaultInstance().getAll()) {
-                put(module.getClass(), module);
-            }
-            ModuleSupplier.getDefaultInstance().clear();
-        }
+//        if (map == null) {
+//            map = new HashMap<>();
+//            ModuleSupplier.getDefaultInstance().getHomeScreenModule(moduleContext); // initializes modules
+//            for (IModule module : ModuleSupplier.getDefaultInstance().getAll()) {
+//                put(module.getClass(), module);
+//            }
+//            ModuleSupplier.getDefaultInstance().clear();
+//        }
     }
 
     public IParentModule loadParentModule() throws IOException {
@@ -135,15 +132,38 @@ public class ModuleDAO {
     private IModule loadModule(Context context, JSONObject moduleObject) throws IOException, JSONException {
         Class moduleClass = getClass(context, moduleObject);
         IModule module;
-        if (IParentModule.class.isAssignableFrom(moduleClass)) { // parent module
-            module = loadParentModule(context, moduleObject);
-        } else if (EmptyModule.class.equals(moduleClass)) {
-            module = new EmptyModule();
-        } else if (get(moduleClass) != null) {
-            module = fillModule(get(moduleClass), context, moduleObject);
-        } else {
-            throw new IOException(EXCEPTION_START + "unknown class: " + moduleClass.getName());
+        try {
+            module = (IModule) moduleClass.newInstance();
+        } catch (InstantiationException e) {
+            throw new IOException(EXCEPTION_START + "unable to create new instance: " + moduleClass.getName());
+        } catch (IllegalAccessException e) {
+            throw new IOException(EXCEPTION_START + "unable to access new instance creation: " + moduleClass.getName());
         }
+        module = fillModule(module, context, moduleObject);
+        if (IParentModule.class.isAssignableFrom(module.getClass())) {
+            IParentModule parentModule = (IParentModule) module;
+            JSONArray submodules;
+            try {
+                submodules = moduleObject.getJSONArray(COLUMN_SUBMODULES);
+            } catch (JSONException e) {
+                throw new IOException(EXCEPTION_START + "array of submodules not found for parent module: " + moduleClass.getName());
+            }
+            for (int i = 0; i < submodules.length(); i++) {
+                JSONObject submoduleObject = submodules.getJSONObject(i);
+                IModule submodule = loadModule(context, submoduleObject);
+                parentModule.addSubmodules(submodule);
+            }
+        }
+
+//        if (SimpleParentModule.class.equals(moduleClass)) { // parent module
+//            module = loadParentModule(context, moduleObject);
+//        } else if (EmptyModule.class.equals(moduleClass)) {
+//            module = new EmptyModule();
+//        } else if (get(moduleClass) != null) {
+//            module = fillModule(get(moduleClass), context, moduleObject);
+//        } else {
+//            throw new IOException(EXCEPTION_START + "unknown class: " + moduleClass.getName());
+//        }
         return module;
     }
 
@@ -230,8 +250,13 @@ public class ModuleDAO {
         }
     }
 
-    private JSONObject getParentJsonObject(Context context, IParentModule parentModule) throws JSONException {
-        IParentModule copyParentModyle = parentModule.copy();
+    private JSONObject getParentJsonObject(Context context, IParentModule parentModule) throws JSONException, IOException {
+        IParentModule copyParentModyle = null;
+        try {
+            copyParentModyle = (IParentModule) parentModule.copyDeep();
+        } catch (ReflectiveOperationException e) {
+            throw new IOException(e);
+        }
         copyParentModyle.removeTailEmptyModules();
         JSONObject jsonObject = fillJsonObject(context, new JSONObject(), copyParentModyle);
         JSONArray jsonSubmodulesArray = new JSONArray();
@@ -269,14 +294,14 @@ public class ModuleDAO {
         return jsonObject;
     }
 
-    private Map<Class, IModule> put(Class clz, IModule module) {
-        map.put(clz, module);
-        return map;
-    }
+//    private Map<Class, IModule> put(Class clz, IModule module) {
+//        map.put(clz, module);
+//        return map;
+//    }
 
-    private IModule get(Class clz) {
-        return map.get(clz);
-    }
+//    private IModule get(Class clz) {
+//        return map.get(clz);
+//    }
 
     private static class SaveAsyncTask extends AsyncTask<SaveMessenger, Void, Void> {
 
