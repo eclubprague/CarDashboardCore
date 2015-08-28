@@ -8,6 +8,7 @@ import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.models.ModuleUpdateEvent;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.views.ModuleView;
 
 import java.util.Random;
 
@@ -27,8 +28,8 @@ public class TestDisplayModule extends AbstractDisplayModule {
     }
 
     @Override
-    public void onClickEvent(IModuleContext moduleContext) {
-        super.onClickEvent(moduleContext);
+    public void onClickEvent(IModuleContext moduleContext, ModuleView moduleView) {
+        super.onClickEvent(moduleContext, moduleView);
 //        new AlertDialog.Builder(context).setMessage("SHORT CLICK").create().show();
         try {
             Integer i = Integer.parseInt(getValue());

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.views.ModuleView;
 
 /**
  * Created by Michael on 15. 7. 2015.
@@ -15,7 +16,7 @@ public interface IModuleContext {
 
     void goBackFromSubmodules(IParentModule previousParentModule);
 
-    void toggleQuickMenu(IModule module, boolean activate);
+    void toggleQuickMenu(IModule module, ModuleView moduleView, boolean activate);
 
     void turnQuickMenusOff();
 
@@ -27,5 +28,5 @@ public interface IModuleContext {
 
     void removeListener(IActivityStateChangeListener listener);
 
-    void onModuleEvent(IModule module, ModuleEvent event);
+    void onModuleEvent(IModule module, ModuleView moduleView, ModuleEvent event);
 }

@@ -49,8 +49,8 @@ public abstract class AbstractTimedUpdateDisplayModule<T extends Event> extends 
     }
 
     @Override
-    public void onEvent(ModuleEvent event, IModuleContext moduleContext) {
-        super.onEvent(event, moduleContext);
+    public void onEvent(ModuleEvent event, ModuleView moduleView, IModuleContext moduleContext) {
+        super.onEvent(event, moduleView, moduleContext);
         if (event.equals(ModuleEvent.DELETE)) {
             moduleContext.removeListener(this);
         }

@@ -3,6 +3,7 @@ package com.eclubprague.cardashboard.core.modules.base;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
+import com.eclubprague.cardashboard.core.application.GlobalApplication;
 import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
@@ -10,6 +11,8 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
 import com.eclubprague.cardashboard.core.utils.ModuleViewFactory;
 import com.eclubprague.cardashboard.core.views.ModuleActiveView;
 import com.eclubprague.cardashboard.core.views.ModuleView;
+
+import java.util.List;
 
 /**
  * Created by Michael on 16. 7. 2015.
@@ -20,7 +23,6 @@ import com.eclubprague.cardashboard.core.views.ModuleView;
  */
 abstract public class AbstractDisplayModule extends AbstractSimpleModule {
     private String value = null;
-    private ModuleActiveView view = null;
     private StringResource unitResource;
 
 
@@ -44,25 +46,40 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule {
     }
 
     public void updateValue(String value) {
+        IModuleContext moduleContext = GlobalApplication.getInstance().getModuleContext();
         this.value = value;
-        if (value == null || view == null) {
+        if (value == null || getViews(moduleContext) == null) {
+            return;
+        } else {
+            List<ModuleView> moduleViewList = getViews(moduleContext);
+            for (ModuleView moduleView : moduleViewList) {
+                ModuleActiveView moduleActiveView = (ModuleActiveView) moduleView;
+                moduleActiveView.setValue(value);
+            }
+        }
+    }
+
+    private void firstUpdate(String value, ModuleActiveView view) {
+        IModuleContext moduleContext = GlobalApplication.getInstance().getModuleContext();
+        if (value == null || getViews(moduleContext) == null) {
             return;
         }
+        this.value = value;
         view.setValue(value);
     }
 
     @Override
     public ModuleView createNewView(IModuleContext moduleContext, ViewGroup parent) {
-        view = ModuleViewFactory.createActive(moduleContext, parent, this, getIcon(), getTitle(), getUnit());
-        updateValue(value);
+        ModuleActiveView view = ModuleViewFactory.createActive(moduleContext, parent, this, getIcon(), getTitle(), getUnit());
+        firstUpdate(value, view);
         return view;
     }
 
     @Override
     public ViewWithHolder<ModuleView> createNewViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
         ViewWithHolder<ModuleActiveView> viewWithHolder = ModuleViewFactory.createActiveWithHolder(moduleContext, holderResourceId, holderParent, this, getIcon(), getTitle(), getUnit());
-        view = viewWithHolder.view;
-        updateValue(value);
+        ModuleActiveView view = viewWithHolder.view;
+        firstUpdate(value, view);
         return new ViewWithHolder<ModuleView>(viewWithHolder.view, viewWithHolder.holder);
     }
 
@@ -72,10 +89,9 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule {
 
     @Override
     public String toString() {
-        return "AbstractDisplayModule{" +
+        return getClass().getSimpleName() + "{" +
                 super.toString() + ", " +
                 "value='" + value + '\'' +
-                ", valueView=" + view +
                 ", unitResource=" + unitResource +
                 '}';
     }

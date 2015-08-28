@@ -46,14 +46,14 @@ public class ModuleViewFactory {
         return new ViewWithHolder<>(view, holder);
     }
 
-    public static View createQuickMenu(IModuleContext moduleContext, ViewGroup parent, IQuickMenuListener listener) {
+    public static View createQuickMenu(ModuleView moduleView, IModuleContext moduleContext, ViewGroup parent, IQuickMenuListener listener) {
         QuickMenuView view = (QuickMenuView) LayoutInflater.from(moduleContext.getContext()).inflate(R.layout.module_quickmenu, parent, false);
-        return ModuleViewUtils.prepareQuickMenu(view, listener, moduleContext);
+        return ModuleViewUtils.prepareQuickMenu(moduleView, view, listener, moduleContext);
     }
 
-    public static ViewWithHolder<View> createQuickMenuWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent, IQuickMenuListener listener) {
+    public static ViewWithHolder<View> createQuickMenuWithHolder(ModuleView moduleView, IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent, IQuickMenuListener listener) {
         ViewGroup holder = (ViewGroup) LayoutInflater.from(moduleContext.getContext()).inflate(holderResourceId, holderParent, false);
-        View view = createQuickMenu(moduleContext, holder, listener);
+        View view = createQuickMenu(moduleView, moduleContext, holder, listener);
         holder.addView(view);
         return new ViewWithHolder<>(view, holder);
     }
