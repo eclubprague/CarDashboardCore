@@ -21,6 +21,10 @@ public class ObdCommandJob {
         return state;
     }
 
+    public ObdCommand getCommand() {
+        return command;
+    }
+
     public void setState(ObdCommandJobState state) {
         this.state = state;
     }

@@ -1,8 +1,10 @@
 package com.eclubprague.cardashboard.core.application;
 
+import android.app.IntentService;
 import android.content.Context;
 
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
+import com.eclubprague.cardashboard.core.obd.DummyGatewayService;
 
 /**
  * Created by Michael on 24.08.2015.
@@ -10,7 +12,11 @@ import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 public enum GlobalApplication {
     INSTANCE;
 
+
+
+
     private IModuleContext moduleContext;
+    private IntentService obdService;
 //    private Set<OnModuleContextSetListener> onModuleSelectListeners;
 
 //    GlobalApplication() {
@@ -39,7 +45,15 @@ public enum GlobalApplication {
 //        }
     }
 
-//    public void addModuleContextListener(OnModuleContextSetListener listener){
+    public void setObdService(IntentService obdService) {
+        this.obdService = obdService;
+    }
+
+    public IntentService getObdService() {
+        return obdService;
+    }
+
+    //    public void addModuleContextListener(OnModuleContextSetListener listener){
 //        onModuleSelectListeners.add(listener);
 //    }
 
