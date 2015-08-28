@@ -52,7 +52,7 @@ abstract public class AbstractParentModule extends AbstractSimpleModule implemen
 
     @Override
     public List<IModule> getSubmodules() {
-        return new ArrayList<>(submodules);
+        return submodules;
     }
 
     @Override
