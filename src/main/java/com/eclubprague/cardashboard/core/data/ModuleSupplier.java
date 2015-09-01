@@ -13,6 +13,7 @@ import com.eclubprague.cardashboard.core.modules.custom.CompassModule;
 import com.eclubprague.cardashboard.core.modules.custom.DeviceBatteryModule;
 import com.eclubprague.cardashboard.core.modules.custom.FolderModule;
 import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
+import com.eclubprague.cardashboard.core.modules.custom.ObdRPMModule;
 import com.eclubprague.cardashboard.core.modules.predefined.SimpleParentModule;
 
 import java.io.IOException;
@@ -37,6 +38,9 @@ abstract public class ModuleSupplier {
                     StringResource.fromString("OBD data"),
                     IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp));
             obdParent.addSubmodules(new GpsSpeedModule());
+            obdParent.addSubmodules(new ObdRPMModule(StringResource.fromString("RPM"),
+                    IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp),
+                    StringResource.fromString("RPM")));
             IParentModule otherParent = new SimpleParentModule(
                     StringResource.fromString("Other"),
                     IconResource.fromResourceId(R.drawable.ic_apps_black_24dp));

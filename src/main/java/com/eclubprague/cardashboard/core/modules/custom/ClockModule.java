@@ -1,6 +1,7 @@
 package com.eclubprague.cardashboard.core.modules.custom;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalMediumUpdateEvent;
@@ -11,9 +12,6 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
 
 import java.util.Calendar;
 
-/**
- * Created by Michael on 11. 8. 2015.
- */
 public class ClockModule extends AbstractTimedUpdateDisplayModule<GlobalMediumUpdateEvent> {
 
     private static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.module_others_clock_title);
