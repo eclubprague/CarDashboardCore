@@ -41,10 +41,14 @@ public class DummyGatewayService extends IntentService {
     protected Queue<ObdCommandJob> jobsQueue = new LinkedList<>();
     Map<Class, ObdCommandJob> executedCommands = new HashMap<>();
     AsyncTask asyncTask = new ObdGatewayTask(this);
+    private static IntentService instance;
+
+    public static IntentService getInstance() {
+        return instance;
+    }
 
     public DummyGatewayService(String name) {
         super("DummyGatewayService");
-
     }
 
     public DummyGatewayService() {
@@ -52,8 +56,8 @@ public class DummyGatewayService extends IntentService {
     }
 
     public synchronized void enqueue(ObdCommandJob job) {
-        executedCommands.put(job.getClass(), job);
         jobsQueue.add(job);
+        int i = jobsQueue.size();
     }
 
     protected synchronized void putResult(Class commandClass, ObdCommandJob commandInstance) {
@@ -77,6 +81,7 @@ public class DummyGatewayService extends IntentService {
     public void onCreate() {
         super.onCreate();
         asyncTask.execute();
+        instance = this;
     }
 
     @Override

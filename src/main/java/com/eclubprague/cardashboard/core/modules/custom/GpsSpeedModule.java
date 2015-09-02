@@ -72,7 +72,6 @@ public class GpsSpeedModule extends AbstractDisplayModule implements MainThreadR
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-
     }
 
     @Override
@@ -81,9 +80,9 @@ public class GpsSpeedModule extends AbstractDisplayModule implements MainThreadR
     }
 
     @Override
-    public void onProviderDisabled(String provider) {
+    public void onProviderDisabled(String provider) {}
 
-    }
+
 }
 
 

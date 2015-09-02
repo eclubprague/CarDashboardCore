@@ -23,9 +23,5 @@ public interface IModuleContext {
 
     Context getContext();
 
-    void addListener(IActivityStateChangeListener listener);
-
-    void removeListener(IActivityStateChangeListener listener);
-
     void onModuleEvent(IModule module, ModuleEvent event);
 }

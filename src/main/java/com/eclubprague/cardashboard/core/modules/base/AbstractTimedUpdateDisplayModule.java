@@ -38,22 +38,17 @@ public abstract class AbstractTimedUpdateDisplayModule<T extends Event> extends 
 
     @Override
     public ModuleView createView(IModuleContext moduleContext, ViewGroup parent) {
-        moduleContext.addListener(this);
         return super.createView(moduleContext, parent);
     }
 
     @Override
     public ViewWithHolder<ModuleView> createViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
-        moduleContext.addListener(this);
         return super.createViewWithHolder(moduleContext, holderResourceId, holderParent);
     }
 
     @Override
     public void onEvent(ModuleEvent event, IModuleContext moduleContext) {
         super.onEvent(event, moduleContext);
-        if (event.equals(ModuleEvent.DELETE)) {
-            moduleContext.removeListener(this);
-        }
     }
 
     @Override

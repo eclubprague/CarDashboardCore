@@ -19,11 +19,12 @@ public class ObdGatewayTask<Params, Progress, Result> extends AsyncTask<Params, 
         while (true) {
             try {
                 if (dummyGatewayService.isQueueEmpty()) {
-                    Thread.sleep(1000);
-                    Log.d("OGT", "sleeping");
+                    Thread.sleep(100);
                 } else {
                     ObdCommandJob job = dummyGatewayService.dequeue();
-                    job.setId(Long.valueOf((long) Math.random() * 1000));
+                    Long randomId = Long.valueOf((long) (Math.random() * 1000));
+                    Log.d("OGT", "random ID "+randomId);
+                    job.setId(randomId);
                     dummyGatewayService.putResult(job.getCommand().getClass(), job);
                 }
             } catch (InterruptedException e) {

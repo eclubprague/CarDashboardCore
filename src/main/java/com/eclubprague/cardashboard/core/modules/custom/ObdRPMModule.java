@@ -22,10 +22,13 @@ public class ObdRPMModule extends AbstractTimedUpdateDisplayModule<GlobalExtraFa
 
     @Override
     public void onEventMainThread(GlobalExtraFastUpdateEvent event) {
-        Log.d(TAG, "enEvent");
-        DummyGatewayService gatewayService = (DummyGatewayService) GlobalApplication.getInstance().getObdService();
+        DummyGatewayService gatewayService = (DummyGatewayService) DummyGatewayService.getInstance();
         ObdCommandJob obdCommandJob = new ObdCommandJob(new EngineRPMObdCommand());
-        gatewayService.enqueue(obdCommandJob);
-        updateValue(String.valueOf(gatewayService.getResult(EngineRPMObdCommand.class).getId()));
+        if (gatewayService != null) {
+            gatewayService.enqueue(obdCommandJob);
+            ObdCommandJob results = gatewayService.getResult(EngineRPMObdCommand.class);
+            if (results != null)
+                updateValue(String.valueOf(results.getId()));
+        }
     }
 }
