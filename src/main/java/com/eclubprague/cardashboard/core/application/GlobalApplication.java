@@ -4,7 +4,6 @@ import android.app.IntentService;
 import android.content.Context;
 
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
-import com.eclubprague.cardashboard.core.obd.DummyGatewayService;
 
 /**
  * Created by Michael on 24.08.2015.

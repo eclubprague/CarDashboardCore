@@ -15,7 +15,7 @@
             android:enabled="true"
             android:exported="true"></service>
         <service
-            android:name=".obd.DummyGatewayService"
+            android:name=".obd.OBDGatewayService"
             android:enabled="true"
             android:exported="true"></service>
     </application>

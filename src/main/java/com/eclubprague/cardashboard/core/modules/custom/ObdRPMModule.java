@@ -1,14 +1,12 @@
 package com.eclubprague.cardashboard.core.modules.custom;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.eclubprague.cardashboard.core.application.GlobalApplication;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalExtraFastUpdateEvent;
 import com.eclubprague.cardashboard.core.modules.base.AbstractTimedUpdateDisplayModule;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
-import com.eclubprague.cardashboard.core.obd.DummyGatewayService;
+import com.eclubprague.cardashboard.core.obd.OBDGatewayService;
 import com.eclubprague.cardashboard.core.obd.ObdCommandJob;
 import com.github.pires.obd.commands.engine.EngineRPMObdCommand;
 
@@ -22,13 +20,14 @@ public class ObdRPMModule extends AbstractTimedUpdateDisplayModule<GlobalExtraFa
 
     @Override
     public void onEventMainThread(GlobalExtraFastUpdateEvent event) {
-        DummyGatewayService gatewayService = (DummyGatewayService) DummyGatewayService.getInstance();
-        ObdCommandJob obdCommandJob = new ObdCommandJob(new EngineRPMObdCommand());
+        OBDGatewayService gatewayService = (OBDGatewayService) OBDGatewayService.getInstance();
         if (gatewayService != null) {
-            gatewayService.enqueue(obdCommandJob);
+            gatewayService.enqueue(new ObdCommandJob(new EngineRPMObdCommand()));
             ObdCommandJob results = gatewayService.getResult(EngineRPMObdCommand.class);
-            if (results != null)
-                updateValue(String.valueOf(results.getId()));
+            if (results != null && results.getCommand().getResult() != null){
+                updateValue(results.getCommand().getCalculatedResult());
+            }
+
         }
     }
 }
