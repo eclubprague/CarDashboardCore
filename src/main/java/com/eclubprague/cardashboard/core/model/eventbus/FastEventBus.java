@@ -29,9 +29,9 @@ public enum FastEventBus {
             eventListeners = new ArrayList<>();
             listenersMap.put(eventClass, eventListeners);
         }
-        if (!eventListeners.contains(receiver)) {
+//        if (!eventListeners.contains(receiver)) {
             eventListeners.add(receiver);
-        }
+//        }
     }
 
     public <T extends Event> void unregister(MainThreadReceiver<T> receiver, Class<T> eventClass) {
@@ -50,6 +50,9 @@ public enum FastEventBus {
         if (eventListeners != null) {
 //            Log.d(TAG, "posting event: " + event.getClass().getSimpleName() + " to listeners");
             for (MainThreadReceiver receiver : eventListeners) {
+//                if(event instanceof GlobalMediumUpdateEvent){
+//                    Log.d(TAG, "posting event for: " + receiver.getClass().getSimpleName());
+//                }
 //                Log.d(TAG, "posting event to: " + receiver.getClass().getSimpleName());
                 receiver.onEventMainThread(event);
             }

@@ -138,13 +138,13 @@ abstract public class AbstractSimpleModule implements IModule {
 
 
     @Override
-    public View createQuickMenuView(IModuleContext moduleContext, ViewGroup parent) {
-        return ModuleViewFactory.createQuickMenu(moduleContext, parent, this);
+    public View createQuickMenuView(ModuleView moduleView, IModuleContext moduleContext, ViewGroup parent) {
+        return ModuleViewFactory.createQuickMenu(moduleView, moduleContext, parent, this);
     }
 
     @Override
-    public ViewWithHolder createQuickMenuViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
-        return ModuleViewFactory.createQuickMenuWithHolder(moduleContext, holderResourceId, holderParent, this);
+    public ViewWithHolder createQuickMenuViewWithHolder(ModuleView moduleView, IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
+        return ModuleViewFactory.createQuickMenuWithHolder(moduleView, moduleContext, holderResourceId, holderParent, this);
     }
 
     abstract protected ModuleView createNewView(IModuleContext context, ViewGroup parent);
@@ -229,23 +229,28 @@ abstract public class AbstractSimpleModule implements IModule {
     }
 
     @Override
-    public void onPause() {
+    public void onPause(IModuleContext moduleContext) {
 
     }
 
     @Override
-    public void onResume() {
+    public void onResume(IModuleContext moduleContext) {
 
     }
 
     @Override
-    public void onStart() {
+    public void onStart(IModuleContext moduleContext) {
 
     }
 
     @Override
-    public void onStop() {
+    public void onStop(IModuleContext moduleContext) {
 
+    }
+
+    @Override
+    public void onDestroy(IModuleContext moduleContext) {
+        viewMap.remove(moduleContext);
     }
 
     @Override

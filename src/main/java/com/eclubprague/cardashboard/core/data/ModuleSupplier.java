@@ -1,6 +1,10 @@
 package com.eclubprague.cardashboard.core.data;
 
+import android.app.AlertDialog;
+import android.util.Log;
+
 import com.eclubprague.cardashboard.core.R;
+import com.eclubprague.cardashboard.core.application.GlobalApplication;
 import com.eclubprague.cardashboard.core.data.database.ModuleDAO;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
@@ -9,6 +13,7 @@ import com.eclubprague.cardashboard.core.modules.base.models.ModuleId;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.custom.ClockModule;
+import com.eclubprague.cardashboard.core.modules.custom.ClockSecondsModule;
 import com.eclubprague.cardashboard.core.modules.custom.CompassModule;
 import com.eclubprague.cardashboard.core.modules.custom.DeviceBatteryModule;
 import com.eclubprague.cardashboard.core.modules.custom.FolderModule;
@@ -32,6 +37,7 @@ abstract public class ModuleSupplier {
     private static final ModuleSupplier baseInstance = new ModuleSupplier() {
         @Override
         protected IParentModule createHomeScreenModule(IModuleContext moduleContext) {
+//            Log.d(TAG, "creating base instance");
             IParentModule homeScreenModule = homeScreenModule();
             IParentModule obdParent = new SimpleParentModule(
                     StringResource.fromString("OBD data"),
@@ -43,6 +49,7 @@ abstract public class ModuleSupplier {
             otherParent.addSubmodules(
                     new FolderModule(),
                     new ClockModule(),
+                    new ClockSecondsModule(),
                     new DeviceBatteryModule(),
                     new CompassModule()
             );
@@ -67,6 +74,7 @@ abstract public class ModuleSupplier {
     private static final ModuleSupplier personalInstance = new ModuleSupplier() {
         @Override
         protected IParentModule createHomeScreenModule(IModuleContext moduleContext) {
+//            Log.d(TAG, "creating personal instance");
 //            IParentModule homeScreenModule = homeScreenModule();
 //            List<IModule> modules = new ArrayList<>();
 //            AbstractParentModule submenuModule;
@@ -152,6 +160,8 @@ abstract public class ModuleSupplier {
             try {
                 homeScreenModule = moduleDAO.loadParentModule();
             } catch (IOException e) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(GlobalApplication.getInstance().getContext());
+                builder.setTitle("Unable to load personal settings. Loading default.").setMessage(e.getMessage()).create().show();
                 // should be prompt with file error
 //                throw new RuntimeException(e);
             }
@@ -168,6 +178,7 @@ abstract public class ModuleSupplier {
     private static final ModuleSupplier defaultInstance = new ModuleSupplier() {
         @Override
         protected IParentModule createHomeScreenModule(IModuleContext moduleContext) {
+//            Log.d(TAG, "creating default instance");
             IParentModule homeScreenModule = homeScreenModule();
             IParentModule obdParent = new SimpleParentModule(
                     StringResource.fromString("OBD data"),
@@ -254,11 +265,13 @@ abstract public class ModuleSupplier {
     }
 
     protected void putRecursively(IParentModule parentModule) {
+        Log.d(TAG, "Putting in BaseSupplier: " + parentModule.getClass().getSimpleName() + ": " + parentModule.getTitle().getString(GlobalApplication.getInstance().getContext()));
         put(parentModule);
         for (IModule m : parentModule.getSubmodules()) {
             if (m instanceof IParentModule) {
                 putRecursively((IParentModule) m);
             } else {
+                Log.d(TAG, "Putting in BaseSupplier: " + m.getClass().getSimpleName());
                 put(m);
             }
         }
