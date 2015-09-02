@@ -52,7 +52,7 @@ abstract public class AbstractParentModule extends AbstractSimpleModule implemen
 
     @Override
     public List<IModule> getSubmodules() {
-        return new ArrayList<>(submodules);
+        return submodules;
     }
 
     @Override
@@ -84,15 +84,15 @@ abstract public class AbstractParentModule extends AbstractSimpleModule implemen
     }
 
     @Override
-    public void onClickEvent(IModuleContext moduleContext) {
-        super.onClickEvent(moduleContext);
+    public void onClickEvent(IModuleContext moduleContext, ModuleView moduleView) {
+        super.onClickEvent(moduleContext, moduleView);
 //        Log.d("SubmenuModule", "setting modules: " + getSubmodules().size());
         moduleContext.goToSubmodules(this);
     }
 
     @Override
     public String toString() {
-        return "AbstractParentModule{" +
+        return getClass().getSimpleName() + "{" +
                 super.toString() + ", " +
                 "submodules=" + submodules.size() +
                 '}';

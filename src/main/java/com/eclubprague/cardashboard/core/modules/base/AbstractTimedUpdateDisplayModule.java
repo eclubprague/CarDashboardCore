@@ -1,16 +1,13 @@
 package com.eclubprague.cardashboard.core.modules.base;
 
 import android.support.annotation.NonNull;
-import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.model.eventbus.FastEventBus;
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.Event;
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.MainThreadReceiver;
-import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
-import com.eclubprague.cardashboard.core.views.ModuleView;
 
 import java.lang.reflect.ParameterizedType;
 
@@ -20,6 +17,7 @@ import java.lang.reflect.ParameterizedType;
 public abstract class AbstractTimedUpdateDisplayModule<T extends Event> extends AbstractDisplayModule implements MainThreadReceiver<T> {
 
     private Class<T> clazz;
+    private static final String TAG = AbstractTimedUpdateDisplayModule.class.getSimpleName();
 
     public AbstractTimedUpdateDisplayModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull StringResource unitResource) {
         super(titleResource, iconResource, unitResource);
@@ -37,42 +35,30 @@ public abstract class AbstractTimedUpdateDisplayModule<T extends Event> extends 
     }
 
     @Override
-    public ModuleView createView(IModuleContext moduleContext, ViewGroup parent) {
-        return super.createView(moduleContext, parent);
-    }
-
-    @Override
-    public ViewWithHolder<ModuleView> createViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
-        return super.createViewWithHolder(moduleContext, holderResourceId, holderParent);
-    }
-
-    @Override
-    public void onEvent(ModuleEvent event, IModuleContext moduleContext) {
-        super.onEvent(event, moduleContext);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
+    public void onPause(IModuleContext moduleContext) {
+        super.onPause(moduleContext);
+//        Log.d(TAG, "Pausing: " + getClass().getSimpleName());
         FastEventBus.getInstance().unregister(this, clazz);
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onResume(IModuleContext moduleContext) {
+        super.onResume(moduleContext);
         FastEventBus.getInstance().register(this, clazz);
+//        Log.d(TAG, "Resuming: " + getClass().getSimpleName());
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onStart(IModuleContext moduleContext) {
+        super.onStart(moduleContext);
         FastEventBus.getInstance().register(this, clazz);
+//        Log.d(TAG, "Starting: " + getClass().getSimpleName());
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-//        Log.d(getClass().getSimpleName(), "stopping");
+    public void onStop(IModuleContext moduleContext) {
+        super.onStop(moduleContext);
         FastEventBus.getInstance().unregister(this, clazz);
+//        Log.d(TAG, "Stopping: " + getClass().getSimpleName());
     }
 }

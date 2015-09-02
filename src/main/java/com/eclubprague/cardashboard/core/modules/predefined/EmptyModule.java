@@ -43,11 +43,11 @@ public class EmptyModule extends AbstractSimpleModule {
     }
 
     @Override
-    public void onClickEvent(IModuleContext context) {
-        context.onModuleEvent(this, ModuleEvent.ADD);
+    public void onClickEvent(IModuleContext context, ModuleView moduleView) {
+        context.onModuleEvent(this, moduleView, ModuleEvent.ADD);
     }
 
     @Override
-    public void onLongClickEvent(IModuleContext context) {
+    public void onLongClickEvent(IModuleContext context, ModuleView moduleView) {
     }
 }

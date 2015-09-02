@@ -1,5 +1,7 @@
 package com.eclubprague.cardashboard.core.model.eventbus;
 
+import android.util.Log;
+
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.Event;
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.MainThreadReceiver;
 
@@ -22,19 +24,21 @@ public enum FastEventBus {
 
     private final Map<Class<? extends Event>, List<MainThreadReceiver>> listenersMap = new HashMap<>();
 
-    public <T extends Event> void register(MainThreadReceiver<T> receiver, Class<T> eventClass) {
+    public synchronized <T extends Event> void register(MainThreadReceiver<T> receiver, Class<T> eventClass) {
 //        Log.d(TAG, "receiver registered: " + receiver.getClass().getSimpleName());
-        List<MainThreadReceiver> eventListeners = listenersMap.get(eventClass);
+        List<MainThreadReceiver> eventListeners;
+        Log.d(TAG, "nothing");
+        eventListeners = listenersMap.get(eventClass);
         if (eventListeners == null) {
             eventListeners = new ArrayList<>();
             listenersMap.put(eventClass, eventListeners);
         }
-        if (!eventListeners.contains(receiver)) {
-            eventListeners.add(receiver);
-        }
+//        if (!eventListeners.contains(receiver)) {
+        eventListeners.add(receiver);
+//        }
     }
 
-    public <T extends Event> void unregister(MainThreadReceiver<T> receiver, Class<T> eventClass) {
+    public synchronized <T extends Event> void unregister(MainThreadReceiver<T> receiver, Class<T> eventClass) {
         List<MainThreadReceiver> eventListeners = listenersMap.get(eventClass);
         if (eventListeners != null) {
             eventListeners.remove(receiver);
@@ -45,11 +49,14 @@ public enum FastEventBus {
         }
     }
 
-    public void post(Event event) {
+    public synchronized void post(Event event) {
         List<MainThreadReceiver> eventListeners = listenersMap.get(event.getClass());
         if (eventListeners != null) {
 //            Log.d(TAG, "posting event: " + event.getClass().getSimpleName() + " to listeners");
             for (MainThreadReceiver receiver : eventListeners) {
+//                if(event instanceof GlobalMediumUpdateEvent){
+//                    Log.d(TAG, "posting event for: " + receiver.getClass().getSimpleName());
+//                }
 //                Log.d(TAG, "posting event to: " + receiver.getClass().getSimpleName());
                 receiver.onEventMainThread(event);
             }

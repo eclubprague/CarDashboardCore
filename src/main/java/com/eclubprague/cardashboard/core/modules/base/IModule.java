@@ -10,6 +10,8 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResou
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.views.ModuleView;
 
+import java.util.List;
+
 /**
  * Created by Michael on 9. 7. 2015.
  * <p/>
@@ -37,13 +39,15 @@ public interface IModule extends IModuleListener, IQuickMenuListener, IActivityS
 
     ModuleView createView(IModuleContext moduleContext, ViewGroup parent);
 
-    ModuleView getView();
+    List<ModuleView> getViews(IModuleContext context);
+
+    IModule removeViews(IModuleContext context);
 
     ViewWithHolder<ModuleView> createViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent);
 
-    View createQuickMenuView(IModuleContext moduleContext, ViewGroup parent);
+    View createQuickMenuView(ModuleView moduleView, IModuleContext moduleContext, ViewGroup parent);
 
-    ViewWithHolder createQuickMenuViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent);
+    ViewWithHolder createQuickMenuViewWithHolder(ModuleView moduleView, IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent);
 
     void setHolder(ViewGroup holder);
 

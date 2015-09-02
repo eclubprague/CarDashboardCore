@@ -50,11 +50,11 @@ public class QuickMenuButton extends RelativeLayout {
         return this;
     }
 
-    public QuickMenuButton setEvent(final IQuickMenuListener listener, final IModuleContext moduleContext, final ModuleEvent moduleEvent) {
+    public QuickMenuButton setEvent(final ModuleView moduleView, final IQuickMenuListener listener, final IModuleContext moduleContext, final ModuleEvent moduleEvent) {
         setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onEvent(moduleEvent, moduleContext);
+                listener.onEvent(moduleEvent, moduleView, moduleContext);
             }
         });
         setIcon(moduleEvent.getIcon());

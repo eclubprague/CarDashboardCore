@@ -13,7 +13,11 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
 import com.eclubprague.cardashboard.core.utils.ModuleViewFactory;
 import com.eclubprague.cardashboard.core.views.ModuleView;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,6 +32,7 @@ abstract public class AbstractSimpleModule implements IModule {
     private ColorResource bgColorResource;
     private ColorResource fgColorResource;
     private ModuleView view;
+    private HashMap<IModuleContext, List<ModuleView>> viewMap = new HashMap<>();
     private ViewGroup holderView;
     private static final String TAG = AbstractSimpleModule.class.getSimpleName();
 
@@ -115,6 +120,8 @@ abstract public class AbstractSimpleModule implements IModule {
     @Override
     public ModuleView createView(IModuleContext moduleContext, ViewGroup parent) {
         view = createNewView(moduleContext, parent);
+        addView(moduleContext, view);
+        view.setModule(this);
         return view;
     }
 
@@ -122,19 +129,22 @@ abstract public class AbstractSimpleModule implements IModule {
     public ViewWithHolder<ModuleView> createViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
         ViewWithHolder<ModuleView> viewWithHolder = createNewViewWithHolder(moduleContext, holderResourceId, holderParent);
         view = viewWithHolder.view;
+        addView(moduleContext, view);
         holderView = viewWithHolder.holder;
+        view.setModule(this);
+        view.setViewHolder(holderView);
         return viewWithHolder;
     }
 
 
     @Override
-    public View createQuickMenuView(IModuleContext moduleContext, ViewGroup parent) {
-        return ModuleViewFactory.createQuickMenu(moduleContext, parent, this);
+    public View createQuickMenuView(ModuleView moduleView, IModuleContext moduleContext, ViewGroup parent) {
+        return ModuleViewFactory.createQuickMenu(moduleView, moduleContext, parent, this);
     }
 
     @Override
-    public ViewWithHolder createQuickMenuViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
-        return ModuleViewFactory.createQuickMenuWithHolder(moduleContext, holderResourceId, holderParent, this);
+    public ViewWithHolder createQuickMenuViewWithHolder(ModuleView moduleView, IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
+        return ModuleViewFactory.createQuickMenuWithHolder(moduleView, moduleContext, holderResourceId, holderParent, this);
     }
 
     abstract protected ModuleView createNewView(IModuleContext context, ViewGroup parent);
@@ -142,11 +152,27 @@ abstract public class AbstractSimpleModule implements IModule {
     abstract protected ViewWithHolder<ModuleView> createNewViewWithHolder(IModuleContext context, int holderResourceId, ViewGroup holderParent);
 
     @Override
-    public ModuleView getView() {
-        if (view == null) {
-            throw new IllegalStateException("ModuleView is null. Please, use createNewView or createNewViewWithHolder method to set ModuleView first.");
+    public List<ModuleView> getViews(IModuleContext context) {
+        List<ModuleView> moduleViews = viewMap.get(context);
+        if (moduleViews == null) {
+            moduleViews = Collections.emptyList();
         }
-        return view;
+        return moduleViews;
+    }
+
+    @Override
+    public IModule removeViews(IModuleContext context) {
+        viewMap.remove(context);
+        return this;
+    }
+
+    private void addView(IModuleContext context, ModuleView view) {
+        List<ModuleView> moduleViews = viewMap.get(context);
+        if (moduleViews == null) {
+            moduleViews = new ArrayList<>();
+            viewMap.put(context, moduleViews);
+        }
+        moduleViews.add(view);
     }
 
     @Override
@@ -156,31 +182,28 @@ abstract public class AbstractSimpleModule implements IModule {
 
     @Override
     public ViewGroup getHolder() {
-        if (holderView == null) {
-            throw new IllegalStateException("Holder has not been saved. Please, use setHolder to save ViewGroup holder or use createViewWithHolder to create view including holder.");
-        }
         return holderView;
     }
 
     @Override
-    public void onClickEvent(IModuleContext context) {
+    public void onClickEvent(IModuleContext context, ModuleView moduleView) {
         context.turnQuickMenusOff();
     }
 
     @Override
-    public void onLongClickEvent(IModuleContext context) {
+    public void onLongClickEvent(IModuleContext context, ModuleView moduleView) {
         context.turnQuickMenusOff();
-        context.toggleQuickMenu(this, true);
+        context.toggleQuickMenu(this, moduleView, true);
     }
 
     @Override
-    public void onEvent(ModuleEvent event, IModuleContext moduleContext) {
-        moduleContext.onModuleEvent(this, event);
+    public void onEvent(ModuleEvent event, ModuleView moduleView, IModuleContext moduleContext) {
+        moduleContext.onModuleEvent(this, moduleView, event);
     }
 
     @Override
     public String toString() {
-        return "AbstractSimpleModule{" +
+        return getClass().getSimpleName() + "{" +
                 "id=" + id +
                 ", titleResource=" + titleResource.getString(GlobalApplication.getInstance().getModuleContext().getContext()) +
                 ", iconResource=" + iconResource +
@@ -206,23 +229,28 @@ abstract public class AbstractSimpleModule implements IModule {
     }
 
     @Override
-    public void onPause() {
+    public void onPause(IModuleContext moduleContext) {
 
     }
 
     @Override
-    public void onResume() {
+    public void onResume(IModuleContext moduleContext) {
 
     }
 
     @Override
-    public void onStart() {
+    public void onStart(IModuleContext moduleContext) {
 
     }
 
     @Override
-    public void onStop() {
+    public void onStop(IModuleContext moduleContext) {
 
+    }
+
+    @Override
+    public void onDestroy(IModuleContext moduleContext) {
+        viewMap.remove(moduleContext);
     }
 
     @Override

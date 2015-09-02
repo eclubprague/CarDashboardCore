@@ -13,6 +13,7 @@ import com.eclubprague.cardashboard.core.model.eventbus.FastEventBus;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalMediumUpdateEvent;
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.MainThreadReceiver;
 import com.eclubprague.cardashboard.core.modules.base.AbstractDisplayModule;
+import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
@@ -53,14 +54,15 @@ public class GpsSpeedModule extends AbstractDisplayModule implements MainThreadR
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onPause(IModuleContext moduleContext) {
+        super.onPause(moduleContext);
         if (locationManager != null)
             locationManager.removeUpdates(this);
     }
 
     @Override
-    public void onResume() {
+    public void onResume(IModuleContext moduleContext) {
+        super.onResume(moduleContext);
         if (locationManager != null)
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
     }

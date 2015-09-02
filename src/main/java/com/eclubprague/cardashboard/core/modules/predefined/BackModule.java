@@ -45,14 +45,14 @@ public class BackModule extends AbstractSimpleModule {
     }
 
     @Override
-    public void onClickEvent(IModuleContext context) {
+    public void onClickEvent(IModuleContext context, ModuleView moduleView) {
 //        Log.d("BackModule", getParent().toString());
         context.goBackFromSubmodules(topModule);
     }
 
     @Override
-    public void onLongClickEvent(IModuleContext context) {
-        onClickEvent(context);
+    public void onLongClickEvent(IModuleContext context, ModuleView moduleView) {
+        onClickEvent(context, moduleView);
         //super.onLongClickEvent(context);
     }
 }

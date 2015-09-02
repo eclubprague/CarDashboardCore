@@ -52,8 +52,10 @@ public class ModuleDAO {
         this.moduleContext = moduleContext;
         if (map == null) {
             map = new HashMap<>();
-            ModuleSupplier.getDefaultInstance().getHomeScreenModule(moduleContext); // initializes modules
-            for (IModule module : ModuleSupplier.getDefaultInstance().getAll()) {
+            ModuleSupplier moduleSupplier = ModuleSupplier.getBaseInstance();
+            moduleSupplier.getHomeScreenModule(moduleContext); // initializes modules
+            for (IModule module : moduleSupplier.getAll()) {
+//                Log.d(TAG, "Putting in ModuleDAO: " + module.getClass().getSimpleName());
                 put(module.getClass(), module);
             }
             ModuleSupplier.getDefaultInstance().clear();

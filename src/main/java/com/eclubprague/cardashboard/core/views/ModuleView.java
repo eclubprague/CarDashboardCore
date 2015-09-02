@@ -3,11 +3,14 @@ package com.eclubprague.cardashboard.core.views;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eclubprague.cardashboard.core.R;
+import com.eclubprague.cardashboard.core.modules.base.IModule;
+import com.eclubprague.cardashboard.core.modules.base.models.ViewId;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 
@@ -17,8 +20,11 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
  * Module view containing a single Module.
  */
 public class ModuleView extends RelativeLayout {
+    private IModule module;
     private ImageView iconView;
     private TextView titleView;
+    private ViewGroup viewHolder;
+    private final ViewId viewId = ViewId.createNew();
 
     public ModuleView(Context context) {
         super(context);
@@ -34,6 +40,26 @@ public class ModuleView extends RelativeLayout {
 
     public ModuleView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    public IModule getModule() {
+        return module;
+    }
+
+    public void setModule(IModule module) {
+        this.module = module;
+    }
+
+    public ViewId getViewId() {
+        return viewId;
+    }
+
+    public ViewGroup getViewHolder() {
+        return viewHolder;
+    }
+
+    public void setViewHolder(ViewGroup viewHolder) {
+        this.viewHolder = viewHolder;
     }
 
     public ModuleView setIcon(@NonNull IconResource iconResource) {

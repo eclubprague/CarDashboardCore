@@ -1,5 +1,7 @@
 package com.eclubprague.cardashboard.core.modules.base;
 
+import com.eclubprague.cardashboard.core.views.ModuleView;
+
 /**
  * Created by Michael on 27. 7. 2015.
  * <p>
@@ -7,7 +9,7 @@ package com.eclubprague.cardashboard.core.modules.base;
  */
 public interface IModuleListener {
 
-    void onClickEvent(IModuleContext context);
+    void onClickEvent(IModuleContext context, ModuleView moduleView);
 
-    void onLongClickEvent(IModuleContext context);
+    void onLongClickEvent(IModuleContext context, ModuleView moduleView);
 }

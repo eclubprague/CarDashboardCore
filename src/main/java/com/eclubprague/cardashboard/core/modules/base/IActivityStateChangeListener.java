@@ -4,11 +4,13 @@ package com.eclubprague.cardashboard.core.modules.base;
  * Created by Michael on 12.08.2015.
  */
 public interface IActivityStateChangeListener {
-    void onPause();
+    void onPause(IModuleContext moduleContext);
 
-    void onResume();
+    void onResume(IModuleContext moduleContext);
 
-    void onStart();
+    void onStart(IModuleContext moduleContext);
 
-    void onStop();
+    void onStop(IModuleContext moduleContext);
+
+    void onDestroy(IModuleContext moduleContext);
 }
