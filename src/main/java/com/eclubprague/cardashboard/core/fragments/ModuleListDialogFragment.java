@@ -15,6 +15,7 @@ import com.eclubprague.cardashboard.core.data.ModuleSupplier;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.custom.FolderModule;
+import com.eclubprague.cardashboard.core.modules.custom.NewShortcutModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,7 @@ public class ModuleListDialogFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View listView = inflater.inflate(R.layout.fragment_application_list, container, false);
+        final View listView = inflater.inflate(R.layout.fragment_module_list, container, false);
         final ExpandableListView list = (ExpandableListView) listView.findViewById(R.id.applist_list_view);
         list.setGroupIndicator(null);
 
@@ -82,6 +83,8 @@ public class ModuleListDialogFragment extends DialogFragment {
                         FolderModule copyFolderModule = (FolderModule) folderModule.copy().removeAllSubmodules();
                         ModuleSupplier.getPersonalInstance().put(copyFolderModule);
                         onAddModuleListener.addModule(copyFolderModule);
+                    } else if (module instanceof NewShortcutModule) {
+                        ((NewShortcutModule) module).createNew(onAddModuleListener);
                     } else {
                         onAddModuleListener.addModule(module);
                     }

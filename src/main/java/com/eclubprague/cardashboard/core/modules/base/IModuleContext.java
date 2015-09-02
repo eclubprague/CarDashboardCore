@@ -1,5 +1,6 @@
 package com.eclubprague.cardashboard.core.modules.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
@@ -25,4 +26,6 @@ public interface IModuleContext {
     Context getContext();
 
     void onModuleEvent(IModule module, ModuleView moduleView, ModuleEvent event);
+
+    Activity getActivity();
 }

@@ -48,6 +48,6 @@
     </style>
 
     <style name="card_icon">
-        <item name="android:tint">?android:attr/textColorSecondary</item>
+        <!--<item name="android:tint">?android:attr/textColorSecondary</item>-->
     </style>
 </resources>

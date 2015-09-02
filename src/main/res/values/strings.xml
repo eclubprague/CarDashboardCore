@@ -22,4 +22,6 @@
     <string name="event_cancel">Cancel</string>
     <string name="event_add">Add</string>
     <string name="event_more">More</string>
+    <string name="error_module_shortcut">Unable to send intent:</string>
+    <string name="module_shortcuts_new">New shortcut</string>
 </resources>

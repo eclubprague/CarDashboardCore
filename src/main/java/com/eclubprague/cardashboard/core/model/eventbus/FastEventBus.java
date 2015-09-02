@@ -1,7 +1,5 @@
 package com.eclubprague.cardashboard.core.model.eventbus;
 
-import android.util.Log;
-
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.Event;
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.MainThreadReceiver;
 
@@ -27,7 +25,6 @@ public enum FastEventBus {
     public synchronized <T extends Event> void register(MainThreadReceiver<T> receiver, Class<T> eventClass) {
 //        Log.d(TAG, "receiver registered: " + receiver.getClass().getSimpleName());
         List<MainThreadReceiver> eventListeners;
-        Log.d(TAG, "nothing");
         eventListeners = listenersMap.get(eventClass);
         if (eventListeners == null) {
             eventListeners = new ArrayList<>();
