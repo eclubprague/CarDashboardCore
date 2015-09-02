@@ -35,4 +35,6 @@
     <string name="pref_imperial_units_title">Use imperial units</string>
     <string name="pref_imperial_units_summaryOff">off todo</string>
     <string name="pref_imperial_units_summaryOn">on todo</string>
+    <string name="error_module_shortcut">Unable to send intent:</string>
+    <string name="module_shortcuts_new">New shortcut</string>
 </resources>

@@ -1,11 +1,15 @@
 package com.eclubprague.cardashboard.core.data.database;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.data.Constants;
 import com.eclubprague.cardashboard.core.data.ModuleSupplier;
+import com.eclubprague.cardashboard.core.modules.base.AbstractShortcutModule;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.IParentModule;
@@ -14,6 +18,7 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
 import com.eclubprague.cardashboard.core.modules.predefined.BackModule;
 import com.eclubprague.cardashboard.core.modules.predefined.EmptyModule;
 import com.eclubprague.cardashboard.core.modules.predefined.SimpleParentModule;
+import com.eclubprague.cardashboard.core.modules.predefined.SimpleShortcutModule;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +30,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +48,7 @@ public class ModuleDAO {
     public static final String COLUMN_TITLE_RESOURCE_NAME = "titleResourceName";
     public static final String COLUMN_TITLE_RESOURCE_PACKAGE = "titleResourcePackage";
     public static final String COLUMN_TITLE_RESOURCE_TYPE = "titleResourceType";
+    public static final String COLUMN_INTENT = "intent";
 
     public static final String EXCEPTION_START = "JSON file error: ";
 
@@ -141,6 +148,8 @@ public class ModuleDAO {
             module = loadParentModule(context, moduleObject);
         } else if (EmptyModule.class.equals(moduleClass)) {
             module = new EmptyModule();
+        } else if (AbstractShortcutModule.class.isAssignableFrom(moduleClass)) { // shortcut module
+            module = loadShortcutModule(context, moduleObject);
         } else if (get(moduleClass) != null) {
             module = fillModule(get(moduleClass), context, moduleObject);
         } else {
@@ -162,6 +171,38 @@ public class ModuleDAO {
         if (iconResource != null) {
             module.setIcon(iconResource);
         }
+        return module;
+    }
+
+    private AbstractShortcutModule loadShortcutModule(Context context, JSONObject jsonObject) throws IOException {
+        String intentString;
+        try {
+            intentString = jsonObject.getString(COLUMN_INTENT);
+        } catch (JSONException e) {
+            throw new IOException(EXCEPTION_START + "no intent defined", e);
+        }
+        Intent intent;
+        try {
+            intent = Intent.parseUri(intentString, 0);
+        } catch (URISyntaxException e) {
+            throw new IOException(EXCEPTION_START + "wrong URI format", e);
+        }
+        StringResource titleResource;
+        titleResource = getTitle(context, jsonObject);
+        if (titleResource == null) {
+            titleResource = getTitleFromResource(context, jsonObject);
+        }
+        IconResource iconResource = getIcon(context, jsonObject);
+        if (iconResource == null) {
+            try {
+                iconResource = IconResource.fromDrawable(context.getPackageManager().getApplicationIcon(intent.getPackage()));
+            } catch (PackageManager.NameNotFoundException e) {
+                iconResource = IconResource.fromResourceId(R.drawable.ic_exit_to_app_black_24dp);
+            }
+        }
+
+        AbstractShortcutModule module = new SimpleShortcutModule(titleResource, iconResource);
+        module.setIntent(intent);
         return module;
     }
 
@@ -261,11 +302,17 @@ public class ModuleDAO {
         }
         IconResource iconResource = module.getIcon();
         if (iconResource.getResourceId() == 0) {
-            throw new UnsupportedOperationException("Icon must have resource ID");
+            if (module instanceof AbstractShortcutModule) {
+            } else {
+                throw new UnsupportedOperationException("Icon must have resource ID");
+            }
         } else {
             jsonObject.put(COLUMN_ICON_RESOURCE_NAME, context.getResources().getResourceEntryName(iconResource.getResourceId()));
             jsonObject.put(COLUMN_ICON_RESOURCE_PACKAGE, context.getResources().getResourcePackageName(iconResource.getResourceId()));
             jsonObject.put(COLUMN_ICON_RESOURCE_TYPE, context.getResources().getResourceTypeName(iconResource.getResourceId()));
+        }
+        if (module instanceof AbstractShortcutModule) {
+            jsonObject.put(COLUMN_INTENT, ((AbstractShortcutModule) module).getIntent().toUri(0));
         }
         jsonObject.put(COLUMN_CLASS, module.getClass().getName());
         return jsonObject;

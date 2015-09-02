@@ -19,6 +19,7 @@ import com.eclubprague.cardashboard.core.modules.custom.DeviceBatteryModule;
 import com.eclubprague.cardashboard.core.modules.custom.FolderModule;
 import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
 import com.eclubprague.cardashboard.core.modules.custom.ObdRPMModule;
+import com.eclubprague.cardashboard.core.modules.custom.NewShortcutModule;
 import com.eclubprague.cardashboard.core.modules.predefined.SimpleParentModule;
 
 import java.io.IOException;
@@ -64,6 +65,9 @@ abstract public class ModuleSupplier {
             IParentModule shortcutsParent = new SimpleParentModule(
                     StringResource.fromString("Shortcuts"),
                     IconResource.fromResourceId(R.drawable.ic_settings_black_24dp)
+            );
+            shortcutsParent.addSubmodules(
+                    new NewShortcutModule()
             );
             homeScreenModule.addSubmodules(
                     obdParent,

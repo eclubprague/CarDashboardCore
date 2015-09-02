@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
+import com.eclubprague.cardashboard.core.R;
+import com.eclubprague.cardashboard.core.application.GlobalApplication;
 import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
@@ -18,8 +20,17 @@ import com.eclubprague.cardashboard.core.views.ModuleView;
  * It leads to an external application through predefined Intent.
  */
 abstract public class AbstractShortcutModule extends AbstractSimpleModule {
-    private final Intent intent;
-    private final StringResource errorMessage;
+    private Intent intent;
+    private StringResource errorMessage;
+    private static final StringResource defaultError = StringResource.fromResourceId(R.string.error_module_shortcut);
+
+    public AbstractShortcutModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource) {
+        super(titleResource, iconResource);
+    }
+
+    public AbstractShortcutModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
+        super(titleResource, iconResource, bgColorResource, fgColorResource);
+    }
 
     public AbstractShortcutModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull Intent intent, @NonNull StringResource errorMessage) {
         super(titleResource, iconResource);
@@ -31,6 +42,15 @@ abstract public class AbstractShortcutModule extends AbstractSimpleModule {
         super(titleResource, iconResource, bgColorResource, fgColorResource);
         this.intent = intent;
         this.errorMessage = errorMessage;
+    }
+
+    public void setIntent(Intent intent) {
+        this.intent = intent;
+        this.errorMessage = StringResource.fromString(defaultError.getString(GlobalApplication.getInstance().getContext()) + intent.toUri(0));
+    }
+
+    public Intent getIntent() {
+        return intent;
     }
 
     @Override
