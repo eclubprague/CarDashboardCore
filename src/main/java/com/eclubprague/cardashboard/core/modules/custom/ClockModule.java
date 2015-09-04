@@ -12,6 +12,9 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
 
 import java.util.Calendar;
 
+/**
+ * Module displaying Clock (in format HH:MM)
+ */
 public class ClockModule extends AbstractTimedUpdateDisplayModule<GlobalMediumUpdateEvent> {
 
     public static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.module_others_clock_title);
