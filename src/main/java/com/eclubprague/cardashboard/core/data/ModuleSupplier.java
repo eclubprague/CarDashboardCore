@@ -1,26 +1,20 @@
 package com.eclubprague.cardashboard.core.data;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.util.Log;
 
-import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.application.GlobalApplication;
 import com.eclubprague.cardashboard.core.data.database.ModuleDAO;
+import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.IParentModule;
 import com.eclubprague.cardashboard.core.modules.base.models.ModuleId;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.custom.ClockModule;
-import com.eclubprague.cardashboard.core.modules.custom.ClockSecondsModule;
 import com.eclubprague.cardashboard.core.modules.custom.CompassModule;
 import com.eclubprague.cardashboard.core.modules.custom.DeviceBatteryModule;
-import com.eclubprague.cardashboard.core.modules.custom.FolderModule;
 import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
-import com.eclubprague.cardashboard.core.modules.custom.ObdRPMModule;
-import com.eclubprague.cardashboard.core.modules.custom.NewShortcutModule;
-import com.eclubprague.cardashboard.core.modules.predefined.SimpleParentModule;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,146 +29,32 @@ import java.util.Map;
  */
 abstract public class ModuleSupplier {
     private static final String TAG = ModuleSupplier.class.getSimpleName();
-
-    private static final ModuleSupplier baseInstance = new ModuleSupplier() {
-        @Override
-        protected IParentModule createHomeScreenModule(IModuleContext moduleContext) {
-//            Log.d(TAG, "creating base instance");
-            IParentModule homeScreenModule = homeScreenModule();
-            IParentModule obdParent = new SimpleParentModule(
-                    StringResource.fromString("OBD data"),
-                    IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp));
-            obdParent.addSubmodules(new GpsSpeedModule());
-            obdParent.addSubmodules(new ObdRPMModule(StringResource.fromString("RPM"),
-                    IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp),
-                    StringResource.fromString("RPM")));
-            IParentModule otherParent = new SimpleParentModule(
-                    StringResource.fromString("Other"),
-                    IconResource.fromResourceId(R.drawable.ic_apps_black_24dp));
-            otherParent.addSubmodules(
-                    new FolderModule(),
-                    new ClockModule(),
-                    new ClockSecondsModule(),
-                    new DeviceBatteryModule(),
-                    new CompassModule()
-            );
-            IParentModule settingsParent = new SimpleParentModule(
-                    StringResource.fromString("Settings"),
-                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp)
-            );
-            IParentModule shortcutsParent = new SimpleParentModule(
-                    StringResource.fromString("Shortcuts"),
-                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp)
-            );
-            shortcutsParent.addSubmodules(
-                    new NewShortcutModule()
-            );
-            homeScreenModule.addSubmodules(
-                    obdParent,
-                    otherParent,
-                    settingsParent,
-                    shortcutsParent
-            );
-            putRecursively(homeScreenModule);
-            return homeScreenModule;
-        }
-    };
     private static final ModuleSupplier personalInstance = new ModuleSupplier() {
         @Override
         protected IParentModule createHomeScreenModule(IModuleContext moduleContext) {
-//            Log.d(TAG, "creating personal instance");
-//            IParentModule homeScreenModule = homeScreenModule();
-//            List<IModule> modules = new ArrayList<>();
-//            AbstractParentModule submenuModule;
-//            modules.add(new DeviceBatteryModule());
-//            modules.add(new GpsSpeedModule());
-//            modules.add(new TestSimpleModule(
-//                    StringResource.fromString("Settings"),
-//                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp)));
-//            modules.add(submenuModule = new SimpleParentModule(
-//                    StringResource.fromString("OBD"),
-//                    IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp)));
-//            modules.add(new TestSimpleModule(
-//                    StringResource.fromString("Voice input"),
-//                    IconResource.fromResourceId(R.drawable.ic_mic_black_24dp)));
-//            modules.add(new GoogleMapsModule());
-//            modules.add(new TestSimpleModule(
-//                    StringResource.fromString("SMS"),
-//                    IconResource.fromResourceId(R.drawable.ic_chat_black_24dp)));
-//            modules.add(new TestSimpleModule(
-//                    StringResource.fromString("Email"),
-//                    IconResource.fromResourceId(R.drawable.ic_email_black_24dp)));
-////        String gm = "Google maps";
-////        StringBuilder sb = new StringBuilder();
-////        for (int i = 0; i < 10; i++) {
-////            sb.append(gm.charAt(i % gm.length()));
-////            modules.add(new TestSimpleModule(
-////                    null,
-////                    homeScreenModule, StringResource.fromString(sb.toString()),
-////                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp),
-////                    null, null));
-////        }
-//            List<IModule> carModules = new ArrayList<>();
-//            TestDisplayModule testDisplayModule;
-//            carModules.add(testDisplayModule = new TestDisplayModule(
-//                    StringResource.fromString("Speed"),
-//                    IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp),
-//                    StringResource.fromString("kmph")
-//            ));
-//            submenuModule.addSubmodules(testDisplayModule);
-//            carModules.add(testDisplayModule = new TestDisplayModule(
-//                    StringResource.fromString("Click counter"),
-//                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp),
-//                    StringResource.fromString("clicks")
-//            ));
-//            submenuModule.addSubmodules(new ClockModule());
-//            testDisplayModule.updateValue(Integer.toString(999));
-//            submenuModule.addSubmodules(testDisplayModule);
-//            homeScreenModule.addSubmodules(modules);
-//            putRecursively(homeScreenModule);
 
-
-//            IParentModule homeScreenModule = homeScreenModule();
-//            IParentModule obdParent = new SimpleParentModule(
-//                    StringResource.fromString("OBD"),
-//                    IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp));
-//            obdParent.addSubmodules(new GpsSpeedModule());
-//            IParentModule otherParent = new SimpleParentModule(
-//                    StringResource.fromString("Other"),
-//                    IconResource.fromResourceId(R.drawable.ic_open_with_black_24dp));
-//            otherParent.addSubmodules(
-//                    new ClockModule(),
-//                    new DeviceBatteryModule()
-//            );
-//            IParentModule settingsParent = new SimpleParentModule(
-//                    StringResource.fromString("Settings"),
-//                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp));
-//            homeScreenModule.addSubmodules(obdParent, otherParent, settingsParent);
-//            putRecursively(homeScreenModule);
-//
-//            ModuleDAO moduleDAO = new ModuleDAO(moduleContext);
-//            try {
-//                String data = moduleDAO.writeParentModule(homeScreenModule);
-////                Log.d(TAG, "data length: " + data.length() );
-//                homeScreenModule = moduleDAO.readParentModule(data);
-//                moduleDAO.saveParentModule(homeScreenModule);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//            putRecursively(homeScreenModule);
-
+            Context context = GlobalApplication.getInstance().getContext();
             IParentModule homeScreenModule = null;
-            ModuleDAO moduleDAO = new ModuleDAO(moduleContext);
             try {
-                homeScreenModule = moduleDAO.loadParentModule();
+                homeScreenModule = ModuleDAO.loadParentModule(context);
             } catch (IOException e) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(GlobalApplication.getInstance().getContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Unable to load personal settings. Loading default.").setMessage(e.getMessage()).create().show();
                 // should be prompt with file error
 //                throw new RuntimeException(e);
             }
             if (homeScreenModule == null) {
-                homeScreenModule = ModuleSupplier.defaultInstance.getHomeScreenModule(moduleContext).copyDeep();
+                homeScreenModule = (IParentModule) ModuleEnum.HOMESCREEN_PARENT.newInstance();
+                IParentModule obdParent = (IParentModule) ModuleEnum.OBD_PARENT.newInstance();
+                obdParent.addSubmodules(new GpsSpeedModule());
+                IParentModule otherParent = (IParentModule) ModuleEnum.OTHER_PARENT.newInstance();
+                otherParent.addSubmodules(
+                        new ClockModule(),
+                        new DeviceBatteryModule(),
+                        new CompassModule()
+                );
+                IParentModule settingsParent = (IParentModule) ModuleEnum.SETTINGS_PARENT.newInstance();
+                homeScreenModule.addSubmodules(obdParent, otherParent, settingsParent);
             }
             putRecursively(homeScreenModule);
 
@@ -182,33 +62,6 @@ abstract public class ModuleSupplier {
             return homeScreenModule;
         }
     };
-
-    private static final ModuleSupplier defaultInstance = new ModuleSupplier() {
-        @Override
-        protected IParentModule createHomeScreenModule(IModuleContext moduleContext) {
-//            Log.d(TAG, "creating default instance");
-            IParentModule homeScreenModule = homeScreenModule();
-            IParentModule obdParent = new SimpleParentModule(
-                    StringResource.fromString("OBD data"),
-                    IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp));
-            obdParent.addSubmodules(new GpsSpeedModule());
-            IParentModule otherParent = new SimpleParentModule(
-                    StringResource.fromString("Other"),
-                    IconResource.fromResourceId(R.drawable.ic_apps_black_24dp));
-            otherParent.addSubmodules(
-                    new ClockModule(),
-                    new DeviceBatteryModule(),
-                    new CompassModule()
-            );
-            IParentModule settingsParent = new SimpleParentModule(
-                    StringResource.fromString("Settings"),
-                    IconResource.fromResourceId(R.drawable.ic_settings_black_24dp));
-            homeScreenModule.addSubmodules(obdParent, otherParent, settingsParent);
-            putRecursively(homeScreenModule);
-            return homeScreenModule;
-        }
-    };
-
 
     private static final Map<ModuleId, IModule> map = new HashMap<>();
     private IParentModule homeScreenModule;
@@ -218,14 +71,6 @@ abstract public class ModuleSupplier {
 
     public static ModuleSupplier getPersonalInstance() {
         return personalInstance;
-    }
-
-    public static ModuleSupplier getBaseInstance() {
-        return baseInstance;
-    }
-
-    public static ModuleSupplier getDefaultInstance() {
-        return defaultInstance;
     }
 
     public IModule findModule(IModuleContext moduleContext, ModuleId id) {
@@ -252,6 +97,10 @@ abstract public class ModuleSupplier {
         }
     }
 
+    public void remove(IModule module) {
+        map.remove(module.getId());
+    }
+
     public IParentModule getHomeScreenModule(IModuleContext moduleContext) {
         if (homeScreenModule == null) {
             homeScreenModule = createHomeScreenModule(moduleContext);
@@ -264,8 +113,7 @@ abstract public class ModuleSupplier {
     }
 
     public void save(IModuleContext moduleContext) throws IOException {
-        ModuleDAO moduleDAO = new ModuleDAO(moduleContext);
-        moduleDAO.saveParentModule(getHomeScreenModule(moduleContext));
+        ModuleDAO.saveParentModuleAsync(moduleContext.getContext(), getHomeScreenModule(moduleContext));
     }
 
     public void clear() {
@@ -279,17 +127,10 @@ abstract public class ModuleSupplier {
             if (m instanceof IParentModule) {
                 putRecursively((IParentModule) m);
             } else {
-                Log.d(TAG, "Putting in BaseSupplier: " + m.getClass().getSimpleName());
+//                Log.d(TAG, "Putting in BaseSupplier: " + m.getClass().getSimpleName());
                 put(m);
             }
         }
-    }
-
-    protected IParentModule homeScreenModule() {
-        return new SimpleParentModule(
-                StringResource.fromResourceId(R.string.module_home_title),
-                IconResource.fromResourceId(R.drawable.ic_home_black_24dp)
-        );
     }
 
     protected abstract IParentModule createHomeScreenModule(IModuleContext moduleContext);

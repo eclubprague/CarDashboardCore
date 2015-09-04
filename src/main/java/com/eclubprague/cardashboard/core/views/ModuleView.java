@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
+import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.models.ViewId;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
@@ -21,6 +22,7 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
  */
 public class ModuleView extends RelativeLayout {
     private IModule module;
+    private IModuleContext moduleContext;
     private ImageView iconView;
     private TextView titleView;
     private ViewGroup viewHolder;
@@ -46,8 +48,21 @@ public class ModuleView extends RelativeLayout {
         return module;
     }
 
-    public void setModule(IModule module) {
+    public void setModule(final IModuleContext moduleContext, final IModule module) {
+        this.moduleContext = moduleContext;
         this.module = module;
+//        final ModuleView thisView = this;
+//        addOnAttachStateChangeListener(new OnAttachStateChangeListener() {
+//            @Override
+//            public void onViewAttachedToWindow(View v) {
+//                module.addView(moduleContext, thisView);
+//            }
+//
+//            @Override
+//            public void onViewDetachedFromWindow(View v) {
+//                module.removeView(moduleContext, thisView);
+//            }
+//        });
     }
 
     public ViewId getViewId() {
@@ -76,5 +91,29 @@ public class ModuleView extends RelativeLayout {
         }
         titleResource.setInView(titleView);
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "ModuleView{" +
+                "viewId=" + viewId +
+                ", module=" + module +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ModuleView that = (ModuleView) o;
+
+        return !(viewId != null ? !viewId.equals(that.viewId) : that.viewId != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return viewId != null ? viewId.hashCode() : 0;
     }
 }

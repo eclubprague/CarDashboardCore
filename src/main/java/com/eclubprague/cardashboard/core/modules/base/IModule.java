@@ -3,14 +3,13 @@ package com.eclubprague.cardashboard.core.modules.base;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
 import com.eclubprague.cardashboard.core.modules.base.models.ModuleId;
 import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.views.ModuleView;
-
-import java.util.List;
 
 /**
  * Created by Michael on 9. 7. 2015.
@@ -39,9 +38,15 @@ public interface IModule extends IModuleListener, IQuickMenuListener, IActivityS
 
     ModuleView createView(IModuleContext moduleContext, ViewGroup parent);
 
-    List<ModuleView> getViews(IModuleContext context);
+//    List<ModuleView> getViews(IModuleContext context);
 
-    IModule removeViews(IModuleContext context);
+//    IModule removeViews(IModuleContext context);
+
+//    IModule addView(IModuleContext moduleContext, ModuleView moduleView);
+
+//    IModule removeView(IModuleContext moduleContext, ModuleView moduleView);
+//
+//    IModule removeView(ModuleView moduleView);
 
     ViewWithHolder<ModuleView> createViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent);
 
@@ -52,5 +57,7 @@ public interface IModule extends IModuleListener, IQuickMenuListener, IActivityS
     void setHolder(ViewGroup holder);
 
     ViewGroup getHolder();
+
+    ModuleEnum getModuleEnum();
 
 }

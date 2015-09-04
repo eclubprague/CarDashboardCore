@@ -1,5 +1,7 @@
 package com.eclubprague.cardashboard.core.utils;
 
+import android.util.Log;
+
 import java.util.List;
 
 /**
@@ -9,11 +11,17 @@ public class ListUtils {
 
     public static <T> int getNthIndexOf(List<T> list, T elem, int n) {
         int skip = 0;
+        Log.d("ListUtils", "Looking for: " + elem);
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).equals(elem)) {
+                Log.d("ListUtils", "EQUAL: " + list.get(i));
+                Log.d("ListUtils", "EQUAL: " + skip + " vs " + n);
                 if (skip++ == n) {
+                    Log.d("ListUtils", "EQUAL: returning " + i);
                     return i;
                 }
+            } else {
+                Log.d("ListUtils", "NOT EQUAL: " + list.get(i));
             }
         }
         return -1;

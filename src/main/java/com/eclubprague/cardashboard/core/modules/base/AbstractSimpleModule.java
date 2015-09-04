@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.application.GlobalApplication;
+import com.eclubprague.cardashboard.core.data.ModuleSupplier;
+import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
 import com.eclubprague.cardashboard.core.modules.base.models.ModuleId;
 import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
@@ -14,9 +16,7 @@ import com.eclubprague.cardashboard.core.utils.ModuleViewFactory;
 import com.eclubprague.cardashboard.core.views.ModuleView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -27,22 +27,26 @@ import java.util.Set;
  */
 abstract public class AbstractSimpleModule implements IModule {
     private final ModuleId id;
+    private final ModuleEnum moduleEnum;
     private StringResource titleResource;
     private IconResource iconResource;
     private ColorResource bgColorResource;
     private ColorResource fgColorResource;
     private ModuleView view;
-    private HashMap<IModuleContext, List<ModuleView>> viewMap = new HashMap<>();
+    public List<ModuleView> views = new ArrayList<>();
+    //    private HashMap<IModuleContext, List<ModuleView>> viewMap = new HashMap<>();
     private ViewGroup holderView;
     private static final String TAG = AbstractSimpleModule.class.getSimpleName();
 
-    public AbstractSimpleModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource) {
+    public AbstractSimpleModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
+        this.moduleEnum = moduleEnum;
         this.id = ModuleId.createNew();
         this.titleResource = titleResource;
         this.iconResource = iconResource;
     }
 
-    public AbstractSimpleModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
+    public AbstractSimpleModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
+        this.moduleEnum = moduleEnum;
         this.id = ModuleId.createNew();
         this.titleResource = titleResource;
         this.iconResource = iconResource;
@@ -120,8 +124,8 @@ abstract public class AbstractSimpleModule implements IModule {
     @Override
     public ModuleView createView(IModuleContext moduleContext, ViewGroup parent) {
         view = createNewView(moduleContext, parent);
-        addView(moduleContext, view);
-        view.setModule(this);
+        view.setModule(moduleContext, this);
+        views.add(view);
         return view;
     }
 
@@ -129,9 +133,9 @@ abstract public class AbstractSimpleModule implements IModule {
     public ViewWithHolder<ModuleView> createViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
         ViewWithHolder<ModuleView> viewWithHolder = createNewViewWithHolder(moduleContext, holderResourceId, holderParent);
         view = viewWithHolder.view;
-        addView(moduleContext, view);
+        views.add(view);
         holderView = viewWithHolder.holder;
-        view.setModule(this);
+        view.setModule(moduleContext, this);
         view.setViewHolder(holderView);
         return viewWithHolder;
     }
@@ -151,29 +155,51 @@ abstract public class AbstractSimpleModule implements IModule {
 
     abstract protected ViewWithHolder<ModuleView> createNewViewWithHolder(IModuleContext context, int holderResourceId, ViewGroup holderParent);
 
-    @Override
-    public List<ModuleView> getViews(IModuleContext context) {
-        List<ModuleView> moduleViews = viewMap.get(context);
-        if (moduleViews == null) {
-            moduleViews = Collections.emptyList();
-        }
-        return moduleViews;
+    public ModuleView getView() {
+        return view;
     }
+//    @Override
+//    public List<ModuleView> getViews(IModuleContext context) {
+//        List<ModuleView> moduleViews = viewMap.get(context);
+//        if (moduleViews == null) {
+//            moduleViews = Collections.emptyList();
+//        }
+//        return moduleViews;
+//    }
 
-    @Override
-    public IModule removeViews(IModuleContext context) {
-        viewMap.remove(context);
-        return this;
-    }
+//    @Override
+//    public IModule removeViews(IModuleContext context) {
+//        viewMap.remove(context);
+//        return this;
+//    }
 
-    private void addView(IModuleContext context, ModuleView view) {
-        List<ModuleView> moduleViews = viewMap.get(context);
-        if (moduleViews == null) {
-            moduleViews = new ArrayList<>();
-            viewMap.put(context, moduleViews);
-        }
-        moduleViews.add(view);
-    }
+//    @Override
+//    public IModule removeView(IModuleContext moduleContext, ModuleView moduleView) {
+//        List<ModuleView> moduleViews = viewMap.get(moduleContext);
+//        if (moduleViews != null) {
+//            moduleViews.remove(moduleView);
+//        }
+//        return this;
+//    }
+
+//    @Override
+//    public IModule removeView(ModuleView moduleView) {
+//        for(List<ModuleView> views : viewMap.values()){
+//            views.remove(moduleView);
+//        }
+//        return this;
+//    }
+
+//    @Override
+//    public IModule addView(IModuleContext context, ModuleView view) {
+//        List<ModuleView> moduleViews = viewMap.get(context);
+//        if (moduleViews == null) {
+//            moduleViews = new ArrayList<>();
+//            viewMap.put(context, moduleViews);
+//        }
+//        moduleViews.add(view);
+//        return this;
+//    }
 
     @Override
     public void setHolder(ViewGroup holder) {
@@ -199,6 +225,10 @@ abstract public class AbstractSimpleModule implements IModule {
     @Override
     public void onEvent(ModuleEvent event, ModuleView moduleView, IModuleContext moduleContext) {
         moduleContext.onModuleEvent(this, moduleView, event);
+        switch (event) {
+            case DELETE:
+                ModuleSupplier.getPersonalInstance().remove(this);
+        }
     }
 
     @Override
@@ -250,7 +280,7 @@ abstract public class AbstractSimpleModule implements IModule {
 
     @Override
     public void onDestroy(IModuleContext moduleContext) {
-        viewMap.remove(moduleContext);
+//        viewMap.remove(moduleContext);
     }
 
     @Override
@@ -264,5 +294,10 @@ abstract public class AbstractSimpleModule implements IModule {
 
     public boolean hasBackgroundColor() {
         return bgColorResource != null;
+    }
+
+    @Override
+    public ModuleEnum getModuleEnum() {
+        return moduleEnum;
     }
 }

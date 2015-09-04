@@ -1,12 +1,14 @@
 package com.eclubprague.cardashboard.core.model.eventbus;
 
+import android.util.Log;
+
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.Event;
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.MainThreadReceiver;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Michael on 11. 8. 2015.
@@ -20,14 +22,14 @@ public enum FastEventBus {
         return INSTANCE;
     }
 
-    private final Map<Class<? extends Event>, List<MainThreadReceiver>> listenersMap = new HashMap<>();
+    private final Map<Class<? extends Event>, Set<MainThreadReceiver>> listenersMap = new HashMap<>();
 
     public synchronized <T extends Event> void register(MainThreadReceiver<T> receiver, Class<T> eventClass) {
-//        Log.d(TAG, "receiver registered: " + receiver.getClass().getSimpleName());
-        List<MainThreadReceiver> eventListeners;
+        Log.d(TAG, "receiver registered: " + receiver);
+        Set<MainThreadReceiver> eventListeners;
         eventListeners = listenersMap.get(eventClass);
         if (eventListeners == null) {
-            eventListeners = new ArrayList<>();
+            eventListeners = new HashSet<>();
             listenersMap.put(eventClass, eventListeners);
         }
 //        if (!eventListeners.contains(receiver)) {
@@ -36,7 +38,8 @@ public enum FastEventBus {
     }
 
     public synchronized <T extends Event> void unregister(MainThreadReceiver<T> receiver, Class<T> eventClass) {
-        List<MainThreadReceiver> eventListeners = listenersMap.get(eventClass);
+        Log.d(TAG, "receiver unregistered: " + receiver);
+        Set<MainThreadReceiver> eventListeners = listenersMap.get(eventClass);
         if (eventListeners != null) {
             eventListeners.remove(receiver);
 //            Log.d(TAG, "remaining listeners:");
@@ -47,7 +50,7 @@ public enum FastEventBus {
     }
 
     public synchronized void post(Event event) {
-        List<MainThreadReceiver> eventListeners = listenersMap.get(event.getClass());
+        Set<MainThreadReceiver> eventListeners = listenersMap.get(event.getClass());
         if (eventListeners != null) {
 //            Log.d(TAG, "posting event: " + event.getClass().getSimpleName() + " to listeners");
             for (MainThreadReceiver receiver : eventListeners) {

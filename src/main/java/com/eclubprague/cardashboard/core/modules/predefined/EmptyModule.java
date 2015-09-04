@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.R;
+import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
 import com.eclubprague.cardashboard.core.modules.base.AbstractSimpleModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.ModuleEvent;
@@ -21,15 +22,15 @@ import com.eclubprague.cardashboard.core.views.ModuleView;
  */
 public class EmptyModule extends AbstractSimpleModule {
 
-    private static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.appmenu_module_add_title);
-    private static final IconResource ICON_RESOURCE = IconResource.fromResourceId(R.drawable.ic_add_black_24dp);
+    public static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.appmenu_module_add_title);
+    public static final IconResource ICON_RESOURCE = IconResource.fromResourceId(R.drawable.ic_add_black_24dp);
 
     public EmptyModule() {
-        super(TITLE_RESOURCE, ICON_RESOURCE);
+        super(ModuleEnum.EMPTY, TITLE_RESOURCE, ICON_RESOURCE);
     }
 
     public EmptyModule(@NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource);
+        super(ModuleEnum.EMPTY, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource);
     }
 
     @Override

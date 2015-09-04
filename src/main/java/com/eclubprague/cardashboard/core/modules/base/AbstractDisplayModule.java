@@ -3,7 +3,7 @@ package com.eclubprague.cardashboard.core.modules.base;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
-import com.eclubprague.cardashboard.core.application.GlobalApplication;
+import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
 import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
@@ -11,8 +11,6 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
 import com.eclubprague.cardashboard.core.utils.ModuleViewFactory;
 import com.eclubprague.cardashboard.core.views.ModuleActiveView;
 import com.eclubprague.cardashboard.core.views.ModuleView;
-
-import java.util.List;
 
 /**
  * Created by Michael on 16. 7. 2015.
@@ -26,13 +24,13 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule {
     private StringResource unitResource;
 
 
-    public AbstractDisplayModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull StringResource unitResource) {
-        super(titleResource, iconResource);
+    public AbstractDisplayModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, StringResource unitResource) {
+        super(moduleEnum, titleResource, iconResource);
         this.unitResource = unitResource;
     }
 
-    public AbstractDisplayModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, @NonNull StringResource unitResource) {
-        super(titleResource, iconResource, bgColorResource, fgColorResource);
+    public AbstractDisplayModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, StringResource unitResource) {
+        super(moduleEnum, titleResource, iconResource, bgColorResource, fgColorResource);
         this.unitResource = unitResource;
     }
 
@@ -46,32 +44,29 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule {
     }
 
     public void updateValue(String value) {
-        IModuleContext moduleContext = GlobalApplication.getInstance().getModuleContext();
+//        Log.d("DisplayModule", "updating value for module: " + this);
+//        Log.d("DisplayModule", "with view: " + getView());
         this.value = value;
-        if (value == null || getViews(moduleContext) == null) {
+//        for(ModuleView v : views){
+//            v.setVa
+//        }
+        if (value == null || getView() == null) {
             return;
         } else {
-            List<ModuleView> moduleViewList = getViews(moduleContext);
-            for (ModuleView moduleView : moduleViewList) {
-                ModuleActiveView moduleActiveView = (ModuleActiveView) moduleView;
-                moduleActiveView.setValue(value);
-            }
+//            List<ModuleView> moduleViewList = getViews(moduleContext);
+//            for (ModuleView moduleView : moduleViewList) {
+//                ModuleActiveView moduleActiveView = (ModuleActiveView) moduleView;
+//                moduleActiveView.setValue(value);
+//            }
+            ModuleActiveView v = (ModuleActiveView) getView();
+            v.setValue(value);
         }
-    }
-
-    private void firstUpdate(String value, ModuleActiveView view) {
-        IModuleContext moduleContext = GlobalApplication.getInstance().getModuleContext();
-        if (value == null || getViews(moduleContext) == null) {
-            return;
-        }
-        this.value = value;
-        view.setValue(value);
     }
 
     @Override
     public ModuleView createNewView(IModuleContext moduleContext, ViewGroup parent) {
         ModuleActiveView view = ModuleViewFactory.createActive(moduleContext, parent, this, getIcon(), getTitle(), getUnit());
-        firstUpdate(value, view);
+        view.setValue(getUpdatedValue());
         return view;
     }
 
@@ -79,13 +74,15 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule {
     public ViewWithHolder<ModuleView> createNewViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
         ViewWithHolder<ModuleActiveView> viewWithHolder = ModuleViewFactory.createActiveWithHolder(moduleContext, holderResourceId, holderParent, this, getIcon(), getTitle(), getUnit());
         ModuleActiveView view = viewWithHolder.view;
-        firstUpdate(value, view);
+        view.setValue(getUpdatedValue());
         return new ViewWithHolder<ModuleView>(viewWithHolder.view, viewWithHolder.holder);
     }
 
     public String getValue() {
         return value;
     }
+
+    abstract public String getUpdatedValue();
 
     @Override
     public String toString() {

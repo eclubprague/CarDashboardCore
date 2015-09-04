@@ -9,19 +9,18 @@ import android.support.annotation.NonNull;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.application.GlobalApplication;
-import com.eclubprague.cardashboard.core.model.eventbus.FastEventBus;
+import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalExtraFastUpdateEvent;
-import com.eclubprague.cardashboard.core.model.eventbus.interfaces.MainThreadReceiver;
-import com.eclubprague.cardashboard.core.modules.base.AbstractDisplayModule;
+import com.eclubprague.cardashboard.core.modules.base.AbstractTimedUpdateDisplayModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 
-public class CompassModule extends AbstractDisplayModule implements MainThreadReceiver<GlobalExtraFastUpdateEvent> {
-    private static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.module_others_compass_title);
-    private static final IconResource ICON_RESOURCE = IconResource.fromResourceId(R.drawable.ic_map_black_24dp);
-    private static final StringResource UNIT_RESOURCE = StringResource.fromResourceId(R.string.module_others_compass_units);
+public class CompassModule extends AbstractTimedUpdateDisplayModule<GlobalExtraFastUpdateEvent> {
+    public static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.module_others_compass_title);
+    public static final IconResource ICON_RESOURCE = IconResource.fromResourceId(R.drawable.ic_map_black_24dp);
+    public static final StringResource UNIT_RESOURCE = StringResource.fromResourceId(R.string.module_others_compass_units);
     private static final double NORTH = 0;
     private static final double NORTH_WEST = -Math.PI / 4;
     private static final double WEST = -Math.PI / 2;
@@ -34,12 +33,12 @@ public class CompassModule extends AbstractDisplayModule implements MainThreadRe
     private String dir;
 
     public CompassModule() {
-        super(TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
+        super(ModuleEnum.COMPASS, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
         init();
     }
 
     public CompassModule(@NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
+        super(ModuleEnum.COMPASS, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
         init();
     }
 
@@ -47,7 +46,7 @@ public class CompassModule extends AbstractDisplayModule implements MainThreadRe
     Float azimut;
 
     private void init() {
-        FastEventBus.getInstance().register(this, GlobalExtraFastUpdateEvent.class);
+//        FastEventBus.getInstance().register(this, GlobalExtraFastUpdateEvent.class);
     }
 
     @Override
@@ -111,9 +110,9 @@ public class CompassModule extends AbstractDisplayModule implements MainThreadRe
     private String currentValue = "-";
 
     @Override
-    public void onEventMainThread(GlobalExtraFastUpdateEvent event) {
+    public String getUpdatedValue() {
         getSensorManager();
-        updateValue(currentValue);
+        return currentValue;
     }
 
     private SensorManager getSensorManager() {

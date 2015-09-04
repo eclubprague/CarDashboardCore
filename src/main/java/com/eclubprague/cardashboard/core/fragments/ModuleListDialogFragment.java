@@ -1,6 +1,9 @@
 package com.eclubprague.cardashboard.core.fragments;
 
 import android.app.DialogFragment;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -11,11 +14,12 @@ import android.widget.TextView;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.adapters.ModuleListAdapter;
-import com.eclubprague.cardashboard.core.data.ModuleSupplier;
+import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
-import com.eclubprague.cardashboard.core.modules.custom.FolderModule;
-import com.eclubprague.cardashboard.core.modules.custom.NewShortcutModule;
+import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
+import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.modules.predefined.SimpleShortcutModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +32,7 @@ public class ModuleListDialogFragment extends DialogFragment {
     private static final String TAG = ModuleListDialogFragment.class.getSimpleName();
 
     private IModuleContext moduleContext;
-    private final List<IModule> insertModules = new ArrayList<>();
+    private final List<ModuleEnum> insertModules = new ArrayList<>();
     private boolean multiInsert = false;
     private OnMultiAddModuleListener onMultiAddModuleListener = null;
     private OnAddModuleListener onAddModuleListener = null;
@@ -64,12 +68,12 @@ public class ModuleListDialogFragment extends DialogFragment {
         if (multiInsert) {
             adapter = new ModuleListAdapter(moduleContext, new ModuleListAdapter.OnModuleCheckListener() {
                 @Override
-                public void onInsert(IModule module) {
+                public void onInsert(ModuleEnum module) {
                     insertModules.add(module);
                 }
 
                 @Override
-                public void onRemove(IModule module) {
+                public void onRemove(ModuleEnum module) {
                     insertModules.remove(module);
                 }
             });
@@ -77,16 +81,21 @@ public class ModuleListDialogFragment extends DialogFragment {
             adapter = new ModuleListAdapter(moduleContext, new ModuleListAdapter.OnModuleSelectListener() {
 
                 @Override
-                public void onSelected(IModule module) {
-                    if (module instanceof FolderModule) {
-                        FolderModule folderModule = (FolderModule) module;
-                        FolderModule copyFolderModule = (FolderModule) folderModule.copy().removeAllSubmodules();
-                        ModuleSupplier.getPersonalInstance().put(copyFolderModule);
-                        onAddModuleListener.addModule(copyFolderModule);
-                    } else if (module instanceof NewShortcutModule) {
-                        ((NewShortcutModule) module).createNew(onAddModuleListener);
+                public void onSelected(ModuleEnum module) {
+                    if (module.equals(ModuleEnum.SHORTCUT)) {
+                        ApplicationListDialogFragment.newInstance(moduleContext, new ApplicationListDialogFragment.OnApplicationSelectedListener() {
+                            @Override
+                            public void onApplicationSelected(ApplicationInfo applicationInfo) {
+                                PackageManager pm = moduleContext.getContext().getPackageManager();
+                                StringResource titleResource = StringResource.fromString(applicationInfo.loadLabel(pm).toString());
+                                IconResource iconResource = IconResource.fromDrawable(applicationInfo.loadIcon(pm));
+                                Intent intent = pm.getLaunchIntentForPackage(applicationInfo.packageName);
+                                SimpleShortcutModule shortcutModule = (SimpleShortcutModule) ModuleEnum.SHORTCUT.newInstance(titleResource, iconResource, intent);
+                                onAddModuleListener.addModule(shortcutModule);
+                            }
+                        }).show(moduleContext.getActivity().getFragmentManager(), "Application list");
                     } else {
-                        onAddModuleListener.addModule(module);
+                        onAddModuleListener.addModule(module.newInstance());
                     }
                 }
             });
@@ -104,7 +113,11 @@ public class ModuleListDialogFragment extends DialogFragment {
             addView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onMultiAddModuleListener.addModules(insertModules);
+                    List<IModule> modules = new ArrayList<IModule>();
+                    for (ModuleEnum m : insertModules) {
+                        modules.add(m.newInstance());
+                    }
+                    onMultiAddModuleListener.addModules(modules);
                 }
             });
         } else {

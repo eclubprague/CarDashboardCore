@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.application.GlobalApplication;
+import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
 import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
@@ -24,24 +25,30 @@ abstract public class AbstractShortcutModule extends AbstractSimpleModule {
     private StringResource errorMessage;
     private static final StringResource defaultError = StringResource.fromResourceId(R.string.error_module_shortcut);
 
-    public AbstractShortcutModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource) {
-        super(titleResource, iconResource);
+    public AbstractShortcutModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
+        super(moduleEnum, titleResource, iconResource);
     }
 
-    public AbstractShortcutModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(titleResource, iconResource, bgColorResource, fgColorResource);
+    public AbstractShortcutModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
+        super(moduleEnum, titleResource, iconResource, bgColorResource, fgColorResource);
     }
 
-    public AbstractShortcutModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull Intent intent, @NonNull StringResource errorMessage) {
-        super(titleResource, iconResource);
+    public AbstractShortcutModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, Intent intent) {
+        super(moduleEnum, titleResource, iconResource);
         this.intent = intent;
-        this.errorMessage = errorMessage;
+        this.errorMessage = StringResource.fromString(defaultError.getString(GlobalApplication.getInstance().getContext()) + intent.toUri(0));
     }
 
-    public AbstractShortcutModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, @NonNull Intent intent, @NonNull StringResource errorMessage) {
-        super(titleResource, iconResource, bgColorResource, fgColorResource);
-        this.intent = intent;
+    public AbstractShortcutModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, StringResource errorMessage, Intent intent) {
+        super(moduleEnum, titleResource, iconResource);
         this.errorMessage = errorMessage;
+        this.intent = intent;
+    }
+
+    public AbstractShortcutModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, StringResource errorMessage, Intent intent) {
+        super(moduleEnum, titleResource, iconResource, bgColorResource, fgColorResource);
+        this.errorMessage = errorMessage;
+        this.intent = intent;
     }
 
     public void setIntent(Intent intent) {

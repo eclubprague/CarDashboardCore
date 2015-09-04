@@ -2,6 +2,7 @@ package com.eclubprague.cardashboard.core.modules.predefined;
 
 import android.support.annotation.NonNull;
 
+import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
 import com.eclubprague.cardashboard.core.modules.base.AbstractParentModule;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IParentModule;
@@ -16,17 +17,17 @@ import com.eclubprague.cardashboard.core.modules.base.models.resources.StringRes
  */
 public class SimpleParentModule extends AbstractParentModule {
 
-    public SimpleParentModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource) {
-        super(titleResource, iconResource);
+    public SimpleParentModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
+        super(moduleEnum, titleResource, iconResource);
     }
 
-    public SimpleParentModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(titleResource, iconResource, bgColorResource, fgColorResource);
+    public SimpleParentModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
+        super(moduleEnum, titleResource, iconResource, bgColorResource, fgColorResource);
     }
 
     @Override
     public IParentModule copy() {
-        SimpleParentModule newParent = new SimpleParentModule(getTitle(), getIcon());
+        SimpleParentModule newParent = new SimpleParentModule(getModuleEnum(), getTitle(), getIcon());
         if (hasBackgroundColor()) {
             newParent.setBackgroundColor(getBackgroundColor());
         }
@@ -39,7 +40,7 @@ public class SimpleParentModule extends AbstractParentModule {
 
     @Override
     public IParentModule copyDeep() {
-        SimpleParentModule newParent = new SimpleParentModule(getTitle(), getIcon());
+        SimpleParentModule newParent = new SimpleParentModule(getModuleEnum(), getTitle(), getIcon());
         if (hasBackgroundColor()) {
             newParent.setBackgroundColor(getBackgroundColor());
         }

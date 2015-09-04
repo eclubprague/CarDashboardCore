@@ -1,13 +1,16 @@
 package com.eclubprague.cardashboard.core.modules.base;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
 import com.eclubprague.cardashboard.core.model.eventbus.FastEventBus;
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.Event;
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.MainThreadReceiver;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.views.ModuleView;
 
 import java.lang.reflect.ParameterizedType;
 
@@ -17,15 +20,16 @@ import java.lang.reflect.ParameterizedType;
 public abstract class AbstractTimedUpdateDisplayModule<T extends Event> extends AbstractDisplayModule implements MainThreadReceiver<T> {
 
     private Class<T> clazz;
+    private String memory;
     private static final String TAG = AbstractTimedUpdateDisplayModule.class.getSimpleName();
 
-    public AbstractTimedUpdateDisplayModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull StringResource unitResource) {
-        super(titleResource, iconResource, unitResource);
+    public AbstractTimedUpdateDisplayModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull StringResource unitResource) {
+        super(moduleEnum, titleResource, iconResource, unitResource);
         init();
     }
 
-    public AbstractTimedUpdateDisplayModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, @NonNull StringResource unitResource) {
-        super(titleResource, iconResource, bgColorResource, fgColorResource, unitResource);
+    public AbstractTimedUpdateDisplayModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, @NonNull StringResource unitResource) {
+        super(moduleEnum, titleResource, iconResource, bgColorResource, fgColorResource, unitResource);
         init();
     }
 
@@ -51,14 +55,39 @@ public abstract class AbstractTimedUpdateDisplayModule<T extends Event> extends 
     @Override
     public void onStart(IModuleContext moduleContext) {
         super.onStart(moduleContext);
-        FastEventBus.getInstance().register(this, clazz);
+//        Log.d(TAG, "on start");
+//        FastEventBus.getInstance().register(this, clazz);
 //        Log.d(TAG, "Starting: " + getClass().getSimpleName());
     }
 
     @Override
     public void onStop(IModuleContext moduleContext) {
         super.onStop(moduleContext);
-        FastEventBus.getInstance().unregister(this, clazz);
+//        Log.d(TAG, "on stop");
+//        FastEventBus.getInstance().unregister(this, clazz);
 //        Log.d(TAG, "Stopping: " + getClass().getSimpleName());
+    }
+
+    @Override
+    public void onEvent(ModuleEvent event, ModuleView moduleView, IModuleContext moduleContext) {
+        super.onEvent(event, moduleView, moduleContext);
+        switch (event) {
+            case DELETE:
+                Log.d(TAG, "on delete");
+                FastEventBus.getInstance().unregister(this, clazz);
+        }
+    }
+
+    @Override
+    public void onEventMainThread(T event) {
+        updateValue(memory = getUpdatedValue());
+    }
+
+    protected String getLastValue() {
+        return memory;
+    }
+
+    protected void setLastValue(String lastValue) {
+        this.memory = lastValue;
     }
 }

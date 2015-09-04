@@ -5,7 +5,7 @@
     <string name="module_home_title">Car Dashboard</string>
     <string name="module_maps_title">Google Maps</string>
     <string name="module_maps_error">Google Maps required to run selected module. Please, install Google Maps first.</string>
-    <string name="module_others_clock_title">Clock</string>
+    <string name="module_others_clock_title">Clock (h:m)</string>
     <string name="module_others_clock_units">HH:MM</string>
     <string name="module_others_gpsspeed_title">Speed (GPS)</string>
     <string name="module_others_battery_title">Battery</string>
@@ -37,4 +37,13 @@
     <string name="pref_imperial_units_summaryOn">on todo</string>
     <string name="error_module_shortcut">Unable to send intent:</string>
     <string name="module_shortcuts_new">New shortcut</string>
+    <string name="error_internal">Internal application error</string>
+    <string name="module_obd_rpm_title">RPM</string>
+    <string name="module_obd_rpm_units">rpm</string>
+    <string name="module_obd_title">OBD</string>
+    <string name="module_others_title">Other</string>
+    <string name="module_settings_title">Settings</string>
+    <string name="module_shortcuts_title">Shortcuts</string>
+    <string name="module_others_clock_seconds_title">Clock (h:m:s)</string>
+    <string name="module_others_clock_seconds_units">HH:MM:SS</string>
 </resources>
