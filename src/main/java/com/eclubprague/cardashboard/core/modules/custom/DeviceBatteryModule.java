@@ -7,13 +7,13 @@ import android.os.BatteryManager;
 import android.support.annotation.NonNull;
 
 import com.eclubprague.cardashboard.core.R;
-import com.eclubprague.cardashboard.core.application.GlobalApplication;
+import com.eclubprague.cardashboard.core.application.GlobalDataProvider;
 import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalSlowUpdateEvent;
+import com.eclubprague.cardashboard.core.model.resources.ColorResource;
+import com.eclubprague.cardashboard.core.model.resources.IconResource;
+import com.eclubprague.cardashboard.core.model.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.base.AbstractTimedUpdateDisplayModule;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 
 /**
  * Created by Michael on 12.08.2015.
@@ -37,7 +37,7 @@ public class DeviceBatteryModule extends AbstractTimedUpdateDisplayModule<Global
     @Override
     public String getUpdatedValue() {
 //        Log.d(DeviceBatteryModule.class.getSimpleName(), "updating");
-        Context context = GlobalApplication.getInstance().getContext();
+        Context context = GlobalDataProvider.getInstance().getContext();
         if (context == null) {
             setIconIfChange(R.drawable.ic_battery_unknown_black_24dp);
             return "?";

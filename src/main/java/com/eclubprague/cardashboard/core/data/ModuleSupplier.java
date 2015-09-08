@@ -4,7 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.util.Log;
 
-import com.eclubprague.cardashboard.core.application.GlobalApplication;
+import com.eclubprague.cardashboard.core.application.GlobalDataProvider;
 import com.eclubprague.cardashboard.core.data.database.ModuleDAO;
 import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
@@ -33,7 +33,7 @@ abstract public class ModuleSupplier {
         @Override
         protected IParentModule createHomeScreenModule(IModuleContext moduleContext) {
 
-            Context context = GlobalApplication.getInstance().getContext();
+            Context context = GlobalDataProvider.getInstance().getContext();
             IParentModule homeScreenModule = null;
             try {
                 homeScreenModule = ModuleDAO.loadParentModule(context);
@@ -121,7 +121,7 @@ abstract public class ModuleSupplier {
     }
 
     protected void putRecursively(IParentModule parentModule) {
-        Log.d(TAG, "Putting in BaseSupplier: " + parentModule.getClass().getSimpleName() + ": " + parentModule.getTitle().getString(GlobalApplication.getInstance().getContext()));
+        Log.d(TAG, "Putting in BaseSupplier: " + parentModule.getClass().getSimpleName() + ": " + parentModule.getTitle().getString(GlobalDataProvider.getInstance().getContext()));
         put(parentModule);
         for (IModule m : parentModule.getSubmodules()) {
             if (m instanceof IParentModule) {

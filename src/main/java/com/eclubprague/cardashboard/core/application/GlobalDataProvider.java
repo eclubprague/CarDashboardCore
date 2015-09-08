@@ -1,5 +1,6 @@
 package com.eclubprague.cardashboard.core.application;
 
+import android.app.Activity;
 import android.app.IntentService;
 import android.content.Context;
 
@@ -8,21 +9,18 @@ import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 /**
  * Created by Michael on 24.08.2015.
  */
-public enum GlobalApplication {
+public enum GlobalDataProvider {
     INSTANCE;
-
-
-
 
     private IModuleContext moduleContext;
     private IntentService obdService;
 //    private Set<OnModuleContextSetListener> onModuleSelectListeners;
 
-//    GlobalApplication() {
+//    GlobalDataProvider() {
 //        onModuleSelectListeners = new HashSet<>();
 //    }
 
-    public static GlobalApplication getInstance() {
+    public static GlobalDataProvider getInstance() {
         return INSTANCE;
     }
 
@@ -30,15 +28,19 @@ public enum GlobalApplication {
         return moduleContext;
     }
 
+    public Activity getActivity() {
+        return moduleContext.getActivity();
+    }
+
     public Context getContext() {
-        if (moduleContext == null) {
-            return null;
-        }
         return moduleContext.getContext();
     }
 
     public void setModuleContext(IModuleContext moduleContext) {
         this.moduleContext = moduleContext;
+//        if(this.moduleContext instanceof Activity){
+//            setActivity(activity);
+//        }
 //        for (OnModuleContextSetListener listener : onModuleSelectListeners) {
 //            listener.onModuleContextSet(moduleContext);
 //        }

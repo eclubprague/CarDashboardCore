@@ -9,7 +9,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.eclubprague.cardashboard.core.application.GlobalApplication;
+import com.eclubprague.cardashboard.core.application.GlobalDataProvider;
 import com.eclubprague.cardashboard.core.preferences.SettingsFragment;
 import com.github.pires.obd.commands.protocol.EchoOffObdCommand;
 import com.github.pires.obd.commands.protocol.LineFeedOffObdCommand;
@@ -37,7 +37,7 @@ public class OBDGatewayService extends IntentService {
 
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
-    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(GlobalApplication.getInstance().getContext());
+    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(GlobalDataProvider.getInstance().getContext());
 
     private BluetoothDevice dev = null;
     private BluetoothSocket sock;

@@ -1,7 +1,7 @@
 package com.eclubprague.cardashboard.core.data.modules;
 
-import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.model.resources.IconResource;
+import com.eclubprague.cardashboard.core.model.resources.StringResource;
 
 /**
  * Created by Michael on 03.09.2015.

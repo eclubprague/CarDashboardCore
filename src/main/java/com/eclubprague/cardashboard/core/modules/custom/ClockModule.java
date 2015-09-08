@@ -5,10 +5,10 @@ import android.support.annotation.NonNull;
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalMediumUpdateEvent;
+import com.eclubprague.cardashboard.core.model.resources.ColorResource;
+import com.eclubprague.cardashboard.core.model.resources.IconResource;
+import com.eclubprague.cardashboard.core.model.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.base.AbstractTimedUpdateDisplayModule;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 
 import java.util.Calendar;
 

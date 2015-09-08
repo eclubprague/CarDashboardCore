@@ -50,4 +50,9 @@
     <style name="card_icon">
         <!--<item name="android:tint">?android:attr/textColorSecondary</item>-->
     </style>
+
+    <style name="button_flat">
+        <!--<item name="android:textColor">@color/secondary</item>-->
+        <item name="android:textSize">@dimen/text_size_display_small</item>
+    </style>
 </resources>

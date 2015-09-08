@@ -8,14 +8,14 @@ import android.hardware.SensorManager;
 import android.support.annotation.NonNull;
 
 import com.eclubprague.cardashboard.core.R;
-import com.eclubprague.cardashboard.core.application.GlobalApplication;
+import com.eclubprague.cardashboard.core.application.GlobalDataProvider;
 import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalExtraFastUpdateEvent;
+import com.eclubprague.cardashboard.core.model.resources.ColorResource;
+import com.eclubprague.cardashboard.core.model.resources.IconResource;
+import com.eclubprague.cardashboard.core.model.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.base.AbstractTimedUpdateDisplayModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 
 public class CompassModule extends AbstractTimedUpdateDisplayModule<GlobalExtraFastUpdateEvent> {
     public static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.module_others_compass_title);
@@ -116,7 +116,7 @@ public class CompassModule extends AbstractTimedUpdateDisplayModule<GlobalExtraF
     }
 
     private SensorManager getSensorManager() {
-        Context context = GlobalApplication.getInstance().getContext();
+        Context context = GlobalDataProvider.getInstance().getContext();
         if (mSensorManager == null && context != null) {
             mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
             if (mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) != null) {

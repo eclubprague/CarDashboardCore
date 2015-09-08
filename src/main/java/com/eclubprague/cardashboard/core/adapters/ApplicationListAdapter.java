@@ -10,9 +10,9 @@ import android.widget.BaseAdapter;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.fragments.ApplicationListDialogFragment;
+import com.eclubprague.cardashboard.core.model.resources.IconResource;
+import com.eclubprague.cardashboard.core.model.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.views.ApplistView;
 
 import java.util.ArrayList;
@@ -43,11 +43,11 @@ public class ApplicationListAdapter extends BaseAdapter {
         this.applications = new ArrayList<>();
         for (ApplicationInfo appInfo : apps) {
             if (appInfo.loadLabel(packageManager) == null) {
-                Log.d(TAG, "name is null");
+//                Log.d(TAG, "name is null");
             } else if (packageManager.getLaunchIntentForPackage(appInfo.packageName) == null) {
-                Log.d(TAG, "intent is null");
+//                Log.d(TAG, "intent is null");
             } else {
-                Log.d(TAG, "Adding application: " + appInfo.toString());
+//                Log.d(TAG, "Adding application: " + appInfo.toString());
                 applications.add(appInfo);
             }
         }

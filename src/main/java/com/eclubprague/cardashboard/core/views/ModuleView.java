@@ -9,11 +9,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eclubprague.cardashboard.core.R;
+import com.eclubprague.cardashboard.core.model.resources.IconResource;
+import com.eclubprague.cardashboard.core.model.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.models.ViewId;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 
 /**
  * Created by Michael on 13.08.2015.

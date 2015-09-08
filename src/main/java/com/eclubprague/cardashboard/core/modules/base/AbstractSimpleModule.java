@@ -4,14 +4,14 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.eclubprague.cardashboard.core.application.GlobalApplication;
+import com.eclubprague.cardashboard.core.application.GlobalDataProvider;
 import com.eclubprague.cardashboard.core.data.ModuleSupplier;
 import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
+import com.eclubprague.cardashboard.core.model.resources.ColorResource;
+import com.eclubprague.cardashboard.core.model.resources.IconResource;
+import com.eclubprague.cardashboard.core.model.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.base.models.ModuleId;
 import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.utils.ModuleViewFactory;
 import com.eclubprague.cardashboard.core.views.ModuleView;
 
@@ -142,13 +142,13 @@ abstract public class AbstractSimpleModule implements IModule {
 
 
     @Override
-    public View createQuickMenuView(ModuleView moduleView, IModuleContext moduleContext, ViewGroup parent) {
-        return ModuleViewFactory.createQuickMenu(moduleView, moduleContext, parent, this);
+    public View createQuickMenuView(IModuleContext moduleContext, ViewGroup parent) {
+        return ModuleViewFactory.createQuickMenu(getView(), moduleContext, parent, this);
     }
 
     @Override
-    public ViewWithHolder createQuickMenuViewWithHolder(ModuleView moduleView, IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
-        return ModuleViewFactory.createQuickMenuWithHolder(moduleView, moduleContext, holderResourceId, holderParent, this);
+    public ViewWithHolder createQuickMenuViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
+        return ModuleViewFactory.createQuickMenuWithHolder(getView(), moduleContext, holderResourceId, holderParent, this);
     }
 
     abstract protected ModuleView createNewView(IModuleContext context, ViewGroup parent);
@@ -235,7 +235,7 @@ abstract public class AbstractSimpleModule implements IModule {
     public String toString() {
         return getClass().getSimpleName() + "{" +
                 "id=" + id +
-                ", titleResource=" + titleResource.getString(GlobalApplication.getInstance().getModuleContext().getContext()) +
+                ", titleResource=" + titleResource.getString(GlobalDataProvider.getInstance().getModuleContext().getContext()) +
                 ", iconResource=" + iconResource +
                 ", bgColorResource=" + bgColorResource +
                 ", fgColorResource=" + fgColorResource +

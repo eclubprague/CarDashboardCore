@@ -9,8 +9,8 @@ import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
 import com.eclubprague.cardashboard.core.data.modules.ModuleInfo;
 import com.eclubprague.cardashboard.core.data.modules.ModuleInfoContainer;
+import com.eclubprague.cardashboard.core.model.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 import com.eclubprague.cardashboard.core.views.ApplistGroupView;
 import com.eclubprague.cardashboard.core.views.ApplistItemView;
 

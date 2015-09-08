@@ -53,6 +53,7 @@ public class ModuleInfoContainer extends ModuleInfo {
         ModuleInfoContainer settingsContainer = new ModuleInfoContainer(ModuleEnum.SETTINGS_PARENT);
         containers.add(settingsContainer);
         settingsContainer.add(
+                new ModuleInfo(ModuleEnum.TEST)
         );
         ModuleInfoContainer shortcutContainer = new ModuleInfoContainer(ModuleEnum.SHORTCUT_PARENT);
         containers.add(shortcutContainer);

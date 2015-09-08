@@ -9,16 +9,17 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.adapters.ModuleListAdapter;
 import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
+import com.eclubprague.cardashboard.core.model.resources.IconResource;
+import com.eclubprague.cardashboard.core.model.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.predefined.SimpleShortcutModule;
 
 import java.util.ArrayList;
@@ -60,6 +61,7 @@ public class ModuleListDialogFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         final View listView = inflater.inflate(R.layout.fragment_module_list, container, false);
         final ExpandableListView list = (ExpandableListView) listView.findViewById(R.id.applist_list_view);
         list.setGroupIndicator(null);

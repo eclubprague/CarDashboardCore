@@ -8,10 +8,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.eclubprague.cardashboard.core.R;
+import com.eclubprague.cardashboard.core.model.resources.IconResource;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.IQuickMenuListener;
 import com.eclubprague.cardashboard.core.modules.base.ModuleEvent;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
 
 /**
  * Created by Michael on 24.08.2015.

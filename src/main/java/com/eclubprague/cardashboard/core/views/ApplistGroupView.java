@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.eclubprague.cardashboard.core.R;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
+import com.eclubprague.cardashboard.core.model.resources.IconResource;
 
 /**
  * Created by Michael on 13.08.2015.

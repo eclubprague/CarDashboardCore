@@ -1,4 +1,4 @@
-package com.eclubprague.cardashboard.core.modules.base.models.resources;
+package com.eclubprague.cardashboard.core.model.resources;
 
 import android.content.Context;
 

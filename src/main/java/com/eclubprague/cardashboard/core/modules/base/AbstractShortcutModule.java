@@ -5,12 +5,12 @@ import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.R;
-import com.eclubprague.cardashboard.core.application.GlobalApplication;
+import com.eclubprague.cardashboard.core.application.GlobalDataProvider;
 import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
+import com.eclubprague.cardashboard.core.model.resources.ColorResource;
+import com.eclubprague.cardashboard.core.model.resources.IconResource;
+import com.eclubprague.cardashboard.core.model.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.utils.ModuleViewFactory;
 import com.eclubprague.cardashboard.core.views.ModuleView;
 
@@ -36,7 +36,7 @@ abstract public class AbstractShortcutModule extends AbstractSimpleModule {
     public AbstractShortcutModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, Intent intent) {
         super(moduleEnum, titleResource, iconResource);
         this.intent = intent;
-        this.errorMessage = StringResource.fromString(defaultError.getString(GlobalApplication.getInstance().getContext()) + intent.toUri(0));
+        this.errorMessage = StringResource.fromString(defaultError.getString(GlobalDataProvider.getInstance().getContext()) + intent.toUri(0));
     }
 
     public AbstractShortcutModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, StringResource errorMessage, Intent intent) {
@@ -53,7 +53,7 @@ abstract public class AbstractShortcutModule extends AbstractSimpleModule {
 
     public void setIntent(Intent intent) {
         this.intent = intent;
-        this.errorMessage = StringResource.fromString(defaultError.getString(GlobalApplication.getInstance().getContext()) + intent.toUri(0));
+        this.errorMessage = StringResource.fromString(defaultError.getString(GlobalDataProvider.getInstance().getContext()) + intent.toUri(0));
     }
 
     public Intent getIntent() {

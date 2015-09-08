@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <!--<Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/applist_toolbar"></Toolbar>-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dialog_text_area_margin"
+        android:layout_above="@+id/dialog_bar_bottom">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dialog_text_space"
+                android:id="@+id/dialog_message_short"
+                android:textSize="@dimen/text_size_display_small" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dialog_text_space"
+                android:id="@+id/dialog_message_hint"
+                android:textSize="@dimen/text_size_display_small" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dialog_text_space"
+                android:id="@+id/dialog_message_long"
+                android:visibility="gone"
+                android:textSize="@dimen/text_size_display_small" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dialog_button_more"
+                android:text="@string/dialog_more"
+                android:textAllCaps="true"
+                style="@style/button_flat" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dialog_button_margin_vertical"
+        android:id="@+id/dialog_bar_bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dialog_button_height"
+            android:layout_marginRight="@dimen/dialog_button_margin_right"
+            android:paddingRight="@dimen/dialog_button_margin_right"
+            android:paddingLeft="@dimen/dialog_button_margin_right"
+            android:id="@+id/dialog_button_ok"
+            android:text="@string/common_ok"
+            android:textAllCaps="true"
+            android:gravity="center"
+            style="@style/button_flat" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -40,8 +41,9 @@ public class ApplicationListDialogFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View listView = inflater.inflate(R.layout.fragment_application_list, container, false);
-        final ListView list = (ListView) listView.findViewById(R.id.applist_list_view);
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        View listView = inflater.inflate(R.layout.fragment_application_list, container, false);
+        ListView list = (ListView) listView.findViewById(R.id.applist_list_view);
 
         ApplicationListAdapter adapter = new ApplicationListAdapter(moduleContext, onApplicationSelectedListener);
         list.setAdapter(adapter);

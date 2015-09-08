@@ -3,13 +3,13 @@ package com.eclubprague.cardashboard.core.modules.base;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.eclubprague.cardashboard.core.application.eventbus.FastEventBus;
 import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
-import com.eclubprague.cardashboard.core.model.eventbus.FastEventBus;
 import com.eclubprague.cardashboard.core.model.eventbus.interfaces.Event;
-import com.eclubprague.cardashboard.core.model.eventbus.interfaces.MainThreadReceiver;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.model.eventbus.interfaces.EventReceiver;
+import com.eclubprague.cardashboard.core.model.resources.ColorResource;
+import com.eclubprague.cardashboard.core.model.resources.IconResource;
+import com.eclubprague.cardashboard.core.model.resources.StringResource;
 import com.eclubprague.cardashboard.core.views.ModuleView;
 
 import java.lang.reflect.ParameterizedType;
@@ -17,7 +17,7 @@ import java.lang.reflect.ParameterizedType;
 /**
  * Created by Michael on 13.08.2015.
  */
-public abstract class AbstractTimedUpdateDisplayModule<T extends Event> extends AbstractDisplayModule implements MainThreadReceiver<T> {
+public abstract class AbstractTimedUpdateDisplayModule<T extends Event> extends AbstractDisplayModule implements EventReceiver<T> {
 
     private Class<T> clazz;
     private String memory;
@@ -79,7 +79,7 @@ public abstract class AbstractTimedUpdateDisplayModule<T extends Event> extends 
     }
 
     @Override
-    public void onEventMainThread(T event) {
+    public void onEventReceived(T event) {
         updateValue(memory = getUpdatedValue());
     }
 

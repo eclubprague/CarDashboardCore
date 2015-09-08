@@ -1,6 +1,6 @@
 package com.eclubprague.cardashboard.core.application.update;
 
-import com.eclubprague.cardashboard.core.model.eventbus.FastEventBus;
+import com.eclubprague.cardashboard.core.application.eventbus.FastEventBus;
 
 /**
  * Created by Michael on 11. 8. 2015.

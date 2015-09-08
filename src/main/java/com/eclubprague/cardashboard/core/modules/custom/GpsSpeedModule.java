@@ -8,14 +8,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.eclubprague.cardashboard.core.R;
-import com.eclubprague.cardashboard.core.application.GlobalApplication;
+import com.eclubprague.cardashboard.core.application.GlobalDataProvider;
 import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalMediumUpdateEvent;
+import com.eclubprague.cardashboard.core.model.resources.ColorResource;
+import com.eclubprague.cardashboard.core.model.resources.IconResource;
+import com.eclubprague.cardashboard.core.model.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.base.AbstractTimedUpdateDisplayModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.ColorResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 
 public class GpsSpeedModule extends AbstractTimedUpdateDisplayModule<GlobalMediumUpdateEvent> implements LocationListener {
 
@@ -36,7 +36,7 @@ public class GpsSpeedModule extends AbstractTimedUpdateDisplayModule<GlobalMediu
 
     @Override
     public String getUpdatedValue() {
-        Context context = GlobalApplication.getInstance().getContext();
+        Context context = GlobalDataProvider.getInstance().getContext();
         if (locationManager == null && context != null) {
             locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);

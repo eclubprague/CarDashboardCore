@@ -18,33 +18,35 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/applist_button_margin_vertical"
-        android:layout_marginBottom="@dimen/applist_button_margin_vertical"
+        android:paddingBottom="@dimen/dialog_button_margin_vertical"
+        android:paddingTop="@dimen/dialog_button_margin_vertical"
         android:id="@+id/applist_bar_bottom"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true">
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/applist_button_height"
-        android:layout_marginRight="@dimen/applist_button_margin_right"
-        android:paddingRight="@dimen/applist_button_margin_right"
-        android:paddingLeft="@dimen/applist_button_margin_right"
+        android:layout_height="@dimen/dialog_button_height"
+        android:layout_marginRight="@dimen/dialog_button_margin_right"
+        android:paddingRight="@dimen/dialog_button_margin_right"
+        android:paddingLeft="@dimen/dialog_button_margin_right"
         android:id="@+id/applist_button_cancel"
-        android:text="@string/applist_cancel"
+        android:text="@string/common_cancel"
         android:textAllCaps="true"
-        android:gravity="center" />
+        android:gravity="center"
+        style="@style/button_flat" />
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/applist_button_height"
-        android:layout_marginRight="@dimen/applist_button_margin_right"
-        android:paddingRight="@dimen/applist_button_margin_right"
-        android:paddingLeft="@dimen/applist_button_margin_right"
+        android:layout_height="@dimen/dialog_button_height"
+        android:layout_marginRight="@dimen/dialog_button_margin_right"
+        android:paddingRight="@dimen/dialog_button_margin_right"
+        android:paddingLeft="@dimen/dialog_button_margin_right"
         android:id="@+id/applist_button_add"
-        android:text="@string/applist_add"
+        android:text="@string/common_add"
         android:textAllCaps="true"
-        android:gravity="center" />
+        android:gravity="center"
+        style="@style/button_flat" />
     </LinearLayout>
 
 </RelativeLayout>

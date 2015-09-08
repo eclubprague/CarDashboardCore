@@ -3,13 +3,14 @@ package com.eclubprague.cardashboard.core.data.modules;
 import android.content.Intent;
 
 import com.eclubprague.cardashboard.core.R;
+import com.eclubprague.cardashboard.core.model.resources.IconResource;
+import com.eclubprague.cardashboard.core.model.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.IconResource;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.custom.ClockModule;
 import com.eclubprague.cardashboard.core.modules.custom.ClockSecondsModule;
 import com.eclubprague.cardashboard.core.modules.custom.CompassModule;
 import com.eclubprague.cardashboard.core.modules.custom.DeviceBatteryModule;
+import com.eclubprague.cardashboard.core.modules.custom.ErrorTester;
 import com.eclubprague.cardashboard.core.modules.custom.FolderModule;
 import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
 import com.eclubprague.cardashboard.core.modules.custom.ObdRpmModule;
@@ -206,6 +207,18 @@ public enum ModuleEnum {
         @Override
         public IModule newInstance() {
             throw new UnsupportedOperationException("This method is not supported for given ModuleEnum: " + this.name());
+        }
+    },
+    TEST(ModuleType.DEFINED) {
+        @Override
+        protected void init() {
+            titleResource = ErrorTester.TITLE_RESOURCE;
+            iconResource = ErrorTester.ICON_RESOURCE;
+        }
+
+        @Override
+        public IModule newInstance() {
+            return new ErrorTester();
         }
     };
 

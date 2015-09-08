@@ -1,7 +1,9 @@
-package com.eclubprague.cardashboard.core.modules.base.models.resources;
+package com.eclubprague.cardashboard.core.model.resources;
 
 import android.content.Context;
 import android.widget.TextView;
+
+import com.eclubprague.cardashboard.core.application.GlobalDataProvider;
 
 /**
  * Created by Michael on 9. 7. 2015.
@@ -36,6 +38,10 @@ public class StringResource extends SimpleAbstractResource {
         } else {
             return context.getResources().getString(getResourceId());
         }
+    }
+
+    public String getString() {
+        return getString(GlobalDataProvider.getInstance().getContext());
     }
 
     public TextView setInView(TextView textView) {

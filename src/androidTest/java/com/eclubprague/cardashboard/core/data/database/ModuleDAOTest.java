@@ -8,13 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.test.InstrumentationTestCase;
 
-import com.eclubprague.cardashboard.core.data.database.ModuleDAO;
 import com.eclubprague.cardashboard.core.modules.base.IActivityStateChangeListener;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.IParentModule;
 import com.eclubprague.cardashboard.core.modules.base.ModuleEvent;
-import com.eclubprague.cardashboard.core.modules.base.models.resources.StringResource;
+import com.eclubprague.cardashboard.core.model.resources.StringResource;
 
 import java.lang.Override;
 
