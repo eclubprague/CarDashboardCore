@@ -38,6 +38,8 @@ public interface IModule extends IModuleListener, IQuickMenuListener, IActivityS
 
     ModuleView createView(IModuleContext moduleContext, ViewGroup parent);
 
+    ModuleView getView();
+
 //    List<ModuleView> getViews(IModuleContext context);
 
 //    IModule removeViews(IModuleContext context);

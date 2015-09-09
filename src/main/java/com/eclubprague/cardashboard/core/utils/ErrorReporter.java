@@ -1,11 +1,11 @@
 package com.eclubprague.cardashboard.core.utils;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.support.design.widget.Snackbar;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
+import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.views.ApplicationErrorDialog;
 
 /**
@@ -14,7 +14,7 @@ import com.eclubprague.cardashboard.core.views.ApplicationErrorDialog;
 public class ErrorReporter {
     public static final StringResource ERROR_INTERNAL = StringResource.fromResourceId(R.string.error_internal);
 
-    public static void reportApplicationError(Activity activity, StringResource shortMessage, StringResource detailedMessage, StringResource hint) {
+    public static void reportApplicationError(IModuleContext moduleContext, StringResource shortMessage, StringResource detailedMessage, StringResource hint) {
 //        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 //        builder.setTitle("Application error").setMessage(shortMessage.getString()).setIcon(R.drawable.ic_error_black_24dp).show();
 //        ApplicationErrorDialogFragment errorDialogFragment = ApplicationErrorDialogFragment.newInstance(
@@ -25,7 +25,7 @@ public class ErrorReporter {
 //        errorDialogFragment.show(activity.getFragmentManager(), "Application error");
 
         Dialog errorDialog = new ApplicationErrorDialog(
-                activity,
+                moduleContext.getContext(),
                 shortMessage,
                 detailedMessage,
                 hint
@@ -33,21 +33,21 @@ public class ErrorReporter {
         errorDialog.show();
     }
 
-    public static void reportApplictionNonCriticalError(Activity activity, StringResource shortMessage, StringResource detailedMessage, StringResource hint) {
-        Snackbar.make(null, shortMessage.getString(activity), Snackbar.LENGTH_SHORT);
-        // TODO
+    public static void reportApplicationNonCriticalError(IModuleContext moduleContext, StringResource shortMessage, StringResource detailedMessage, StringResource hint) {
+        Snackbar.make(moduleContext.getSnackbarHolder(), shortMessage.getString(moduleContext.getContext()), Snackbar.LENGTH_SHORT)
+                .show();
 
     }
 
-    public static void reportConnectivityError(Activity activity, StringResource shortMessage, StringResource detailedMessage, StringResource hint) {
+    public static void reportConnectivityError(IModuleContext moduleContext, StringResource shortMessage, StringResource detailedMessage, StringResource hint) {
 
     }
 
-    public static void reportIncompatibleStateError(Activity activity, StringResource shortMessage, StringResource detailedMessage, StringResource hint) {
+    public static void reportIncompatibleStateError(IModuleContext moduleContext, StringResource shortMessage, StringResource detailedMessage, StringResource hint) {
 
     }
 
-    public static void reportPermissionError(Activity activity, StringResource shortMessage, OnPermissionDetailsProvidedListener listener) {
+    public static void reportPermissionError(IModuleContext moduleContext, StringResource shortMessage, OnPermissionDetailsProvidedListener listener) {
 
     }
 

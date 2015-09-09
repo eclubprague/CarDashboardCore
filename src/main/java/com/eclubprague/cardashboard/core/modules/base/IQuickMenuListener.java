@@ -1,7 +1,5 @@
 package com.eclubprague.cardashboard.core.modules.base;
 
-import com.eclubprague.cardashboard.core.views.ModuleView;
-
 import java.util.Set;
 
 /**
@@ -10,7 +8,7 @@ import java.util.Set;
  * Listener interface for quickmenu actions.
  */
 public interface IQuickMenuListener {
-    void onEvent(ModuleEvent event, ModuleView moduleView, IModuleContext moduleContext);
+    void onEvent(ModuleEvent event, IModuleContext moduleContext);
 
     Set<ModuleEvent> getAvailableActions();
 }

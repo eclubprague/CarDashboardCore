@@ -3,7 +3,6 @@ package com.eclubprague.cardashboard.core.modules.custom;
 import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.R;
-import com.eclubprague.cardashboard.core.application.GlobalDataProvider;
 import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
@@ -27,8 +26,13 @@ public class ErrorTester extends AbstractSimpleModule {
     }
 
     @Override
-    public void onClickEvent(IModuleContext context, ModuleView moduleView) {
-        ErrorReporter.reportApplicationError(GlobalDataProvider.getInstance().getActivity(),
+    public void onClickEvent(IModuleContext context) {
+//        ErrorReporter.reportApplicationError(context,
+//                StringResource.fromString("Testing short message"),
+//                StringResource.fromString("Testing long long long long message with some Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
+//                StringResource.fromString("Turn it off and on again")
+//        );
+        ErrorReporter.reportApplicationNonCriticalError(context,
                 StringResource.fromString("Testing short message"),
                 StringResource.fromString("Testing long long long long message with some Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
                 StringResource.fromString("Turn it off and on again")

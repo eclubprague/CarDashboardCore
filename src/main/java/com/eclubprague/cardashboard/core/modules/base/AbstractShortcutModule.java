@@ -61,8 +61,8 @@ abstract public class AbstractShortcutModule extends AbstractSimpleModule {
     }
 
     @Override
-    public void onClickEvent(IModuleContext context, ModuleView moduleView) {
-        super.onClickEvent(context, moduleView);
+    public void onClickEvent(IModuleContext context) {
+        super.onClickEvent(context);
         context.launchIntent(intent, getErrorMessage());
     }
 

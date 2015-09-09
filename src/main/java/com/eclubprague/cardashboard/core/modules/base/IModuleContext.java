@@ -3,9 +3,9 @@ package com.eclubprague.cardashboard.core.modules.base;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
 
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
-import com.eclubprague.cardashboard.core.views.ModuleView;
 
 /**
  * Created by Michael on 15. 7. 2015.
@@ -17,7 +17,7 @@ public interface IModuleContext {
 
     void goBackFromSubmodules(IParentModule previousParentModule);
 
-    void toggleQuickMenu(IModule module, ModuleView moduleView, boolean activate);
+    void toggleQuickMenu(IModule module, boolean activate);
 
     void turnQuickMenusOff();
 
@@ -25,7 +25,9 @@ public interface IModuleContext {
 
     Context getContext();
 
-    void onModuleEvent(IModule module, ModuleView moduleView, ModuleEvent event);
+    void onModuleEvent(IModule module, ModuleEvent event);
 
     Activity getActivity();
+
+    View getSnackbarHolder();
 }

@@ -143,18 +143,19 @@ abstract public class AbstractSimpleModule implements IModule {
 
     @Override
     public View createQuickMenuView(IModuleContext moduleContext, ViewGroup parent) {
-        return ModuleViewFactory.createQuickMenu(getView(), moduleContext, parent, this);
+        return ModuleViewFactory.createQuickMenu(moduleContext, parent, this);
     }
 
     @Override
     public ViewWithHolder createQuickMenuViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
-        return ModuleViewFactory.createQuickMenuWithHolder(getView(), moduleContext, holderResourceId, holderParent, this);
+        return ModuleViewFactory.createQuickMenuWithHolder(moduleContext, holderResourceId, holderParent, this);
     }
 
     abstract protected ModuleView createNewView(IModuleContext context, ViewGroup parent);
 
     abstract protected ViewWithHolder<ModuleView> createNewViewWithHolder(IModuleContext context, int holderResourceId, ViewGroup holderParent);
 
+    @Override
     public ModuleView getView() {
         return view;
     }
@@ -212,19 +213,19 @@ abstract public class AbstractSimpleModule implements IModule {
     }
 
     @Override
-    public void onClickEvent(IModuleContext context, ModuleView moduleView) {
+    public void onClickEvent(IModuleContext context) {
         context.turnQuickMenusOff();
     }
 
     @Override
-    public void onLongClickEvent(IModuleContext context, ModuleView moduleView) {
+    public void onLongClickEvent(IModuleContext context) {
         context.turnQuickMenusOff();
-        context.toggleQuickMenu(this, moduleView, true);
+        context.toggleQuickMenu(this, true);
     }
 
     @Override
-    public void onEvent(ModuleEvent event, ModuleView moduleView, IModuleContext moduleContext) {
-        moduleContext.onModuleEvent(this, moduleView, event);
+    public void onEvent(ModuleEvent event, IModuleContext moduleContext) {
+        moduleContext.onModuleEvent(this, event);
         switch (event) {
             case DELETE:
                 ModuleSupplier.getPersonalInstance().remove(this);

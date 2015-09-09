@@ -48,14 +48,14 @@ public class ModuleViewUtils {
                 if (clickHolder.longClicked) {
                     clickHolder.longClicked = false;
                 } else {
-                    listener.onClickEvent(moduleContext, moduleView);
+                    listener.onClickEvent(moduleContext);
                 }
             }
         });
         moduleView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                listener.onLongClickEvent(moduleContext, moduleView);
+                listener.onLongClickEvent(moduleContext);
                 clickHolder.longClicked = true;
                 return false;
             }
@@ -63,22 +63,22 @@ public class ModuleViewUtils {
         return moduleView;
     }
 
-    public static View prepareQuickMenu(ModuleView moduleView, QuickMenuView quickMenuView, final IQuickMenuListener listener, final IModuleContext moduleContext) {
+    public static View prepareQuickMenu(QuickMenuView quickMenuView, final IQuickMenuListener listener, final IModuleContext moduleContext) {
         final ModuleEvent[] moduleEvents = listener.getAvailableActions().toArray(new ModuleEvent[0]);
         if (moduleEvents.length > 0) {
-            quickMenuView.getButtonTopLeft().setEvent(moduleView, listener, moduleContext, moduleEvents[0]);
+            quickMenuView.getButtonTopLeft().setEvent(listener, moduleContext, moduleEvents[0]);
         }
         if (moduleEvents.length > 1) {
-            quickMenuView.getButtonTopRight().setEvent(moduleView, listener, moduleContext, moduleEvents[1]);
+            quickMenuView.getButtonTopRight().setEvent(listener, moduleContext, moduleEvents[1]);
         }
         if (moduleEvents.length > 2) {
-            quickMenuView.getButtonBottomLeft().setEvent(moduleView, listener, moduleContext, moduleEvents[2]);
+            quickMenuView.getButtonBottomLeft().setEvent(listener, moduleContext, moduleEvents[2]);
         }
         if (moduleEvents.length == 4) {
-            quickMenuView.getButtonBottomRight().setEvent(moduleView, listener, moduleContext, moduleEvents[3]);
+            quickMenuView.getButtonBottomRight().setEvent(listener, moduleContext, moduleEvents[3]);
         }
         if (moduleEvents.length > 4) {
-            quickMenuView.getButtonBottomRight().setEvent(moduleView, listener, moduleContext, ModuleEvent.MORE);
+            quickMenuView.getButtonBottomRight().setEvent(listener, moduleContext, ModuleEvent.MORE);
         }
 
         return quickMenuView;

@@ -10,7 +10,6 @@ import com.eclubprague.cardashboard.core.model.eventbus.interfaces.EventReceiver
 import com.eclubprague.cardashboard.core.model.resources.ColorResource;
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
-import com.eclubprague.cardashboard.core.views.ModuleView;
 
 import java.lang.reflect.ParameterizedType;
 
@@ -69,8 +68,8 @@ public abstract class AbstractTimedUpdateDisplayModule<T extends Event> extends 
     }
 
     @Override
-    public void onEvent(ModuleEvent event, ModuleView moduleView, IModuleContext moduleContext) {
-        super.onEvent(event, moduleView, moduleContext);
+    public void onEvent(ModuleEvent event, IModuleContext moduleContext) {
+        super.onEvent(event, moduleContext);
         switch (event) {
             case DELETE:
                 Log.d(TAG, "on delete");
