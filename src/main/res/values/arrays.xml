@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="gmaps_place_array">
+        <item>Nearby</item>
+        <item>Address</item>
+        <item>Geolocation</item>
+    </string-array>
+</resources>

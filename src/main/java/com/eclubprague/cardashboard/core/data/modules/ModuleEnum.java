@@ -137,6 +137,40 @@ public enum ModuleEnum {
             return new SimpleShortcutModule(this, titleResource, iconResource, intent);
         }
     },
+    SHORTCUT_CUSTOM(ModuleType.SHORTCUT) {
+        @Override
+        protected void init() {
+            titleResource = StringResource.fromResourceId(R.string.module_shortcuts_custom);
+            iconResource = IconResource.fromResourceId(R.drawable.ic_exit_to_app_black_24dp);
+        }
+
+        @Override
+        public IModule newInstance() {
+            throw new UnsupportedOperationException("This method is not supported for given ModuleEnum: " + this.name());
+        }
+
+        @Override
+        public IModule newInstance(StringResource titleResource, IconResource iconResource, Intent intent) {
+            return new SimpleShortcutModule(this, titleResource, iconResource, intent);
+        }
+    },
+    SHORTCUT_MAPS_GOOGLE(ModuleType.SHORTCUT) {
+        @Override
+        protected void init() {
+            titleResource = StringResource.fromResourceId(R.string.module_shortcuts_new_maps_google);
+            iconResource = IconResource.fromResourceId(R.drawable.ic_map_black_24dp);
+        }
+
+        @Override
+        public IModule newInstance() {
+            throw new UnsupportedOperationException("This method is not supported for given ModuleEnum: " + this.name());
+        }
+
+        @Override
+        public IModule newInstance(StringResource titleResource, IconResource iconResource, Intent intent) {
+            return new SimpleShortcutModule(this, titleResource, iconResource, intent);
+        }
+    },
     OBD_PARENT(ModuleType.PARENT) {
         @Override
         protected void init() {

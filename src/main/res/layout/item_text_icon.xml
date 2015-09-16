@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.eclubprague.cardashboard.core.views.TextIconListItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/applist_item_height">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/applist_text_padding_top"
+        android:paddingBottom="@dimen/applist_text_padding_bottom"
+        android:id="@+id/item_text"
+        android:textSize="@dimen/text_size_display_small"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true" />
+
+    <ImageView
+        android:layout_width="@dimen/applist_left_icon_size"
+        android:layout_height="@dimen/applist_item_height"
+        android:paddingLeft="@dimen/applist_left_icon_padding_horizontal"
+        android:paddingRight="@dimen/applist_left_icon_padding_horizontal"
+        android:id="@+id/item_icon"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true" />
+
+</com.eclubprague.cardashboard.core.views.TextIconListItemView>

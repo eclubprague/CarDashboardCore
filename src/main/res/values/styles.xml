@@ -54,5 +54,19 @@
     <style name="button_flat">
         <!--<item name="android:textColor">@color/secondary</item>-->
         <item name="android:textSize">@dimen/text_size_display_small</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginRight">@dimen/dialog_button_margin_right</item>
+        <item name="android:paddingRight">@dimen/dialog_button_margin_right</item>
+        <item name="android:paddingLeft">@dimen/dialog_button_margin_right</item>
+        <item name="android:textColor">?android:colorAccent</item>
+    </style>
+
+    <style name="form_text">
+        <item name="android:textSize">@dimen/text_size_display_small</item>
+    </style>
+
+    <style name="form_label">
+        <item name="android:textColor">?android:colorAccent</item>
     </style>
 </resources>
