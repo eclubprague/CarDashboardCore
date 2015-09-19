@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.eclubprague.cardashboard.core.application.GlobalDataProvider;
 import com.eclubprague.cardashboard.core.data.ModuleSupplier;
 import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
+import com.eclubprague.cardashboard.core.fragments.RenameDialogFragment;
 import com.eclubprague.cardashboard.core.model.resources.ColorResource;
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
@@ -16,9 +17,8 @@ import com.eclubprague.cardashboard.core.utils.ModuleViewFactory;
 import com.eclubprague.cardashboard.core.views.ModuleView;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Michael on 9. 7. 2015.
@@ -224,11 +224,21 @@ abstract public class AbstractSimpleModule implements IModule {
     }
 
     @Override
-    public void onEvent(ModuleEvent event, IModuleContext moduleContext) {
+    public void onEvent(ModuleEvent event, final IModuleContext moduleContext) {
         moduleContext.onModuleEvent(this, event);
         switch (event) {
             case DELETE:
                 ModuleSupplier.getPersonalInstance().remove(this);
+                break;
+            case RENAME:
+                RenameDialogFragment.newInstance(new RenameDialogFragment.OnTitleEnteredListener() {
+                    @Override
+                    public void onTitleEntered(String title) {
+                        moduleContext.turnQuickMenusOff();
+                        setTitle(StringResource.fromString(title));
+                    }
+                }).show(moduleContext.getActivity().getFragmentManager(), "rename");
+                break;
         }
     }
 
@@ -285,8 +295,8 @@ abstract public class AbstractSimpleModule implements IModule {
     }
 
     @Override
-    public Set<ModuleEvent> getAvailableActions() {
-        return EnumSet.of(ModuleEvent.CANCEL, ModuleEvent.DELETE);
+    public List<ModuleEvent> getAvailableActions() {
+        return Arrays.asList(ModuleEvent.CANCEL, ModuleEvent.DELETE, ModuleEvent.RENAME);
     }
 
     public boolean hasForegroundColor() {

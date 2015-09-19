@@ -6,6 +6,9 @@ import android.content.Context;
 
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by Michael on 24.08.2015.
  */
@@ -14,6 +17,8 @@ public enum GlobalDataProvider {
 
     private IModuleContext moduleContext;
     private IntentService obdService;
+
+    private Set<ModuleContextChangeListener> moduleContextChangeListeners = new HashSet<>();
 //    private Set<OnModuleContextSetListener> onModuleSelectListeners;
 
 //    GlobalDataProvider() {
@@ -38,6 +43,9 @@ public enum GlobalDataProvider {
 
     public void setModuleContext(IModuleContext moduleContext) {
         this.moduleContext = moduleContext;
+        for (ModuleContextChangeListener listener : moduleContextChangeListeners) {
+            listener.onChange(moduleContext);
+        }
 //        if(this.moduleContext instanceof Activity){
 //            setActivity(activity);
 //        }
@@ -54,6 +62,14 @@ public enum GlobalDataProvider {
         return obdService;
     }
 
+    public void register(ModuleContextChangeListener listener) {
+        moduleContextChangeListeners.add(listener);
+    }
+
+    public void unregister(ModuleContextChangeListener listener) {
+        moduleContextChangeListeners.remove(listener);
+    }
+
     //    public void addModuleContextListener(OnModuleContextSetListener listener){
 //        onModuleSelectListeners.add(listener);
 //    }
@@ -61,4 +77,8 @@ public enum GlobalDataProvider {
 //    public static interface OnModuleContextSetListener {
 //        void onModuleContextSet(IModuleContext moduleContext);
 //    }
+
+    public interface ModuleContextChangeListener {
+        void onChange(IModuleContext newContext);
+    }
 }

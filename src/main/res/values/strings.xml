@@ -74,4 +74,5 @@
     <string name="validation_field_not_empty">Cannot be empty</string>
     <string name="validation_field_decimal">Must be a decimal number</string>
     <string name="validation_at_least_one_not_empty">At least one of these fields must be filled</string>
+    <string name="common_rename">Rename</string>
 </resources>

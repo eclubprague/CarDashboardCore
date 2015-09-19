@@ -40,11 +40,27 @@ public class QuickMenuButton extends RelativeLayout {
             iconView = (ImageView) findViewById(R.id.card_submenu_icon_1);
             if (iconView == null) {
                 iconView = (ImageView) findViewById(R.id.card_submenu_icon_2);
-            } else if (iconView == null) {
+            }
+            if (iconView == null) {
                 iconView = (ImageView) findViewById(R.id.card_submenu_icon_3);
-            } else if (iconView == null) {
+            }
+            if (iconView == null) {
                 iconView = (ImageView) findViewById(R.id.card_submenu_icon_4);
             }
+//            if(iconView == null){
+//                Log.d("QuickMenuButton", getChildCount() + "");
+//                for(int i = 0 ; i < getChildCount(); i++){
+//                    View childView = getChildAt(i);
+//                    Log.d("QuickMenuButton", childView + " with id " + childView.getId());
+//                    if(childView instanceof ViewGroup){
+//                        ViewGroup viewGroup = (ViewGroup) childView;
+//                        for(int j = 0; j < viewGroup.getChildCount(); j++){
+//                            View v = viewGroup.getChildAt(j);
+//                            Log.d("QuickMenuButton",  "grp: " + v + " with id " + v.getId());
+//                        }
+//                    }
+//                }
+//            }
         }
         iconResource.setInView(iconView);
         return this;
@@ -57,6 +73,7 @@ public class QuickMenuButton extends RelativeLayout {
                 listener.onEvent(moduleEvent, moduleContext);
             }
         });
+//        Log.d("QuickMenuButton", moduleEvent.name() + " title: " + moduleEvent.getTitleResource().getString());
         setIcon(moduleEvent.getIcon());
         return this;
     }

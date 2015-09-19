@@ -12,7 +12,8 @@ public enum ModuleEvent {
     DELETE(IconResource.fromResourceId(R.drawable.ic_delete_black_24dp), StringResource.fromResourceId(R.string.common_delete)),
     CANCEL(IconResource.fromResourceId(R.drawable.ic_close_black_24dp), StringResource.fromResourceId(R.string.common_cancel)),
     ADD(IconResource.fromResourceId(R.drawable.ic_add_black_24dp), StringResource.fromResourceId(R.string.common_add)),
-    MORE(IconResource.fromResourceId(R.drawable.ic_more_horiz_black_24dp), StringResource.fromResourceId(R.string.common_more));
+    MORE(IconResource.fromResourceId(R.drawable.ic_more_horiz_black_24dp), StringResource.fromResourceId(R.string.common_more)),
+    RENAME(IconResource.fromResourceId(R.drawable.ic_create_black_24dp), StringResource.fromResourceId(R.string.common_rename));
 
     private final IconResource iconResource;
     private final StringResource titleResource;
