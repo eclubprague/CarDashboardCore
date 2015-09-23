@@ -1,12 +1,12 @@
 package com.eclubprague.cardashboard.core.utils;
 
 import android.app.Dialog;
-import android.support.design.widget.Snackbar;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.views.ApplicationErrorDialog;
+import com.eclubprague.cardashboard.core.views.SnackbarView;
 
 /**
  * Created by Michael on 03.09.2015.
@@ -34,9 +34,11 @@ public class ErrorReporter {
     }
 
     public static void reportApplicationNonCriticalError(IModuleContext moduleContext, StringResource shortMessage, StringResource detailedMessage, StringResource hint) {
-        Snackbar.make(moduleContext.getSnackbarHolder(), shortMessage.getString(moduleContext.getContext()), Snackbar.LENGTH_SHORT)
-                .show();
-
+//        Toast.makeText(moduleContext.getContext(), shortMessage.getString(moduleContext.getContext()), Toast.LENGTH_LONG)
+//                .show();
+        SnackbarView.make(moduleContext.getContext())
+                .setText(shortMessage)
+                .show(moduleContext.getSnackbarHolder());
     }
 
     public static void reportConnectivityError(IModuleContext moduleContext, StringResource shortMessage, StringResource detailedMessage, StringResource hint) {

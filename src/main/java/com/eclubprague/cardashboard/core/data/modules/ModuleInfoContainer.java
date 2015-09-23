@@ -58,7 +58,9 @@ public class ModuleInfoContainer extends ModuleInfo {
         ModuleInfoContainer shortcutContainer = new ModuleInfoContainer(ModuleEnum.SHORTCUT_PARENT);
         containers.add(shortcutContainer);
         shortcutContainer.add(
-                new ModuleInfo(ModuleEnum.SHORTCUT)
+                new ModuleInfo(ModuleEnum.SHORTCUT),
+                new ModuleInfo(ModuleEnum.SHORTCUT_CUSTOM),
+                new ModuleInfo(ModuleEnum.SHORTCUT_MAPS_GOOGLE)
         );
         return containers;
     }

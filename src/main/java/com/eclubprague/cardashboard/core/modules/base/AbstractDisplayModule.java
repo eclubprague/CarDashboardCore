@@ -9,6 +9,7 @@ import com.eclubprague.cardashboard.core.model.resources.IconResource;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.utils.ModuleViewFactory;
+import com.eclubprague.cardashboard.core.utils.TextToSpeech;
 import com.eclubprague.cardashboard.core.views.ModuleActiveView;
 import com.eclubprague.cardashboard.core.views.ModuleView;
 
@@ -61,6 +62,12 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule {
             ModuleActiveView v = (ModuleActiveView) getView();
             v.setValue(value);
         }
+    }
+
+    @Override
+    public void onClickEvent(IModuleContext context) {
+        super.onClickEvent(context);
+        TextToSpeech.speak(getValue());
     }
 
     @Override

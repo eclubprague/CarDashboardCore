@@ -96,6 +96,25 @@ public class ModuleListDialogFragment extends DialogFragment {
                                 onAddModuleListener.addModule(shortcutModule);
                             }
                         }).show(moduleContext.getActivity().getFragmentManager(), "Application list");
+                    } else if (module.equals(ModuleEnum.SHORTCUT_CUSTOM)) {
+                        CustomShortcutDialogFragment.newInstance(new CustomShortcutDialogFragment.OnShortcutCreatedListener() {
+                            @Override
+                            public void onShortcutCreated(String title, Intent intent) {
+                                StringResource titleResource = StringResource.fromString(title);
+                                IconResource iconResource = ModuleEnum.SHORTCUT_CUSTOM.getIcon();
+                                SimpleShortcutModule shortcutModule = (SimpleShortcutModule) ModuleEnum.SHORTCUT_CUSTOM.newInstance(titleResource, iconResource, intent);
+                                onAddModuleListener.addModule(shortcutModule);
+                            }
+                        }).show(moduleContext.getActivity().getFragmentManager(), "Custom shortcut");
+                    } else if (module.equals(ModuleEnum.SHORTCUT_MAPS_GOOGLE)) {
+                        GmapsShortcutDialogFragment.newInstance(moduleContext.getContext(), new GmapsShortcutDialogFragment.OnIntentCreatedListener() {
+                            @Override
+                            public void onIntentCreated(IconResource iconResource, StringResource titleResource, Intent intent) {
+                                SimpleShortcutModule shortcutModule = (SimpleShortcutModule) ModuleEnum.SHORTCUT_CUSTOM.newInstance(titleResource, iconResource, intent);
+                                onAddModuleListener.addModule(shortcutModule);
+                            }
+                        })
+                                .show(moduleContext.getActivity().getFragmentManager(), "Custom gmaps");
                     } else {
                         onAddModuleListener.addModule(module.newInstance());
                     }

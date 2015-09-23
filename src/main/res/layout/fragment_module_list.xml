@@ -27,25 +27,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dialog_button_height"
-        android:layout_marginRight="@dimen/dialog_button_margin_right"
-        android:paddingRight="@dimen/dialog_button_margin_right"
-        android:paddingLeft="@dimen/dialog_button_margin_right"
         android:id="@+id/applist_button_cancel"
         android:text="@string/common_cancel"
-        android:textAllCaps="true"
-        android:gravity="center"
         style="@style/button_flat" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dialog_button_height"
-        android:layout_marginRight="@dimen/dialog_button_margin_right"
-        android:paddingRight="@dimen/dialog_button_margin_right"
-        android:paddingLeft="@dimen/dialog_button_margin_right"
         android:id="@+id/applist_button_add"
         android:text="@string/common_add"
-        android:textAllCaps="true"
-        android:gravity="center"
         style="@style/button_flat" />
     </LinearLayout>
 

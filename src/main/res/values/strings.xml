@@ -46,5 +46,37 @@
     <string name="module_others_clock_seconds_units">HH:MM:SS</string>
     <string name="dialog_more">More</string>
     <string name="dialog_less">Less</string>
+<<<<<<< HEAD
     <string name="common_ok">OK</string>
+=======
+    <string name="common_ok">Ok</string>
+    <string name="module_shortcuts_custom">New custom shortcut</string>
+    <string name="module_shortcuts_new_maps_google">New Google Maps shortcut</string>
+    <string name="gmaps_type_navigate">Navigate</string>
+    <string name="gmaps_type_search">Search</string>
+    <string name="gmaps_type_place">Display</string>
+    <string name="gmaps_place_nearby">Nearby</string>
+    <string name="gmaps_place_address">Address</string>
+    <string name="gmaps_place_geolocation">Geolocation</string>
+    <string name="gmaps_query_custom">Custom</string>
+    <string name="gmaps_query_restaurant">Restaurant</string>
+    <string name="gmaps_query_gas_station">Gas station</string>
+    <string name="gmaps_place">Where</string>
+    <string name="gmaps_place_geolocation_latitude">Latitude</string>
+    <string name="gmaps_place_geolocation_longitude">Longitude</string>
+    <string name="gmaps_place_address_houseNumber">House number</string>
+    <string name="gmaps_place_address_street">Street</string>
+    <string name="gmaps_place_address_city">City</string>
+    <string name="gmaps_place_address_zipCode">ZIP code</string>
+    <string name="gmaps_query">Query</string>
+    <string name="gmaps_query_text">Query text</string>
+    <string name="gmaps_title">Title</string>
+    <string name="shortcut_custom_title">Title</string>
+    <string name="shortcut_custom_intent">Intent</string>
+    <string name="validation_title_not_empty">Title cannot be empty</string>
+    <string name="validation_field_not_empty">Cannot be empty</string>
+    <string name="validation_field_decimal">Must be a decimal number</string>
+    <string name="validation_at_least_one_not_empty">At least one of these fields must be filled</string>
+    <string name="common_rename">Rename</string>
+>>>>>>> 79f16a9acc023cf9ed7780549d05b5a3db1ad2a6
 </resources>

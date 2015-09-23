@@ -15,6 +15,8 @@ import com.eclubprague.cardashboard.core.views.ModuleActiveView;
 import com.eclubprague.cardashboard.core.views.ModuleView;
 import com.eclubprague.cardashboard.core.views.QuickMenuView;
 
+import java.util.List;
+
 /**
  * Utility class containing tools for module views
  * <p>
@@ -64,20 +66,20 @@ public class ModuleViewUtils {
     }
 
     public static View prepareQuickMenu(QuickMenuView quickMenuView, final IQuickMenuListener listener, final IModuleContext moduleContext) {
-        final ModuleEvent[] moduleEvents = listener.getAvailableActions().toArray(new ModuleEvent[0]);
-        if (moduleEvents.length > 0) {
-            quickMenuView.getButtonTopLeft().setEvent(listener, moduleContext, moduleEvents[0]);
+        final List<ModuleEvent> moduleEvents = listener.getAvailableActions();
+        if (moduleEvents.size() > 0) {
+            quickMenuView.getButtonTopLeft().setEvent(listener, moduleContext, moduleEvents.get(0));
         }
-        if (moduleEvents.length > 1) {
-            quickMenuView.getButtonTopRight().setEvent(listener, moduleContext, moduleEvents[1]);
+        if (moduleEvents.size() > 1) {
+            quickMenuView.getButtonTopRight().setEvent(listener, moduleContext, moduleEvents.get(1));
         }
-        if (moduleEvents.length > 2) {
-            quickMenuView.getButtonBottomLeft().setEvent(listener, moduleContext, moduleEvents[2]);
+        if (moduleEvents.size() > 2) {
+            quickMenuView.getButtonBottomLeft().setEvent(listener, moduleContext, moduleEvents.get(2));
         }
-        if (moduleEvents.length == 4) {
-            quickMenuView.getButtonBottomRight().setEvent(listener, moduleContext, moduleEvents[3]);
+        if (moduleEvents.size() == 4) {
+            quickMenuView.getButtonBottomRight().setEvent(listener, moduleContext, moduleEvents.get(3));
         }
-        if (moduleEvents.length > 4) {
+        if (moduleEvents.size() > 4) {
             quickMenuView.getButtonBottomRight().setEvent(listener, moduleContext, ModuleEvent.MORE);
         }
 

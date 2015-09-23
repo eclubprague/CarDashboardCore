@@ -1,12 +1,14 @@
 package com.eclubprague.cardashboard.core.modules.base;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.application.GlobalDataProvider;
 import com.eclubprague.cardashboard.core.data.ModuleSupplier;
 import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
+import com.eclubprague.cardashboard.core.fragments.RenameDialogFragment;
 import com.eclubprague.cardashboard.core.model.resources.ColorResource;
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
@@ -15,10 +17,8 @@ import com.eclubprague.cardashboard.core.modules.base.models.ViewWithHolder;
 import com.eclubprague.cardashboard.core.utils.ModuleViewFactory;
 import com.eclubprague.cardashboard.core.views.ModuleView;
 
-import java.util.ArrayList;
-import java.util.EnumSet;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Michael on 9. 7. 2015.
@@ -33,8 +33,6 @@ abstract public class AbstractSimpleModule implements IModule {
     private ColorResource bgColorResource;
     private ColorResource fgColorResource;
     private ModuleView view;
-    public List<ModuleView> views = new ArrayList<>();
-    //    private HashMap<IModuleContext, List<ModuleView>> viewMap = new HashMap<>();
     private ViewGroup holderView;
     private static final String TAG = AbstractSimpleModule.class.getSimpleName();
 
@@ -125,15 +123,15 @@ abstract public class AbstractSimpleModule implements IModule {
     public ModuleView createView(IModuleContext moduleContext, ViewGroup parent) {
         view = createNewView(moduleContext, parent);
         view.setModule(moduleContext, this);
-        views.add(view);
         return view;
     }
 
     @Override
     public ViewWithHolder<ModuleView> createViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
         ViewWithHolder<ModuleView> viewWithHolder = createNewViewWithHolder(moduleContext, holderResourceId, holderParent);
+        Log.d(TAG, this + ": setting view: " + viewWithHolder.view);
         view = viewWithHolder.view;
-        views.add(view);
+        Log.d(TAG, this + ": setting holder: " + viewWithHolder.holder);
         holderView = viewWithHolder.holder;
         view.setModule(moduleContext, this);
         view.setViewHolder(holderView);
@@ -224,11 +222,22 @@ abstract public class AbstractSimpleModule implements IModule {
     }
 
     @Override
-    public void onEvent(ModuleEvent event, IModuleContext moduleContext) {
+    public void onEvent(ModuleEvent event, final IModuleContext moduleContext) {
         moduleContext.onModuleEvent(this, event);
         switch (event) {
             case DELETE:
                 ModuleSupplier.getPersonalInstance().remove(this);
+                break;
+            case RENAME:
+                RenameDialogFragment.newInstance(getTitle().getString(moduleContext.getContext())
+                        , new RenameDialogFragment.OnTitleEnteredListener() {
+                    @Override
+                    public void onTitleEntered(String title) {
+                        setTitle(StringResource.fromString(title));
+                    }
+                }).show(moduleContext.getActivity().getFragmentManager(), "rename");
+                moduleContext.turnQuickMenusOff();
+                break;
         }
     }
 
@@ -282,8 +291,8 @@ abstract public class AbstractSimpleModule implements IModule {
     }
 
     @Override
-    public Set<ModuleEvent> getAvailableActions() {
-        return EnumSet.of(ModuleEvent.CANCEL, ModuleEvent.DELETE);
+    public List<ModuleEvent> getAvailableActions() {
+        return Arrays.asList(ModuleEvent.CANCEL, ModuleEvent.DELETE, ModuleEvent.RENAME);
     }
 
     public boolean hasForegroundColor() {

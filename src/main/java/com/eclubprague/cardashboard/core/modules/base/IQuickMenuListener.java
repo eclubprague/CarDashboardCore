@@ -1,6 +1,6 @@
 package com.eclubprague.cardashboard.core.modules.base;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by Michael on 27. 7. 2015.
@@ -10,5 +10,5 @@ import java.util.Set;
 public interface IQuickMenuListener {
     void onEvent(ModuleEvent event, IModuleContext moduleContext);
 
-    Set<ModuleEvent> getAvailableActions();
+    List<ModuleEvent> getAvailableActions();
 }

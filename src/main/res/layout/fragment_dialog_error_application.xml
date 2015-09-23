@@ -63,13 +63,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dialog_button_height"
-            android:layout_marginRight="@dimen/dialog_button_margin_right"
-            android:paddingRight="@dimen/dialog_button_margin_right"
-            android:paddingLeft="@dimen/dialog_button_margin_right"
             android:id="@+id/dialog_button_ok"
             android:text="@string/common_ok"
-            android:textAllCaps="true"
-            android:gravity="center"
             style="@style/button_flat" />
     </LinearLayout>
 
