@@ -59,7 +59,7 @@
         <item name="android:layout_marginRight">@dimen/dialog_button_margin_right</item>
         <item name="android:paddingRight">@dimen/dialog_button_margin_right</item>
         <item name="android:paddingLeft">@dimen/dialog_button_margin_right</item>
-        <item name="android:textColor">?android:colorAccent</item>
+        <item name="android:textColor">@color/flatbutton</item>
     </style>
 
     <style name="form_text">
@@ -67,6 +67,6 @@
     </style>
 
     <style name="form_label">
-        <item name="android:textColor">?android:colorAccent</item>
+        <item name="android:textColor">@color/accent</item>
     </style>
 </resources>

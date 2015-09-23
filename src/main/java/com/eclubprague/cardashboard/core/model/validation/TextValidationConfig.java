@@ -1,5 +1,6 @@
 package com.eclubprague.cardashboard.core.model.validation;
 
+import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
 
 import java.util.ArrayList;
@@ -9,6 +10,9 @@ import java.util.List;
  * Created by Michael on 16.09.2015.
  */
 public class TextValidationConfig {
+
+    private static final StringResource DEFAULT_EMPTY = StringResource.fromResourceId(R.string.validation_field_not_empty);
+    private static final StringResource DEFAULT_DECIMAL = StringResource.fromResourceId(R.string.validation_field_decimal);
 
     private final List<Rule> rules;
     private StringResource errorMessage;
@@ -72,8 +76,18 @@ public class TextValidationConfig {
             return this;
         }
 
+        public Builder required() {
+            addRule(TextValidationOptions.REQUIRED, DEFAULT_EMPTY);
+            return this;
+        }
+
         public Builder decimal(StringResource message) {
             addRule(TextValidationOptions.DECIMAL, message);
+            return this;
+        }
+
+        public Builder decimal() {
+            addRule(TextValidationOptions.DECIMAL, DEFAULT_DECIMAL);
             return this;
         }
 

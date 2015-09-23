@@ -3,5 +3,6 @@
     <color name="card_background_light">#ffffffff</color>
     <color name="card_background_dark">#88000000</color>
     <color name="primary">#777777</color>
-    <color name="secondary">#0000ff</color>
+    <color name="accent">#00ffff</color>
+    <color name="text_disabled">#333</color>
 </resources>

@@ -88,7 +88,7 @@ abstract public class AbstractParentModule extends AbstractSimpleModule implemen
     public void onClickEvent(IModuleContext moduleContext) {
         super.onClickEvent(moduleContext);
 //        Log.d("SubmenuModule", "setting modules: " + getSubmodules().size());
-        moduleContext.goToSubmodules(this);
+        moduleContext.goToParentModule(this);
     }
 
     @Override

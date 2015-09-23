@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.eclubprague.cardashboard.core.R;
-import com.eclubprague.cardashboard.core.model.resources.StringResource;
 import com.eclubprague.cardashboard.core.model.validation.SimpleTextValidator;
 import com.eclubprague.cardashboard.core.model.validation.TextValidationConfig;
 
@@ -21,14 +20,16 @@ import com.eclubprague.cardashboard.core.model.validation.TextValidationConfig;
 public class RenameDialogFragment extends DialogFragment {
 
     private static final TextValidationConfig titleValidationConfig = TextValidationConfig.Builder()
-            .required(StringResource.fromResourceId(R.string.validation_field_not_empty))
+            .required()
             .build();
 
     private OnTitleEnteredListener onTitleEnteredListener;
+    private String currentTitle;
 
-    public static RenameDialogFragment newInstance(OnTitleEnteredListener listener) {
+    public static RenameDialogFragment newInstance(String currentTitle, OnTitleEnteredListener listener) {
         RenameDialogFragment f = new RenameDialogFragment();
-        f.setOnTitleEnteredListener(listener);
+        f.currentTitle = currentTitle;
+        f.onTitleEnteredListener = listener;
         return f;
     }
 
@@ -43,6 +44,8 @@ public class RenameDialogFragment extends DialogFragment {
         View dialogView = inflater.inflate(R.layout.fragment_dialog_rename, container, false);
 
         final EditText titleText = (EditText) dialogView.findViewById(R.id.dialog_shortcut_title);
+        titleText.setText("");
+        titleText.append(currentTitle);
         TextView cancelButtonTextView = (TextView) dialogView.findViewById(R.id.dialog_button_cancel);
         final TextView okButtonTextView = (TextView) dialogView.findViewById(R.id.dialog_button_ok);
         okButtonTextView.setEnabled(false);

@@ -13,9 +13,9 @@ import com.eclubprague.cardashboard.core.model.resources.StringResource;
  * Module context required for calls from modules.
  */
 public interface IModuleContext {
-    void goToSubmodules(IParentModule parentModule);
+    void goToParentModule(IParentModule parentModule);
 
-    void goBackFromSubmodules(IParentModule previousParentModule);
+    void goBackFromParentModule(IParentModule previousParentModule);
 
     void toggleQuickMenu(IModule module, boolean activate);
 
