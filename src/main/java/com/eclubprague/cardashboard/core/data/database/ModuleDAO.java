@@ -281,7 +281,7 @@ public class ModuleDAO {
 
         @Override
         protected Void doInBackground(SaveMessenger... params) {
-            Log.d(TAG, "Executing saving task");
+            //Log.d(TAG, "Executing saving task");
             SaveMessenger msg = params[0];
             SaveRunnable sr = new SaveRunnable(msg.context, msg.parentModule);
             sr.run();
@@ -306,14 +306,14 @@ public class ModuleDAO {
                 bw = new BufferedWriter(new FileWriter(file));
                 SaveDAO saveDAO = new SaveDAO(context);
                 String data = saveDAO.writeParentModule(parentModule);
-                Log.d(TAG, "write parent module = " + data);
+                //Log.d(TAG, "write parent module = " + data);
                 bw.write(data);
                 bw.close();
 
                 BufferedReader br = new BufferedReader(new FileReader(file));
                 String line;
                 while ((line = br.readLine()) != null) {
-                    Log.d(TAG, "file: " + line);
+                    //Log.d(TAG, "file: " + line);
                 }
                 br.close();
             } catch (IOException e) {

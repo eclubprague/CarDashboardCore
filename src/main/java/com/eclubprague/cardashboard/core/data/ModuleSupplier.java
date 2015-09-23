@@ -15,6 +15,7 @@ import com.eclubprague.cardashboard.core.modules.custom.ClockModule;
 import com.eclubprague.cardashboard.core.modules.custom.CompassModule;
 import com.eclubprague.cardashboard.core.modules.custom.DeviceBatteryModule;
 import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
+import com.eclubprague.cardashboard.core.modules.custom.ObdRpmModule;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ abstract public class ModuleSupplier {
             if (homeScreenModule == null) {
                 homeScreenModule = (IParentModule) ModuleEnum.HOMESCREEN_PARENT.newInstance();
                 IParentModule obdParent = (IParentModule) ModuleEnum.OBD_PARENT.newInstance();
-                obdParent.addSubmodules(new GpsSpeedModule());
+                obdParent.addSubmodules(new GpsSpeedModule(), new ObdRpmModule());
                 IParentModule otherParent = (IParentModule) ModuleEnum.OTHER_PARENT.newInstance();
                 otherParent.addSubmodules(
                         new ClockModule(),

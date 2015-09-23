@@ -237,10 +237,7 @@ abstract public class AbstractSimpleModule implements IModule {
         return getClass().getSimpleName() + "{" +
                 "id=" + id +
                 ", titleResource=" + titleResource.getString(GlobalDataProvider.getInstance().getModuleContext().getContext()) +
-                ", iconResource=" + iconResource +
-                ", bgColorResource=" + bgColorResource +
-                ", fgColorResource=" + fgColorResource +
-                '}';
+                "}";
     }
 
     @Override

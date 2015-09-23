@@ -46,5 +46,5 @@
     <string name="module_others_clock_seconds_units">HH:MM:SS</string>
     <string name="dialog_more">More</string>
     <string name="dialog_less">Less</string>
-    <string name="common_ok">Ok</string>
+    <string name="common_ok">OK</string>
 </resources>
