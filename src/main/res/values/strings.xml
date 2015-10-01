@@ -46,10 +46,7 @@
     <string name="module_others_clock_seconds_units">HH:MM:SS</string>
     <string name="dialog_more">More</string>
     <string name="dialog_less">Less</string>
-<<<<<<< HEAD
     <string name="common_ok">OK</string>
-=======
-    <string name="common_ok">Ok</string>
     <string name="module_shortcuts_custom">New custom shortcut</string>
     <string name="module_shortcuts_new_maps_google">New Google Maps shortcut</string>
     <string name="gmaps_type_navigate">Navigate</string>
@@ -78,5 +75,4 @@
     <string name="validation_field_decimal">Must be a decimal number</string>
     <string name="validation_at_least_one_not_empty">At least one of these fields must be filled</string>
     <string name="common_rename">Rename</string>
->>>>>>> 79f16a9acc023cf9ed7780549d05b5a3db1ad2a6
 </resources>
