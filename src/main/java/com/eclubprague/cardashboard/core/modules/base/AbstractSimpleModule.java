@@ -41,6 +41,7 @@ abstract public class AbstractSimpleModule implements IModule {
         this.id = ModuleId.createNew();
         this.titleResource = titleResource;
         this.iconResource = iconResource;
+        ModuleSupplier.getPersonalInstance().put(this);
     }
 
     public AbstractSimpleModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
@@ -50,6 +51,7 @@ abstract public class AbstractSimpleModule implements IModule {
         this.iconResource = iconResource;
         this.bgColorResource = bgColorResource;
         this.fgColorResource = fgColorResource;
+        ModuleSupplier.getPersonalInstance().put(this);
     }
 
     @Override
@@ -129,9 +131,9 @@ abstract public class AbstractSimpleModule implements IModule {
     @Override
     public ViewWithHolder<ModuleView> createViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
         ViewWithHolder<ModuleView> viewWithHolder = createNewViewWithHolder(moduleContext, holderResourceId, holderParent);
-        Log.d(TAG, this + ": setting view: " + viewWithHolder.view);
+//        Log.d(TAG, this + ": setting view: " + viewWithHolder.view);
         view = viewWithHolder.view;
-        Log.d(TAG, this + ": setting holder: " + viewWithHolder.holder);
+//        Log.d(TAG, this + ": setting holder: " + viewWithHolder.holder);
         holderView = viewWithHolder.holder;
         view.setModule(moduleContext, this);
         view.setViewHolder(holderView);

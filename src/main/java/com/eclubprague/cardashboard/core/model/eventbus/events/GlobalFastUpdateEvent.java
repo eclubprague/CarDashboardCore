@@ -1,6 +1,7 @@
 package com.eclubprague.cardashboard.core.model.eventbus.events;
 
 /**
+ * Every 500 ms
  * Created by Michael on 11. 8. 2015.
  */
 public class GlobalFastUpdateEvent extends GlobalUpdateEvent {

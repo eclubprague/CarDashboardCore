@@ -111,6 +111,9 @@ public class CompassModule extends AbstractTimedUpdateDisplayModule<GlobalExtraF
 
     @Override
     public String getUpdatedValue() {
+        if(true){
+            return "SE";
+        }
         getSensorManager();
         return currentValue;
     }

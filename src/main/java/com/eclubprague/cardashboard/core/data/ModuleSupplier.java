@@ -15,6 +15,7 @@ import com.eclubprague.cardashboard.core.modules.custom.ClockModule;
 import com.eclubprague.cardashboard.core.modules.custom.CompassModule;
 import com.eclubprague.cardashboard.core.modules.custom.DeviceBatteryModule;
 import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
+import com.eclubprague.cardashboard.core.modules.custom.settings.ThemeSwitchModule;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,6 +55,9 @@ abstract public class ModuleSupplier {
                         new CompassModule()
                 );
                 IParentModule settingsParent = (IParentModule) ModuleEnum.SETTINGS_PARENT.newInstance();
+                settingsParent.addSubmodules(
+                        new ThemeSwitchModule()
+                );
                 homeScreenModule.addSubmodules(obdParent, otherParent, settingsParent);
             }
             putRecursively(homeScreenModule);
