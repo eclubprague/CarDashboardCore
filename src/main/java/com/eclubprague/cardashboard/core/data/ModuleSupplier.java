@@ -15,7 +15,8 @@ import com.eclubprague.cardashboard.core.modules.custom.ClockModule;
 import com.eclubprague.cardashboard.core.modules.custom.CompassModule;
 import com.eclubprague.cardashboard.core.modules.custom.DeviceBatteryModule;
 import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
-import com.eclubprague.cardashboard.core.modules.custom.ObdRpmModule;
+import com.eclubprague.cardashboard.core.modules.custom.settings.ThemeSwitchModule;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ abstract public class ModuleSupplier {
             if (homeScreenModule == null) {
                 homeScreenModule = (IParentModule) ModuleEnum.HOMESCREEN_PARENT.newInstance();
                 IParentModule obdParent = (IParentModule) ModuleEnum.OBD_PARENT.newInstance();
-                obdParent.addSubmodules(new GpsSpeedModule(), new ObdRpmModule());
+                //obdParent.addSubmodules(new GpsSpeedModule(), new ObdRpmModule());
                 IParentModule otherParent = (IParentModule) ModuleEnum.OTHER_PARENT.newInstance();
                 otherParent.addSubmodules(
                         new ClockModule(),
@@ -55,6 +56,9 @@ abstract public class ModuleSupplier {
                         new CompassModule()
                 );
                 IParentModule settingsParent = (IParentModule) ModuleEnum.SETTINGS_PARENT.newInstance();
+                settingsParent.addSubmodules(
+                        new ThemeSwitchModule()
+                );
                 homeScreenModule.addSubmodules(obdParent, otherParent, settingsParent);
             }
             putRecursively(homeScreenModule);

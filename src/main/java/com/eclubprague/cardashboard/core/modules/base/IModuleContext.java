@@ -30,4 +30,8 @@ public interface IModuleContext {
     Activity getActivity();
 
     ViewGroup getSnackbarHolder();
+
+    void restartActivity();
+
+    void restartApplication();
 }

@@ -75,4 +75,8 @@
     <string name="validation_field_decimal">Must be a decimal number</string>
     <string name="validation_at_least_one_not_empty">At least one of these fields must be filled</string>
     <string name="common_rename">Rename</string>
+    <string name="module_settings_theme_title">Theme</string>
+    <string name="module_unit_empty"/>
+    <string name="module_sensor_temperature_title">Temperature</string>
+    <string name="module_sensor_temperature_units">°C</string>
 </resources>

@@ -14,6 +14,8 @@ import com.eclubprague.cardashboard.core.modules.custom.ErrorTester;
 import com.eclubprague.cardashboard.core.modules.custom.FolderModule;
 import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
 import com.eclubprague.cardashboard.core.modules.custom.ObdRpmModule;
+import com.eclubprague.cardashboard.core.modules.custom.TemperatureModule;
+import com.eclubprague.cardashboard.core.modules.custom.settings.ThemeSwitchModule;
 import com.eclubprague.cardashboard.core.modules.predefined.BackModule;
 import com.eclubprague.cardashboard.core.modules.predefined.EmptyModule;
 import com.eclubprague.cardashboard.core.modules.predefined.SimpleParentModule;
@@ -23,7 +25,7 @@ import com.eclubprague.cardashboard.core.modules.predefined.SimpleShortcutModule
  * Created by Michael on 03.09.2015.
  */
 public enum ModuleEnum {
-    EMPTY(ModuleType.DEFINED) {
+    EMPTY( ModuleType.DEFINED ) {
         @Override
         protected void init() {
             titleResource = EmptyModule.TITLE_RESOURCE;
@@ -36,7 +38,7 @@ public enum ModuleEnum {
         }
 
     },
-    CLOCK(ModuleType.DEFINED) {
+    CLOCK( ModuleType.DEFINED ) {
         @Override
         protected void init() {
             titleResource = ClockModule.TITLE_RESOURCE;
@@ -48,7 +50,7 @@ public enum ModuleEnum {
             return new ClockModule();
         }
     },
-    CLOCK_SECONDS(ModuleType.DEFINED) {
+    CLOCK_SECONDS( ModuleType.DEFINED ) {
         @Override
         protected void init() {
             titleResource = ClockSecondsModule.TITLE_RESOURCE;
@@ -60,7 +62,7 @@ public enum ModuleEnum {
             return new ClockSecondsModule();
         }
     },
-    COMPASS(ModuleType.DEFINED) {
+    COMPASS( ModuleType.DEFINED ) {
         @Override
         protected void init() {
             titleResource = CompassModule.TITLE_RESOURCE;
@@ -72,7 +74,7 @@ public enum ModuleEnum {
             return new CompassModule();
         }
     },
-    DEVICE_BATTERY(ModuleType.DEFINED) {
+    DEVICE_BATTERY( ModuleType.DEFINED ) {
         @Override
         protected void init() {
             titleResource = DeviceBatteryModule.TITLE_RESOURCE;
@@ -84,7 +86,7 @@ public enum ModuleEnum {
             return new DeviceBatteryModule();
         }
     },
-    FOLDER(ModuleType.PARENT) {
+    FOLDER( ModuleType.PARENT ) {
         @Override
         protected void init() {
             titleResource = FolderModule.TITLE_RESOURCE;
@@ -94,6 +96,18 @@ public enum ModuleEnum {
         @Override
         public IModule newInstance() {
             return new FolderModule();
+        }
+    },
+    SETTINGS_THEME(ModuleType.DEFINED){
+        @Override
+        protected void init() {
+            titleResource = ThemeSwitchModule.TITLE_RESOURCE;
+            iconResource = ThemeSwitchModule.ICON_RESOURCE;
+        }
+
+        @Override
+        public IModule newInstance() {
+            return new ThemeSwitchModule();
         }
     },
     GPS_SPEED(ModuleType.DEFINED) {
@@ -118,6 +132,18 @@ public enum ModuleEnum {
         @Override
         public IModule newInstance() {
             return new ObdRpmModule();
+        }
+    },
+    TEMPERATURE(ModuleType.DEFINED){
+        @Override
+        protected void init() {
+            titleResource = TemperatureModule.TITLE_RESOURCE;
+            iconResource = TemperatureModule.ICON_RESOURCE;
+        }
+
+        @Override
+        public IModule newInstance() {
+            return new TemperatureModule();
         }
     },
     SHORTCUT(ModuleType.SHORTCUT) {

@@ -47,6 +47,9 @@ public class ObdRpmModule extends AbstractTimedUpdateDisplayModule<GlobalExtraFa
             }
 
         }
+        if(true){
+            return "1700";
+        }
         return getLastValue();
     }
 }
