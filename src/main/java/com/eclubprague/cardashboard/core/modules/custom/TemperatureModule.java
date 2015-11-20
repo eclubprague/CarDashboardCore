@@ -18,7 +18,7 @@ import java.util.Random;
  */
 public class TemperatureModule extends AbstractTimedUpdateDisplayModule<GlobalSlowUpdateEvent> {
     public static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.module_sensor_temperature_title);
-    public static final IconResource ICON_RESOURCE = IconResource.fromResourceId(R.drawable.ic_clock_black_24dp);
+    public static final IconResource ICON_RESOURCE = IconResource.fromResourceId(R.drawable.thermometer30);
     public static final StringResource UNIT_RESOURCE = StringResource.fromResourceId(R.string.module_sensor_temperature_units);
 
     public TemperatureModule(@NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
