@@ -63,6 +63,12 @@ public class ModuleInfoContainer extends ModuleInfo {
                 new ModuleInfo( ModuleEnum.SHORTCUT_CUSTOM ),
                 new ModuleInfo( ModuleEnum.SHORTCUT_MAPS_GOOGLE )
         );
+        ModuleInfoContainer httpContainer = new ModuleInfoContainer( ModuleEnum.HTTP );
+        containers.add( httpContainer );
+        httpContainer.add(
+                //new ModuleInfo( ModuleEnum.HTTP )
+                new ModuleInfo(ModuleEnum.HTTP_LIGHT)
+        );
         return containers;
     }
 }

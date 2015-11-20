@@ -5,6 +5,7 @@ import android.content.Intent;
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
+import com.eclubprague.cardashboard.core.modules.base.AbstractHttpModule;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.custom.ClockModule;
 import com.eclubprague.cardashboard.core.modules.custom.ClockSecondsModule;
@@ -13,6 +14,7 @@ import com.eclubprague.cardashboard.core.modules.custom.DeviceBatteryModule;
 import com.eclubprague.cardashboard.core.modules.custom.ErrorTester;
 import com.eclubprague.cardashboard.core.modules.custom.FolderModule;
 import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
+import com.eclubprague.cardashboard.core.modules.custom.LightButtonModule;
 import com.eclubprague.cardashboard.core.modules.custom.ObdRpmModule;
 import com.eclubprague.cardashboard.core.modules.custom.TemperatureModule;
 import com.eclubprague.cardashboard.core.modules.custom.settings.ThemeSwitchModule;
@@ -279,6 +281,30 @@ public enum ModuleEnum {
         @Override
         public IModule newInstance() {
             return new ErrorTester();
+        }
+    },
+    HTTP(ModuleType.HTTP){
+        @Override
+        protected void init() {
+            titleResource = AbstractHttpModule.TITLE_RESOURCE;
+            iconResource = AbstractHttpModule.ICON_RESOURCE;
+        }
+
+        @Override
+        public IModule newInstance() {
+            throw new UnsupportedOperationException("This method is not supported for given ModuleEnum: " + this.name());
+        }
+    },
+    HTTP_LIGHT(ModuleType.DEFINED){
+        @Override
+        protected void init() {
+            titleResource = AbstractHttpModule.TITLE_RESOURCE;
+            iconResource = AbstractHttpModule.ICON_RESOURCE;
+        }
+
+        @Override
+        public IModule newInstance() {
+            return new LightButtonModule();
         }
     };
 
