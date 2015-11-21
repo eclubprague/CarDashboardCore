@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.application.GlobalDataProvider;
-import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
+
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalSlowUpdateEvent;
 import com.eclubprague.cardashboard.core.model.resources.ColorResource;
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
@@ -27,12 +27,9 @@ public class DeviceBatteryModule extends AbstractTimedUpdateDisplayModule<Global
     private int previousIconId = -1;
 
     public DeviceBatteryModule() {
-        super(ModuleEnum.DEVICE_BATTERY, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
+        super(TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
     }
 
-    public DeviceBatteryModule(@NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(ModuleEnum.DEVICE_BATTERY, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
-    }
 
     @Override
     public String getUpdatedValue() {

@@ -81,4 +81,7 @@
     <string name="module_sensor_temperature_units">°C</string>
     <string name="module_http_default">HttpModule</string>
     <string name="module_http_light_button">Light bulb</string>
+    <string name="title_application_list">Application list</string>
+    <string name="title_custom_intent">Custom intent</string>
+    <string name="title_custom_gmaps">Custom gmaps intent</string>
 </resources>

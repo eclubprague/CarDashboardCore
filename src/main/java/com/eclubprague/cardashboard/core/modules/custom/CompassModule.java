@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.application.GlobalDataProvider;
-import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
+
 import com.eclubprague.cardashboard.core.model.eventbus.events.GlobalExtraFastUpdateEvent;
 import com.eclubprague.cardashboard.core.model.resources.ColorResource;
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
@@ -33,14 +33,10 @@ public class CompassModule extends AbstractTimedUpdateDisplayModule<GlobalExtraF
     private String dir;
 
     public CompassModule() {
-        super(ModuleEnum.COMPASS, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
+        super(TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE );
         init();
     }
 
-    public CompassModule(@NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(ModuleEnum.COMPASS, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource, UNIT_RESOURCE);
-        init();
-    }
 
     private SensorManager mSensorManager;
     Float azimut;

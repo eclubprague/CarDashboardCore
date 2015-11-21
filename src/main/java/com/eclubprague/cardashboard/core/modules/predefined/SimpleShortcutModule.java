@@ -5,7 +5,8 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.ViewGroup;
 
-import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
+import com.eclubprague.cardashboard.core.R;
+
 import com.eclubprague.cardashboard.core.model.resources.ColorResource;
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
@@ -18,38 +19,15 @@ import com.eclubprague.cardashboard.core.views.ModuleView;
  * Created by Michael on 02.09.2015.
  */
 public class SimpleShortcutModule extends AbstractShortcutModule {
+    public static final StringResource TITLE_RESOURCE = StringResource.fromResourceId( R.string.module_shortcuts_custom );
+    public static final IconResource ICON_RESOURCE = IconResource.fromResourceId( R.drawable.ic_exit_to_app_black_24dp );
 
-//    public SimpleShortcutModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
-//        super(moduleEnum, titleResource, iconResource);
-//    }
-//
-//    public SimpleShortcutModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-//        super(moduleEnum, titleResource, iconResource, bgColorResource, fgColorResource);
-//    }
-
-    public SimpleShortcutModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, StringResource errorMessage, Intent intent) {
-        super(moduleEnum, titleResource, iconResource, bgColorResource, fgColorResource, errorMessage, intent);
+    public SimpleShortcutModule() {
+        setTitle( TITLE_RESOURCE );
+        setIcon( ICON_RESOURCE );
     }
 
-    public SimpleShortcutModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, StringResource errorMessage, Intent intent) {
-        super(moduleEnum, titleResource, iconResource, errorMessage, intent);
-    }
-
-    public SimpleShortcutModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, Intent intent) {
-        super(moduleEnum, titleResource, iconResource, intent);
-    }
-
-    @Override
-    public ModuleView createNewView(IModuleContext moduleContext, ViewGroup parent) {
-        ModuleView v = super.createNewView(moduleContext, parent);
-        Log.d("SimpleShortcutModule", "creating new view: " + getTitle().getString(moduleContext.getContext()) + ", " + v);
-        return v;
-    }
-
-    @Override
-    public ViewWithHolder<ModuleView> createNewViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
-        ViewWithHolder<ModuleView> v = super.createNewViewWithHolder(moduleContext, holderResourceId, holderParent);
-        Log.d("SimpleShortcutModule", "creating new view: " + getTitle().getString(moduleContext.getContext()) + ", " + v.view);
-        return v;
+    public SimpleShortcutModule( StringResource titleResource, IconResource iconResource, Intent intent ) {
+        super( titleResource, iconResource, intent );
     }
 }

@@ -3,7 +3,7 @@ package com.eclubprague.cardashboard.core.modules.base;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
+
 import com.eclubprague.cardashboard.core.model.resources.ColorResource;
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
@@ -58,7 +58,5 @@ public interface IModule extends IModuleListener, IQuickMenuListener, IActivityS
     void setHolder(ViewGroup holder);
 
     ViewGroup getHolder();
-
-    ModuleEnum getModuleEnum();
 
 }

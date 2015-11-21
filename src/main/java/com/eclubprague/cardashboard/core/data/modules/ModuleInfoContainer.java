@@ -1,5 +1,14 @@
 package com.eclubprague.cardashboard.core.data.modules;
 
+import android.text.TextDirectionHeuristic;
+
+import com.eclubprague.cardashboard.core.model.resources.IconResource;
+import com.eclubprague.cardashboard.core.model.resources.StringResource;
+import com.eclubprague.cardashboard.core.modules.base.IModule;
+import com.eclubprague.cardashboard.core.modules.custom.*;
+import com.eclubprague.cardashboard.core.modules.custom.settings.ThemeSwitchModule;
+import com.eclubprague.cardashboard.core.modules.predefined.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,11 +17,10 @@ import java.util.List;
  */
 public class ModuleInfoContainer extends ModuleInfo {
 
-    private List<ModuleInfo> submodules;
+    private final List<ModuleInfo> submodules = new ArrayList<>();
 
-    public ModuleInfoContainer( ModuleEnum module ) {
-        super( module );
-        submodules = new ArrayList<>();
+    public ModuleInfoContainer( Class<? extends IModule> moduleClass, StringResource titleResource, IconResource iconResource ) {
+        super( moduleClass, titleResource, iconResource );
     }
 
     public void add( ModuleInfo moduleInfo ) {
@@ -35,39 +43,34 @@ public class ModuleInfoContainer extends ModuleInfo {
 
     public static List<ModuleInfoContainer> getModules() {
         List<ModuleInfoContainer> containers = new ArrayList<>();
-        ModuleInfoContainer obdContainer = new ModuleInfoContainer( ModuleEnum.OBD_PARENT );
+        ModuleInfoContainer obdContainer = new ModuleInfoContainer( SimpleParentModule.class, SimpleParentModule.OBD_TITLE_RESOURCE, SimpleParentModule.OBD_ICON_RESOURCE );
         containers.add( obdContainer );
         obdContainer.add(
-                new ModuleInfo( ModuleEnum.GPS_SPEED ),
-                new ModuleInfo( ModuleEnum.OBD_RPM )
+                new ModuleInfo( GpsSpeedModule.class, GpsSpeedModule.TITLE_RESOURCE, GpsSpeedModule.ICON_RESOURCE ),
+                new ModuleInfo( ObdRpmModule.class, ObdRpmModule.TITLE_RESOURCE, ObdRpmModule.ICON_RESOURCE )
         );
-        ModuleInfoContainer otherContainer = new ModuleInfoContainer( ModuleEnum.OTHER_PARENT );
+        ModuleInfoContainer otherContainer = new ModuleInfoContainer( SimpleParentModule.class, SimpleParentModule.OTHERS_TITLE_RESOURCE, SimpleParentModule.OTHERS_ICON_RESOURCE );
         containers.add( otherContainer );
         otherContainer.add(
-                new ModuleInfo( ModuleEnum.FOLDER ),
-                new ModuleInfo( ModuleEnum.CLOCK ),
-                new ModuleInfo( ModuleEnum.CLOCK_SECONDS ),
-                new ModuleInfo( ModuleEnum.DEVICE_BATTERY ),
-                new ModuleInfo( ModuleEnum.COMPASS )
+                new ModuleInfo( FolderModule.class, FolderModule.TITLE_RESOURCE, FolderModule.ICON_RESOURCE ),
+                new ModuleInfo( ClockModule.class, ClockModule.TITLE_RESOURCE, ClockModule.ICON_RESOURCE ),
+                new ModuleInfo( ClockSecondsModule.class, ClockSecondsModule.TITLE_RESOURCE, ClockSecondsModule.ICON_RESOURCE ),
+                new ModuleInfo( DeviceBatteryModule.class, DeviceBatteryModule.TITLE_RESOURCE, DeviceBatteryModule.ICON_RESOURCE ),
+                new ModuleInfo( CompassModule.class, CompassModule.TITLE_RESOURCE, CompassModule.ICON_RESOURCE ),
+                new ModuleInfo( LightButtonModule.class, LightButtonModule.TITLE_RESOURCE, LightButtonModule.ICON_RESOURCE )
         );
-        ModuleInfoContainer settingsContainer = new ModuleInfoContainer( ModuleEnum.SETTINGS_PARENT );
+        ModuleInfoContainer settingsContainer = new ModuleInfoContainer( SimpleParentModule.class, SimpleParentModule.SETTINGS_TITLE_RESOURCE, SimpleParentModule.SETTINGS_ICON_RESOURCE );
         containers.add( settingsContainer );
         settingsContainer.add(
-                new ModuleInfo( ModuleEnum.TEST ),
-                new ModuleInfo( ModuleEnum.SETTINGS_THEME )
+                new ModuleInfo( ErrorTester.class, ErrorTester.TITLE_RESOURCE, ErrorTester.ICON_RESOURCE ),
+                new ModuleInfo( ThemeSwitchModule.class, ThemeSwitchModule.TITLE_RESOURCE, ThemeSwitchModule.ICON_RESOURCE )
         );
-        ModuleInfoContainer shortcutContainer = new ModuleInfoContainer( ModuleEnum.SHORTCUT_PARENT );
+        ModuleInfoContainer shortcutContainer = new ModuleInfoContainer( SimpleParentModule.class, SimpleParentModule.SHORTCUT_TITLE_RESOURCE, SimpleParentModule.SHORTCUT_ICON_RESOURCE );
         containers.add( shortcutContainer );
         shortcutContainer.add(
-                new ModuleInfo( ModuleEnum.SHORTCUT ),
-                new ModuleInfo( ModuleEnum.SHORTCUT_CUSTOM ),
-                new ModuleInfo( ModuleEnum.SHORTCUT_MAPS_GOOGLE )
-        );
-        ModuleInfoContainer httpContainer = new ModuleInfoContainer( ModuleEnum.HTTP );
-        containers.add( httpContainer );
-        httpContainer.add(
-                //new ModuleInfo( ModuleEnum.HTTP )
-                new ModuleInfo(ModuleEnum.HTTP_LIGHT)
+                new ModuleInfo( AppShortcutModule.class, AppShortcutModule.TITLE_RESOURCE, AppShortcutModule.ICON_RESOURCE ),
+                new ModuleInfo( SimpleShortcutModule.class, SimpleShortcutModule.TITLE_RESOURCE, SimpleShortcutModule.ICON_RESOURCE ),
+                new ModuleInfo( GmapsShortcutModule.class, GmapsShortcutModule.TITLE_RESOURCE, GmapsShortcutModule.ICON_RESOURCE )
         );
         return containers;
     }

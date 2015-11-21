@@ -4,9 +4,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.util.Log;
 
+import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.application.GlobalDataProvider;
 import com.eclubprague.cardashboard.core.data.database.ModuleDAO;
-import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
+
+import com.eclubprague.cardashboard.core.data.modules.ModuleCreationToolsMap;
+import com.eclubprague.cardashboard.core.model.resources.IconResource;
+import com.eclubprague.cardashboard.core.model.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.modules.base.IParentModule;
@@ -16,6 +20,7 @@ import com.eclubprague.cardashboard.core.modules.custom.CompassModule;
 import com.eclubprague.cardashboard.core.modules.custom.DeviceBatteryModule;
 import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
 import com.eclubprague.cardashboard.core.modules.custom.settings.ThemeSwitchModule;
+import com.eclubprague.cardashboard.core.modules.predefined.SimpleParentModule;
 
 
 import java.io.IOException;
@@ -33,35 +38,35 @@ abstract public class ModuleSupplier {
     private static final String TAG = ModuleSupplier.class.getSimpleName();
     private static final ModuleSupplier personalInstance = new ModuleSupplier() {
         @Override
-        protected IParentModule createHomeScreenModule(IModuleContext moduleContext) {
+        protected IParentModule createHomeScreenModule( IModuleContext moduleContext ) {
 
-            Context context = GlobalDataProvider.getInstance().getContext();
+            IModuleContext context = GlobalDataProvider.getInstance().getModuleContext();
             IParentModule homeScreenModule = null;
             try {
-                homeScreenModule = ModuleDAO.loadParentModule(context);
-            } catch (IOException e) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Unable to load personal settings. Loading default.").setMessage(e.getMessage()).create().show();
+                homeScreenModule = ModuleDAO.loadParentModule( moduleContext );
+            } catch ( IOException e ) {
+                AlertDialog.Builder builder = new AlertDialog.Builder( context.getContext() );
+                builder.setTitle( "Unable to load personal settings. Loading default." ).setMessage( e.getMessage() ).create().show();
                 // should be prompt with file error
 //                throw new RuntimeException(e);
             }
-            if (homeScreenModule == null) {
-                homeScreenModule = (IParentModule) ModuleEnum.HOMESCREEN_PARENT.newInstance();
-                IParentModule obdParent = (IParentModule) ModuleEnum.OBD_PARENT.newInstance();
+            if ( homeScreenModule == null ) {
+                homeScreenModule = new SimpleParentModule( SimpleParentModule.HOME_TITLE_RESOURCE, SimpleParentModule.HOME_ICON_RESOURCE );
+                IParentModule obdParent = new SimpleParentModule( SimpleParentModule.OBD_TITLE_RESOURCE, SimpleParentModule.OBD_ICON_RESOURCE );
                 //obdParent.addSubmodules(new GpsSpeedModule(), new ObdRpmModule());
-                IParentModule otherParent = (IParentModule) ModuleEnum.OTHER_PARENT.newInstance();
+                IParentModule otherParent = new SimpleParentModule( SimpleParentModule.OTHERS_TITLE_RESOURCE, SimpleParentModule.OTHERS_ICON_RESOURCE );
                 otherParent.addSubmodules(
                         new ClockModule(),
                         new DeviceBatteryModule(),
                         new CompassModule()
                 );
-                IParentModule settingsParent = (IParentModule) ModuleEnum.SETTINGS_PARENT.newInstance();
+                IParentModule settingsParent = new SimpleParentModule( SimpleParentModule.SETTINGS_TITLE_RESOURCE, SimpleParentModule.SETTINGS_ICON_RESOURCE );
                 settingsParent.addSubmodules(
                         new ThemeSwitchModule()
                 );
-                homeScreenModule.addSubmodules(obdParent, otherParent, settingsParent);
+                homeScreenModule.addSubmodules( obdParent, otherParent, settingsParent );
             }
-            putRecursively(homeScreenModule);
+            putRecursively( homeScreenModule );
 
 
             return homeScreenModule;
@@ -78,65 +83,65 @@ abstract public class ModuleSupplier {
         return personalInstance;
     }
 
-    public IModule findModule(IModuleContext moduleContext, ModuleId id) {
-        return map.get(id);
+    public IModule findModule( IModuleContext moduleContext, ModuleId id ) {
+        return map.get( id );
     }
 
-    public IParentModule findSubmenuModule(IModuleContext moduleContext, ModuleId id) {
-        return (IParentModule) map.get(id);
+    public IParentModule findSubmenuModule( IModuleContext moduleContext, ModuleId id ) {
+        return (IParentModule) map.get( id );
     }
 
-    public void put(IModule module) {
-        map.put(module.getId(), module);
+    public void put( IModule module ) {
+        map.put( module.getId(), module );
     }
 
-    public void put(IModule... modules) {
-        for (IModule m : modules) {
-            put(m);
+    public void put( IModule... modules ) {
+        for ( IModule m : modules ) {
+            put( m );
         }
     }
 
-    public void put(List<IModule> modules) {
-        for (IModule m : modules) {
-            put(m);
+    public void put( List<IModule> modules ) {
+        for ( IModule m : modules ) {
+            put( m );
         }
     }
 
-    public void remove(IModule module) {
-        map.remove(module.getId());
+    public void remove( IModule module ) {
+        map.remove( module.getId() );
     }
 
-    public IParentModule getHomeScreenModule(IModuleContext moduleContext) {
-        if (homeScreenModule == null) {
-            homeScreenModule = createHomeScreenModule(moduleContext);
+    public IParentModule getHomeScreenModule( IModuleContext moduleContext ) {
+        if ( homeScreenModule == null ) {
+            homeScreenModule = createHomeScreenModule( moduleContext );
         }
         return (IParentModule) homeScreenModule;
     }
 
     public List<IModule> getAll() {
-        return new ArrayList<>(map.values());
+        return new ArrayList<>( map.values() );
     }
 
-    public void save(IModuleContext moduleContext) throws IOException {
-        ModuleDAO.saveParentModuleAsync(moduleContext.getContext(), getHomeScreenModule(moduleContext));
+    public void save( IModuleContext moduleContext ) throws IOException {
+        ModuleDAO.saveParentModuleAsync( moduleContext, getHomeScreenModule( moduleContext ) );
     }
 
     public void clear() {
         homeScreenModule = null;
     }
 
-    protected void putRecursively(IParentModule parentModule) {
-        Log.d(TAG, "Putting in BaseSupplier: " + parentModule.getClass().getSimpleName() + ": " + parentModule.getTitle().getString(GlobalDataProvider.getInstance().getContext()));
-        put(parentModule);
-        for (IModule m : parentModule.getSubmodules()) {
-            if (m instanceof IParentModule) {
-                putRecursively((IParentModule) m);
+    protected void putRecursively( IParentModule parentModule ) {
+        Log.d( TAG, "Putting in BaseSupplier: " + parentModule.getClass().getSimpleName() + ": " + parentModule.getTitle().getString( GlobalDataProvider.getInstance().getContext() ) );
+        put( parentModule );
+        for ( IModule m : parentModule.getSubmodules() ) {
+            if ( m instanceof IParentModule ) {
+                putRecursively( (IParentModule) m );
             } else {
 //                Log.d(TAG, "Putting in BaseSupplier: " + m.getClass().getSimpleName());
-                put(m);
+                put( m );
             }
         }
     }
 
-    protected abstract IParentModule createHomeScreenModule(IModuleContext moduleContext);
+    protected abstract IParentModule createHomeScreenModule( IModuleContext moduleContext );
 }

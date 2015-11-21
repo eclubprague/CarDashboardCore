@@ -3,7 +3,6 @@ package com.eclubprague.cardashboard.core.modules.base;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
-import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
 import com.eclubprague.cardashboard.core.model.resources.ColorResource;
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
@@ -24,34 +23,31 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule {
     private String value = null;
     private StringResource unitResource;
 
-
-    public AbstractDisplayModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, StringResource unitResource) {
-        super(moduleEnum, titleResource, iconResource);
-        this.unitResource = unitResource;
+    public AbstractDisplayModule() {
     }
 
-    public AbstractDisplayModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, StringResource unitResource) {
-        super(moduleEnum, titleResource, iconResource, bgColorResource, fgColorResource);
-        this.unitResource = unitResource;
+    public AbstractDisplayModule( @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull StringResource unitResource ) {
+        super( titleResource, iconResource );
+        setUnitResource( unitResource );
     }
 
     public StringResource getUnit() {
         return unitResource;
     }
 
-    public AbstractDisplayModule setUnitResource(StringResource unitResource) {
+    public AbstractDisplayModule setUnitResource( StringResource unitResource ) {
         this.unitResource = unitResource;
         return this;
     }
 
-    public void updateValue(String value) {
+    public void updateValue( String value ) {
 //        Log.d("DisplayModule", "updating value for module: " + this);
 //        Log.d("DisplayModule", "with view: " + getView());
         this.value = value;
 //        for(ModuleView v : views){
 //            v.setVa
 //        }
-        if (value == null || getView() == null) {
+        if ( value == null || getView() == null ) {
             return;
         } else {
 //            List<ModuleView> moduleViewList = getViews(moduleContext);
@@ -60,29 +56,29 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule {
 //                moduleActiveView.setValue(value);
 //            }
             ModuleActiveView v = (ModuleActiveView) getView();
-            v.setValue(value);
+            v.setValue( value );
         }
     }
 
     @Override
-    public void onClickEvent(IModuleContext context) {
-        super.onClickEvent(context);
-        TextToSpeech.speak(getValue());
+    public void onClickEvent( IModuleContext context ) {
+        super.onClickEvent( context );
+        TextToSpeech.speak( getValue() );
     }
 
     @Override
-    public ModuleView createNewView(IModuleContext moduleContext, ViewGroup parent) {
-        ModuleActiveView view = ModuleViewFactory.createActive(moduleContext, parent, this, getIcon(), getTitle(), getUnit());
-        view.setValue(getUpdatedValue());
+    public ModuleView createNewView( IModuleContext moduleContext, ViewGroup parent ) {
+        ModuleActiveView view = ModuleViewFactory.createActive( moduleContext, parent, this, getIcon(), getTitle(), getUnit() );
+        view.setValue( getUpdatedValue() );
         return view;
     }
 
     @Override
-    public ViewWithHolder<ModuleView> createNewViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
-        ViewWithHolder<ModuleActiveView> viewWithHolder = ModuleViewFactory.createActiveWithHolder(moduleContext, holderResourceId, holderParent, this, getIcon(), getTitle(), getUnit());
+    public ViewWithHolder<ModuleView> createNewViewWithHolder( IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent ) {
+        ViewWithHolder<ModuleActiveView> viewWithHolder = ModuleViewFactory.createActiveWithHolder( moduleContext, holderResourceId, holderParent, this, getIcon(), getTitle(), getUnit() );
         ModuleActiveView view = viewWithHolder.view;
-        view.setValue(getUpdatedValue());
-        return new ViewWithHolder<ModuleView>(viewWithHolder.view, viewWithHolder.holder);
+        view.setValue( getUpdatedValue() );
+        return new ViewWithHolder<ModuleView>( viewWithHolder.view, viewWithHolder.holder );
     }
 
     public String getValue() {

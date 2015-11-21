@@ -3,6 +3,7 @@ package com.eclubprague.cardashboard.core.modules.base;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
@@ -28,6 +29,8 @@ public interface IModuleContext {
     void onModuleEvent(IModule module, ModuleEvent event);
 
     Activity getActivity();
+
+    Resources getResources();
 
     ViewGroup getSnackbarHolder();
 

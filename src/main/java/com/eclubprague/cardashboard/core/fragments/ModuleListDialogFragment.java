@@ -15,7 +15,9 @@ import android.widget.TextView;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.adapters.ModuleListAdapter;
-import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
+
+import com.eclubprague.cardashboard.core.data.modules.ModuleCreator;
+import com.eclubprague.cardashboard.core.data.modules.ModuleInfo;
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
@@ -33,7 +35,7 @@ public class ModuleListDialogFragment extends DialogFragment {
     private static final String TAG = ModuleListDialogFragment.class.getSimpleName();
 
     private IModuleContext moduleContext;
-    private final List<ModuleEnum> insertModules = new ArrayList<>();
+    private final List<ModuleInfo> insertModules = new ArrayList<>();
     private boolean multiInsert = false;
     private OnMultiAddModuleListener onMultiAddModuleListener = null;
     private OnAddModuleListener onAddModuleListener = null;
@@ -70,12 +72,12 @@ public class ModuleListDialogFragment extends DialogFragment {
         if ( multiInsert ) {
             adapter = new ModuleListAdapter( moduleContext, new ModuleListAdapter.OnModuleCheckListener() {
                 @Override
-                public void onInsert( ModuleEnum module ) {
+                public void onInsert( ModuleInfo module ) {
                     insertModules.add( module );
                 }
 
                 @Override
-                public void onRemove( ModuleEnum module ) {
+                public void onRemove( ModuleInfo module ) {
                     insertModules.remove( module );
                 }
             } );
@@ -83,39 +85,16 @@ public class ModuleListDialogFragment extends DialogFragment {
             adapter = new ModuleListAdapter( moduleContext, new ModuleListAdapter.OnModuleSelectListener() {
 
                 @Override
-                public void onSelected( ModuleEnum module ) {
-                    if ( module.equals( ModuleEnum.SHORTCUT ) ) {
-                        ApplicationListDialogFragment.newInstance( moduleContext, new ApplicationListDialogFragment.OnApplicationSelectedListener() {
+                public void onSelected( ModuleInfo module ) {
+                    try {
+                        module.getCreator().create( moduleContext, module.getModuleClass(), new ModuleCreator.OnModuleCreateListener() {
                             @Override
-                            public void onApplicationSelected( ApplicationInfo applicationInfo ) {
-                                PackageManager pm = moduleContext.getContext().getPackageManager();
-                                StringResource titleResource = StringResource.fromString( applicationInfo.loadLabel( pm ).toString() );
-                                IconResource iconResource = IconResource.fromDrawable( applicationInfo.loadIcon( pm ) );
-                                Intent intent = pm.getLaunchIntentForPackage( applicationInfo.packageName );
-                                SimpleShortcutModule shortcutModule = (SimpleShortcutModule) ModuleEnum.SHORTCUT.newInstance( titleResource, iconResource, intent );
-                                onAddModuleListener.addModule( shortcutModule );
+                            public void onModuleCreated( IModule module ) {
+                                onAddModuleListener.addModule( module );
                             }
-                        } ).show( moduleContext.getActivity().getFragmentManager(), "Application list" );
-                    } else if ( module.equals( ModuleEnum.SHORTCUT_CUSTOM ) ) {
-                        CustomShortcutDialogFragment.newInstance( new CustomShortcutDialogFragment.OnShortcutCreatedListener() {
-                            @Override
-                            public void onShortcutCreated( String title, Intent intent ) {
-                                StringResource titleResource = StringResource.fromString( title );
-                                IconResource iconResource = ModuleEnum.SHORTCUT_CUSTOM.getIcon();
-                                SimpleShortcutModule shortcutModule = (SimpleShortcutModule) ModuleEnum.SHORTCUT_CUSTOM.newInstance( titleResource, iconResource, intent );
-                                onAddModuleListener.addModule( shortcutModule );
-                            }
-                        } ).show( moduleContext.getActivity().getFragmentManager(), "Custom shortcut" );
-                    } else if ( module.equals( ModuleEnum.SHORTCUT_MAPS_GOOGLE ) ) {
-                        GmapsShortcutDialogFragment.newInstance( moduleContext.getContext(), new GmapsShortcutDialogFragment.OnIntentCreatedListener() {
-                            @Override
-                            public void onIntentCreated( IconResource iconResource, StringResource titleResource, Intent intent ) {
-                                SimpleShortcutModule shortcutModule = (SimpleShortcutModule) ModuleEnum.SHORTCUT_CUSTOM.newInstance( titleResource, iconResource, intent );
-                                onAddModuleListener.addModule( shortcutModule );
-                            }
-                        } ).show( moduleContext.getActivity().getFragmentManager(), "Custom gmaps" );
-                    } else {
-                        onAddModuleListener.addModule( module.newInstance() );
+                        } );
+                    } catch ( java.lang.InstantiationException e ) {
+                        // TODO: unexpected error
                     }
                 }
             } );
@@ -133,9 +112,18 @@ public class ModuleListDialogFragment extends DialogFragment {
             addView.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick( View v ) {
-                    List<IModule> modules = new ArrayList<IModule>();
-                    for ( ModuleEnum m : insertModules ) {
-                        modules.add( m.newInstance() );
+                    final List<IModule> modules = new ArrayList<IModule>();
+                    for ( ModuleInfo m : insertModules ) {
+                        try {
+                            m.getCreator().create( moduleContext, m.getModuleClass(), new ModuleCreator.OnModuleCreateListener() {
+                                @Override
+                                public void onModuleCreated( IModule module ) {
+                                    modules.add( module );
+                                }
+                            } );
+                        } catch ( java.lang.InstantiationException e ) {
+                            // TODO: unexpected error
+                        }
                     }
                     onMultiAddModuleListener.addModules( modules );
                 }

@@ -3,7 +3,7 @@ package com.eclubprague.cardashboard.core.modules.base;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
-import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
+
 import com.eclubprague.cardashboard.core.model.resources.ColorResource;
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
@@ -25,12 +25,11 @@ import java.util.List;
 abstract public class AbstractParentModule extends AbstractSimpleModule implements IParentModule {
     private final List<IModule> submodules = new ArrayList<>();
 
-    public AbstractParentModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
-        super(moduleEnum, titleResource, iconResource);
+    public AbstractParentModule() {
     }
 
-    public AbstractParentModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(moduleEnum, titleResource, iconResource, bgColorResource, fgColorResource);
+    public AbstractParentModule( @NonNull StringResource titleResource, @NonNull IconResource iconResource ) {
+        super( titleResource, iconResource );
     }
 
     @Override

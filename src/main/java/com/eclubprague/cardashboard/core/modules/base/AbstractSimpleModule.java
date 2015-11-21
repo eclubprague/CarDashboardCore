@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.application.GlobalDataProvider;
 import com.eclubprague.cardashboard.core.data.ModuleSupplier;
-import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
+
 import com.eclubprague.cardashboard.core.fragments.RenameDialogFragment;
 import com.eclubprague.cardashboard.core.model.resources.ColorResource;
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
@@ -27,7 +27,6 @@ import java.util.List;
  */
 abstract public class AbstractSimpleModule implements IModule {
     private final ModuleId id;
-    private final ModuleEnum moduleEnum;
     private StringResource titleResource;
     private IconResource iconResource;
     private ColorResource bgColorResource;
@@ -36,16 +35,18 @@ abstract public class AbstractSimpleModule implements IModule {
     private ViewGroup holderView;
     private static final String TAG = AbstractSimpleModule.class.getSimpleName();
 
-    public AbstractSimpleModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
-        this.moduleEnum = moduleEnum;
+    public AbstractSimpleModule(){
+        this.id = ModuleId.createNew();
+    }
+
+    public AbstractSimpleModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource) {
         this.id = ModuleId.createNew();
         this.titleResource = titleResource;
         this.iconResource = iconResource;
         ModuleSupplier.getPersonalInstance().put(this);
     }
 
-    public AbstractSimpleModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        this.moduleEnum = moduleEnum;
+    public AbstractSimpleModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
         this.id = ModuleId.createNew();
         this.titleResource = titleResource;
         this.iconResource = iconResource;
@@ -303,10 +304,5 @@ abstract public class AbstractSimpleModule implements IModule {
 
     public boolean hasBackgroundColor() {
         return bgColorResource != null;
-    }
-
-    @Override
-    public ModuleEnum getModuleEnum() {
-        return moduleEnum;
     }
 }

@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.eclubprague.cardashboard.core.R;
-import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
+
 import com.eclubprague.cardashboard.core.model.resources.ColorResource;
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
@@ -24,53 +24,50 @@ import java.io.IOException;
  */
 public class LightButtonModule extends AbstractHttpModule {
 
-    public static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.module_http_light_button);
-    public static final IconResource ICON_RESOURCE = IconResource.fromResourceId(R.drawable.ic_exit_to_app_black_24dp);
+    public static final StringResource TITLE_RESOURCE = StringResource.fromResourceId( R.string.module_http_light_button );
+    public static final IconResource ICON_RESOURCE = IconResource.fromResourceId( R.drawable.ic_exit_to_app_black_24dp );
 
-    private static final MediaType MEDIA_TYPE = MediaType.parse("application/x-www-form-urlencoded");
+    private static final MediaType MEDIA_TYPE = MediaType.parse( "application/x-www-form-urlencoded" );
     private static final String URL = "http://zettor.sin.cvut.cz:1337/servers/00000000/devices/4ec556ea-c638-496e-aa5d-b4751a08ca66";
     private static final String BODY = "action=turn-on";
 
     public LightButtonModule() {
-        super(ModuleEnum.HTTP_LIGHT, TITLE_RESOURCE, ICON_RESOURCE);
+        super(TITLE_RESOURCE, ICON_RESOURCE);
     }
 
-    public LightButtonModule(@NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(ModuleEnum.HTTP_LIGHT, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource);
-    }
 
     @Override
-    public void handleClickEvent(IModuleContext context) {
-        new HttpRequestTask().execute(new HttpData(MEDIA_TYPE, URL, null));
+    public void handleClickEvent( IModuleContext context ) {
+        new HttpRequestTask().execute( new HttpData( MEDIA_TYPE, URL, null ) );
     }
 
     private class HttpRequestTask extends AsyncTask<AbstractHttpModule.HttpData, Void, Void> {
 
         @Override
-        protected Void doInBackground(AbstractHttpModule.HttpData... params) {
+        protected Void doInBackground( AbstractHttpModule.HttpData... params ) {
             AbstractHttpModule.HttpData httpData = params[0];
             OkHttpClient client = new OkHttpClient();
-            RequestBody requestBody = RequestBody.create(httpData.getMediaType(), "action=turn-on");
+            RequestBody requestBody = RequestBody.create( httpData.getMediaType(), "action=turn-on" );
             Request request = new Request.Builder()
-                    .url(httpData.getUrl())
-                    .post(requestBody)
+                    .url( httpData.getUrl() )
+                    .post( requestBody )
                     .build();
             try {
-                Response response = client.newCall(request).execute();
+                Response response = client.newCall( request ).execute();
                 //Log.d("AbstractHttpModule", "response = " + response);
-                if(response.code() != 200){
-                    requestBody = RequestBody.create(httpData.getMediaType(), "action=turn-off");
+                if ( response.code() != 200 ) {
+                    requestBody = RequestBody.create( httpData.getMediaType(), "action=turn-off" );
                     request = new Request.Builder()
-                            .url(httpData.getUrl())
-                            .post(requestBody)
+                            .url( httpData.getUrl() )
+                            .post( requestBody )
                             .build();
-                    response = client.newCall(request).execute();
-                    if(response.code() != 200){
-                        Log.d("AbstractHttpModule", "response = " + response);
+                    response = client.newCall( request ).execute();
+                    if ( response.code() != 200 ) {
+                        Log.d( "AbstractHttpModule", "response = " + response );
                     }
                 }
-            } catch (IOException e) {
-                Log.d("AbstractHttpModule", e.toString());
+            } catch ( IOException e ) {
+                Log.d( "AbstractHttpModule", e.toString() );
                 e.printStackTrace();
             }
             return null;

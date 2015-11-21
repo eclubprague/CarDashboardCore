@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.R;
-import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
+
 import com.eclubprague.cardashboard.core.model.resources.ColorResource;
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
@@ -30,13 +30,11 @@ abstract public class AbstractHttpModule extends AbstractSimpleModule {
     public static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.module_http_default);
     public static final IconResource ICON_RESOURCE = IconResource.fromResourceId(R.drawable.ic_exit_to_app_black_24dp);
 
-
-    public AbstractHttpModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
-        super(moduleEnum, titleResource, iconResource);
+    public AbstractHttpModule() {
     }
 
-    public AbstractHttpModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(moduleEnum, titleResource, iconResource, bgColorResource, fgColorResource);
+    public AbstractHttpModule( @NonNull StringResource titleResource, @NonNull IconResource iconResource ) {
+        super( titleResource, iconResource );
     }
 
     @Override

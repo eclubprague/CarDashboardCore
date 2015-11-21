@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.application.GlobalDataProvider;
-import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
+
 import com.eclubprague.cardashboard.core.model.resources.ColorResource;
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
@@ -25,30 +25,14 @@ abstract public class AbstractShortcutModule extends AbstractSimpleModule {
     private StringResource errorMessage;
     private static final StringResource defaultError = StringResource.fromResourceId(R.string.error_module_shortcut);
 
-    public AbstractShortcutModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource) {
-        super(moduleEnum, titleResource, iconResource);
+    public AbstractShortcutModule(){
+
     }
 
-    public AbstractShortcutModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(moduleEnum, titleResource, iconResource, bgColorResource, fgColorResource);
-    }
-
-    public AbstractShortcutModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, Intent intent) {
-        super(moduleEnum, titleResource, iconResource);
-        this.intent = intent;
-        this.errorMessage = StringResource.fromString(defaultError.getString(GlobalDataProvider.getInstance().getContext()) + intent.toUri(0));
-    }
-
-    public AbstractShortcutModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, StringResource errorMessage, Intent intent) {
-        super(moduleEnum, titleResource, iconResource);
-        this.errorMessage = errorMessage;
-        this.intent = intent;
-    }
-
-    public AbstractShortcutModule(@NonNull ModuleEnum moduleEnum, @NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource, StringResource errorMessage, Intent intent) {
-        super(moduleEnum, titleResource, iconResource, bgColorResource, fgColorResource);
-        this.errorMessage = errorMessage;
-        this.intent = intent;
+    public AbstractShortcutModule( StringResource titleResource, IconResource iconResource, Intent intent ) {
+        setTitle( titleResource );
+        setIcon( iconResource );
+        setIntent( intent );
     }
 
     public void setIntent(Intent intent) {

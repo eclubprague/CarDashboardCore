@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
 import com.eclubprague.cardashboard.core.R;
-import com.eclubprague.cardashboard.core.data.modules.ModuleEnum;
+
 import com.eclubprague.cardashboard.core.model.resources.ColorResource;
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
@@ -22,33 +22,31 @@ import com.eclubprague.cardashboard.core.views.ModuleView;
  */
 public class EmptyModule extends AbstractSimpleModule {
 
-    public static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.appmenu_module_add_title);
-    public static final IconResource ICON_RESOURCE = IconResource.fromResourceId(R.drawable.ic_add_black_24dp);
+    public static final StringResource TITLE_RESOURCE = StringResource.fromResourceId( R.string.appmenu_module_add_title );
+    public static final IconResource ICON_RESOURCE = IconResource.fromResourceId( R.drawable.ic_add_black_24dp );
 
     public EmptyModule() {
-        super(ModuleEnum.EMPTY, TITLE_RESOURCE, ICON_RESOURCE);
+        setTitle( TITLE_RESOURCE );
+        setIcon( ICON_RESOURCE );
     }
 
-    public EmptyModule(@NonNull ColorResource bgColorResource, @NonNull ColorResource fgColorResource) {
-        super(ModuleEnum.EMPTY, TITLE_RESOURCE, ICON_RESOURCE, bgColorResource, fgColorResource);
+
+    @Override
+    protected ModuleView createNewView( IModuleContext moduleContext, ViewGroup parent ) {
+        return ModuleViewFactory.createPassive( moduleContext, parent, this, getIcon(), getTitle() );
     }
 
     @Override
-    protected ModuleView createNewView(IModuleContext moduleContext, ViewGroup parent) {
-        return ModuleViewFactory.createPassive(moduleContext, parent, this, getIcon(), getTitle());
+    protected ViewWithHolder<ModuleView> createNewViewWithHolder( IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent ) {
+        return ModuleViewFactory.createPassiveWithHolder( moduleContext, holderResourceId, holderParent, this, getIcon(), getTitle() );
     }
 
     @Override
-    protected ViewWithHolder<ModuleView> createNewViewWithHolder(IModuleContext moduleContext, int holderResourceId, ViewGroup holderParent) {
-        return ModuleViewFactory.createPassiveWithHolder(moduleContext, holderResourceId, holderParent, this, getIcon(), getTitle());
+    public void onClickEvent( IModuleContext context ) {
+        context.onModuleEvent( this, ModuleEvent.ADD );
     }
 
     @Override
-    public void onClickEvent(IModuleContext context) {
-        context.onModuleEvent(this, ModuleEvent.ADD);
-    }
-
-    @Override
-    public void onLongClickEvent(IModuleContext context) {
+    public void onLongClickEvent( IModuleContext context ) {
     }
 }
