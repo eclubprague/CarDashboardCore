@@ -79,4 +79,6 @@
     <string name="module_unit_empty"/>
     <string name="module_sensor_temperature_title">Temperature</string>
     <string name="module_sensor_temperature_units">°C</string>
+    <string name="module_http_default">HttpModule</string>
+    <string name="module_http_light_button">Light bulb</string>
 </resources>

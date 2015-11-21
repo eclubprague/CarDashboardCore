@@ -38,111 +38,110 @@ public class ModuleListDialogFragment extends DialogFragment {
     private OnMultiAddModuleListener onMultiAddModuleListener = null;
     private OnAddModuleListener onAddModuleListener = null;
 
-    public static ModuleListDialogFragment newInstance(IModuleContext moduleContext, OnMultiAddModuleListener onMultiAddModuleListener) {
+    public static ModuleListDialogFragment newInstance( IModuleContext moduleContext, OnMultiAddModuleListener onMultiAddModuleListener ) {
         ModuleListDialogFragment f = new ModuleListDialogFragment();
-        f.setModuleContext(moduleContext);
+        f.setModuleContext( moduleContext );
         f.multiInsert = true;
         f.onMultiAddModuleListener = onMultiAddModuleListener;
         return f;
     }
 
-    public static ModuleListDialogFragment newInstance(IModuleContext moduleContext, OnAddModuleListener onAddModuleListener) {
+    public static ModuleListDialogFragment newInstance( IModuleContext moduleContext, OnAddModuleListener onAddModuleListener ) {
         ModuleListDialogFragment f = new ModuleListDialogFragment();
-        f.setModuleContext(moduleContext);
+        f.setModuleContext( moduleContext );
         f.multiInsert = false;
         f.onAddModuleListener = onAddModuleListener;
         return f;
     }
 
-    public void setModuleContext(IModuleContext moduleContext) {
+    public void setModuleContext( IModuleContext moduleContext ) {
         this.moduleContext = moduleContext;
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        final View listView = inflater.inflate(R.layout.fragment_module_list, container, false);
-        final ExpandableListView list = (ExpandableListView) listView.findViewById(R.id.applist_list_view);
-        list.setGroupIndicator(null);
+    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
+        getDialog().getWindow().requestFeature( Window.FEATURE_NO_TITLE );
+        final View listView = inflater.inflate( R.layout.fragment_module_list, container, false );
+        final ExpandableListView list = (ExpandableListView) listView.findViewById( R.id.applist_list_view );
+        list.setGroupIndicator( null );
 
         ModuleListAdapter adapter;
-        if (multiInsert) {
-            adapter = new ModuleListAdapter(moduleContext, new ModuleListAdapter.OnModuleCheckListener() {
+        if ( multiInsert ) {
+            adapter = new ModuleListAdapter( moduleContext, new ModuleListAdapter.OnModuleCheckListener() {
                 @Override
-                public void onInsert(ModuleEnum module) {
-                    insertModules.add(module);
+                public void onInsert( ModuleEnum module ) {
+                    insertModules.add( module );
                 }
 
                 @Override
-                public void onRemove(ModuleEnum module) {
-                    insertModules.remove(module);
+                public void onRemove( ModuleEnum module ) {
+                    insertModules.remove( module );
                 }
-            });
+            } );
         } else {
-            adapter = new ModuleListAdapter(moduleContext, new ModuleListAdapter.OnModuleSelectListener() {
+            adapter = new ModuleListAdapter( moduleContext, new ModuleListAdapter.OnModuleSelectListener() {
 
                 @Override
-                public void onSelected(ModuleEnum module) {
-                    if (module.equals(ModuleEnum.SHORTCUT)) {
-                        ApplicationListDialogFragment.newInstance(moduleContext, new ApplicationListDialogFragment.OnApplicationSelectedListener() {
+                public void onSelected( ModuleEnum module ) {
+                    if ( module.equals( ModuleEnum.SHORTCUT ) ) {
+                        ApplicationListDialogFragment.newInstance( moduleContext, new ApplicationListDialogFragment.OnApplicationSelectedListener() {
                             @Override
-                            public void onApplicationSelected(ApplicationInfo applicationInfo) {
+                            public void onApplicationSelected( ApplicationInfo applicationInfo ) {
                                 PackageManager pm = moduleContext.getContext().getPackageManager();
-                                StringResource titleResource = StringResource.fromString(applicationInfo.loadLabel(pm).toString());
-                                IconResource iconResource = IconResource.fromDrawable(applicationInfo.loadIcon(pm));
-                                Intent intent = pm.getLaunchIntentForPackage(applicationInfo.packageName);
-                                SimpleShortcutModule shortcutModule = (SimpleShortcutModule) ModuleEnum.SHORTCUT.newInstance(titleResource, iconResource, intent);
-                                onAddModuleListener.addModule(shortcutModule);
+                                StringResource titleResource = StringResource.fromString( applicationInfo.loadLabel( pm ).toString() );
+                                IconResource iconResource = IconResource.fromDrawable( applicationInfo.loadIcon( pm ) );
+                                Intent intent = pm.getLaunchIntentForPackage( applicationInfo.packageName );
+                                SimpleShortcutModule shortcutModule = (SimpleShortcutModule) ModuleEnum.SHORTCUT.newInstance( titleResource, iconResource, intent );
+                                onAddModuleListener.addModule( shortcutModule );
                             }
-                        }).show(moduleContext.getActivity().getFragmentManager(), "Application list");
-                    } else if (module.equals(ModuleEnum.SHORTCUT_CUSTOM)) {
-                        CustomShortcutDialogFragment.newInstance(new CustomShortcutDialogFragment.OnShortcutCreatedListener() {
+                        } ).show( moduleContext.getActivity().getFragmentManager(), "Application list" );
+                    } else if ( module.equals( ModuleEnum.SHORTCUT_CUSTOM ) ) {
+                        CustomShortcutDialogFragment.newInstance( new CustomShortcutDialogFragment.OnShortcutCreatedListener() {
                             @Override
-                            public void onShortcutCreated(String title, Intent intent) {
-                                StringResource titleResource = StringResource.fromString(title);
+                            public void onShortcutCreated( String title, Intent intent ) {
+                                StringResource titleResource = StringResource.fromString( title );
                                 IconResource iconResource = ModuleEnum.SHORTCUT_CUSTOM.getIcon();
-                                SimpleShortcutModule shortcutModule = (SimpleShortcutModule) ModuleEnum.SHORTCUT_CUSTOM.newInstance(titleResource, iconResource, intent);
-                                onAddModuleListener.addModule(shortcutModule);
+                                SimpleShortcutModule shortcutModule = (SimpleShortcutModule) ModuleEnum.SHORTCUT_CUSTOM.newInstance( titleResource, iconResource, intent );
+                                onAddModuleListener.addModule( shortcutModule );
                             }
-                        }).show(moduleContext.getActivity().getFragmentManager(), "Custom shortcut");
-                    } else if (module.equals(ModuleEnum.SHORTCUT_MAPS_GOOGLE)) {
-                        GmapsShortcutDialogFragment.newInstance(moduleContext.getContext(), new GmapsShortcutDialogFragment.OnIntentCreatedListener() {
+                        } ).show( moduleContext.getActivity().getFragmentManager(), "Custom shortcut" );
+                    } else if ( module.equals( ModuleEnum.SHORTCUT_MAPS_GOOGLE ) ) {
+                        GmapsShortcutDialogFragment.newInstance( moduleContext.getContext(), new GmapsShortcutDialogFragment.OnIntentCreatedListener() {
                             @Override
-                            public void onIntentCreated(IconResource iconResource, StringResource titleResource, Intent intent) {
-                                SimpleShortcutModule shortcutModule = (SimpleShortcutModule) ModuleEnum.SHORTCUT_CUSTOM.newInstance(titleResource, iconResource, intent);
-                                onAddModuleListener.addModule(shortcutModule);
+                            public void onIntentCreated( IconResource iconResource, StringResource titleResource, Intent intent ) {
+                                SimpleShortcutModule shortcutModule = (SimpleShortcutModule) ModuleEnum.SHORTCUT_CUSTOM.newInstance( titleResource, iconResource, intent );
+                                onAddModuleListener.addModule( shortcutModule );
                             }
-                        })
-                                .show(moduleContext.getActivity().getFragmentManager(), "Custom gmaps");
+                        } ).show( moduleContext.getActivity().getFragmentManager(), "Custom gmaps" );
                     } else {
-                        onAddModuleListener.addModule(module.newInstance());
+                        onAddModuleListener.addModule( module.newInstance() );
                     }
                 }
-            });
+            } );
         }
-        list.setAdapter(adapter);
-        TextView cancelView = (TextView) listView.findViewById(R.id.applist_button_cancel);
-        cancelView.setOnClickListener(new View.OnClickListener() {
+        list.setAdapter( adapter );
+        TextView cancelView = (TextView) listView.findViewById( R.id.applist_button_cancel );
+        cancelView.setOnClickListener( new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick( View v ) {
                 dismiss();
             }
-        });
-        TextView addView = (TextView) listView.findViewById(R.id.applist_button_add);
-        if (multiInsert) {
-            addView.setOnClickListener(new View.OnClickListener() {
+        } );
+        TextView addView = (TextView) listView.findViewById( R.id.applist_button_add );
+        if ( multiInsert ) {
+            addView.setOnClickListener( new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick( View v ) {
                     List<IModule> modules = new ArrayList<IModule>();
-                    for (ModuleEnum m : insertModules) {
-                        modules.add(m.newInstance());
+                    for ( ModuleEnum m : insertModules ) {
+                        modules.add( m.newInstance() );
                     }
-                    onMultiAddModuleListener.addModules(modules);
+                    onMultiAddModuleListener.addModules( modules );
                 }
-            });
+            } );
         } else {
-            addView.setVisibility(View.GONE);
+            addView.setVisibility( View.GONE );
         }
 
 //        int width = getResources().getDisplayMetrics().widthPixels;
@@ -173,33 +172,33 @@ public class ModuleListDialogFragment extends DialogFragment {
         return listView;
     }
 
-    private ExpandableListView setGroupIndicatorToRight(ExpandableListView expListView) {
+    private ExpandableListView setGroupIndicatorToRight( ExpandableListView expListView ) {
         /* Get the screen width */
         int width = moduleContext.getContext().getResources().getDisplayMetrics().widthPixels;
 
-        expListView.setIndicatorBoundsRelative(width - getDipsFromPixel(80), width
-                - getDipsFromPixel(60));
+        expListView.setIndicatorBoundsRelative( width - getDipsFromPixel( 80 ), width
+                - getDipsFromPixel( 60 ) );
         return expListView;
     }
 
     // Convert pixel to dip
-    public int getDipsFromPixel(float pixels) {
+    public int getDipsFromPixel( float pixels ) {
         // Get the screen's density scale
         final float scale = getResources().getDisplayMetrics().density;
         // Convert the dps to pixels, based on density scale
-        return (int) (pixels * scale);
+        return (int) ( pixels * scale );
     }
 
-    public int getPixelValue(int dp) {
+    public int getPixelValue( int dp ) {
         final float scale = moduleContext.getContext().getResources().getDisplayMetrics().density;
-        return (int) (dp * scale + 0.5f);
+        return (int) ( dp * scale + 0.5f );
     }
 
     public interface OnMultiAddModuleListener {
-        void addModules(List<IModule> modules);
+        void addModules( List<IModule> modules );
     }
 
     public interface OnAddModuleListener {
-        void addModule(IModule module);
+        void addModule( IModule module );
     }
 }
