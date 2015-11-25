@@ -11,21 +11,22 @@ import com.eclubprague.cardashboard.core.modules.base.AbstractTimedUpdateDisplay
 import com.eclubprague.cardashboard.core.modules.base.IModuleContext;
 import com.eclubprague.cardashboard.core.obd.OBDGatewayService;
 import com.eclubprague.cardashboard.core.obd.ObdCommandJob;
+import com.github.pires.obd.commands.SpeedObdCommand;
 import com.github.pires.obd.commands.engine.EngineRPMObdCommand;
 
-public class ObdRpmModule extends AbstractTimedUpdateDisplayModule<GlobalExtraFastUpdateEvent> {
+public class ObdSpeedModule extends AbstractTimedUpdateDisplayModule<GlobalExtraFastUpdateEvent> {
 
-    public static final String TAG = ObdRpmModule.class.getSimpleName();
+    public static final String TAG = ObdSpeedModule.class.getSimpleName();
 
-    public static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.module_obd_rpm_title);
+    public static final StringResource TITLE_RESOURCE = StringResource.fromResourceId(R.string.module_obd_speed_title);
     public static final IconResource ICON_RESOURCE = IconResource.fromResourceId(R.drawable.ic_directions_car_black_24dp);
-    public static final StringResource UNIT_RESOURCE = StringResource.fromResourceId(R.string.module_obd_rpm_units);
+    public static final StringResource UNIT_RESOURCE = StringResource.fromResourceId(R.string.module_obd_speed_units);
 
-    public ObdRpmModule() {
+    public ObdSpeedModule() {
         super(ModuleEnum.OBD_RPM, TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
     }
 
-    public ObdRpmModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull StringResource unitResource) {
+    public ObdSpeedModule(@NonNull StringResource titleResource, @NonNull IconResource iconResource, @NonNull StringResource unitResource) {
         super(ModuleEnum.OBD_RPM, titleResource, iconResource, unitResource);
     }
 
@@ -40,14 +41,13 @@ public class ObdRpmModule extends AbstractTimedUpdateDisplayModule<GlobalExtraFa
     public String getUpdatedValue() {
         OBDGatewayService gatewayService = (OBDGatewayService) OBDGatewayService.getInstance();
         if (gatewayService != null) {
-            gatewayService.enqueue(new ObdCommandJob(new EngineRPMObdCommand()));
-            ObdCommandJob results = gatewayService.getResult(EngineRPMObdCommand.class);
+            gatewayService.enqueue(new ObdCommandJob(new SpeedObdCommand()));
+            ObdCommandJob results = gatewayService.getResult(SpeedObdCommand.class);
             if (results != null && results.getCommand().getResult() != null){
                 setLastValue(results.getCommand().getCalculatedResult());
             }
 
         }
-
         return getLastValue();
     }
 }

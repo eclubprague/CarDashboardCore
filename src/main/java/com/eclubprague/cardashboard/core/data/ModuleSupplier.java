@@ -14,6 +14,7 @@ import com.eclubprague.cardashboard.core.modules.base.models.ModuleId;
 import com.eclubprague.cardashboard.core.modules.custom.ClockModule;
 import com.eclubprague.cardashboard.core.modules.custom.CompassModule;
 import com.eclubprague.cardashboard.core.modules.custom.DeviceBatteryModule;
+import com.eclubprague.cardashboard.core.modules.custom.DummyTemperatureModule;
 import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
 import com.eclubprague.cardashboard.core.modules.custom.settings.ThemeSwitchModule;
 
@@ -43,12 +44,12 @@ abstract public class ModuleSupplier {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Unable to load personal settings. Loading default.").setMessage(e.getMessage()).create().show();
                 // should be prompt with file error
-//                throw new RuntimeException(e);
+//               throw new RuntimeException(e);
             }
             if (homeScreenModule == null) {
                 homeScreenModule = (IParentModule) ModuleEnum.HOMESCREEN_PARENT.newInstance();
                 IParentModule obdParent = (IParentModule) ModuleEnum.OBD_PARENT.newInstance();
-                //obdParent.addSubmodules(new GpsSpeedModule(), new ObdRpmModule());
+                obdParent.addSubmodules(new DummyTemperatureModule());
                 IParentModule otherParent = (IParentModule) ModuleEnum.OTHER_PARENT.newInstance();
                 otherParent.addSubmodules(
                         new ClockModule(),
