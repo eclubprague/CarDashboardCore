@@ -13,6 +13,7 @@ import com.eclubprague.cardashboard.core.modules.custom.CompassModule;
 import com.eclubprague.cardashboard.core.modules.custom.DeviceBatteryModule;
 import com.eclubprague.cardashboard.core.modules.custom.ErrorTester;
 import com.eclubprague.cardashboard.core.modules.custom.FolderModule;
+import com.eclubprague.cardashboard.core.modules.custom.FuckedLightButtonModule;
 import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
 import com.eclubprague.cardashboard.core.modules.custom.LightButtonModule;
 import com.eclubprague.cardashboard.core.modules.custom.ObdRpmModule;
@@ -305,6 +306,18 @@ public enum ModuleEnum {
         @Override
         public IModule newInstance() {
             return new LightButtonModule();
+        }
+    },
+    HTTP_FUCKED_LIGHT(ModuleType.DEFINED){
+        @Override
+        protected void init() {
+            titleResource = AbstractHttpModule.TITLE_RESOURCE;
+            iconResource = AbstractHttpModule.ICON_RESOURCE;
+        }
+
+        @Override
+        public IModule newInstance() {
+            return new FuckedLightButtonModule();
         }
     };
 

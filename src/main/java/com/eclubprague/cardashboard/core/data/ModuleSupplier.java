@@ -15,6 +15,7 @@ import com.eclubprague.cardashboard.core.modules.custom.ClockModule;
 import com.eclubprague.cardashboard.core.modules.custom.CompassModule;
 import com.eclubprague.cardashboard.core.modules.custom.DeviceBatteryModule;
 import com.eclubprague.cardashboard.core.modules.custom.DummyTemperatureModule;
+import com.eclubprague.cardashboard.core.modules.custom.FuckedLightButtonModule;
 import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
 import com.eclubprague.cardashboard.core.modules.custom.settings.ThemeSwitchModule;
 
@@ -54,7 +55,8 @@ abstract public class ModuleSupplier {
                 otherParent.addSubmodules(
                         new ClockModule(),
                         new DeviceBatteryModule(),
-                        new CompassModule()
+                        new CompassModule(),
+                        new FuckedLightButtonModule()
                 );
                 IParentModule settingsParent = (IParentModule) ModuleEnum.SETTINGS_PARENT.newInstance();
                 settingsParent.addSubmodules(
