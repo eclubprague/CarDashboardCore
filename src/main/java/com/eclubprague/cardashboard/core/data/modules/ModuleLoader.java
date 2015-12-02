@@ -2,6 +2,7 @@ package com.eclubprague.cardashboard.core.data.modules;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.util.Log;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
@@ -70,6 +71,7 @@ public enum ModuleLoader {
             JSONObject jsonObject = fillJsonObject( new JSONObject(), context, module );
             JSONArray jsonSubModulesArray = new JSONArray();
             for ( IModule m : parentModule.getSubmodules() ) {
+                Log.d("ModuleLoader", "moduleCreationToolsMap = " + moduleCreationToolsMap);
                 ModuleLoader moduleLoader = moduleCreationToolsMap.getLoader( m.getClass() );
                 JSONObject mJsonObject = moduleLoader.save( context, m );
                 if ( mJsonObject != null ) {
@@ -164,7 +166,12 @@ public enum ModuleLoader {
     protected static final String COLUMN_INTENT = "intent";
     protected static final String EXCEPTION_START = "JSON file error: ";
 
-    protected final ModuleCreationToolsMap moduleCreationToolsMap = ModuleCreationToolsMap.getInstance();
+    protected final ModuleCreationToolsMap moduleCreationToolsMap;
+
+    ModuleLoader() {
+        Log.d("ModuleLoader", "constructor, initializing toolsMap = " + ModuleCreationToolsMap.getInstance());
+        moduleCreationToolsMap = ModuleCreationToolsMap.getInstance();
+    }
 
     /**
      * Creates IModule from given JSON object definition.
