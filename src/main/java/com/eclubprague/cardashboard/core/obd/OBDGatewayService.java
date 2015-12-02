@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -32,7 +33,6 @@ public class OBDGatewayService extends IntentService {
     private static final String TAG = OBDGatewayService.class.getName();
     protected BlockingQueue<ObdCommandJob> jobsQueue = new LinkedBlockingDeque<>();
     Map<Class, ObdCommandJob> executedCommands = new HashMap<>();
-    //AsyncTask asyncTask = new ObdGatewayTask(this);
     private static IntentService instance;
 
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -44,7 +44,6 @@ public class OBDGatewayService extends IntentService {
     private BluetoothSocket sockFallback = null;
     private boolean isRunning = false;
     private Long queueCounter = 0L;
-
 
     public BluetoothSocket getSock() {
         return sock;
@@ -82,14 +81,12 @@ public class OBDGatewayService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
-        t.start();
-        try {
-            startService();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
+
+    }
+
+    public boolean isRunning() {
+        return isRunning;
     }
 
     public void enqueue(ObdCommandJob job) {
@@ -114,42 +111,30 @@ public class OBDGatewayService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.d(TAG, "onHandleIntent");
+        instance = this;
+        try {
+            startService();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        t.start();
     }
 
     public void startService() throws IOException {
         Log.d(TAG, "Starting service..");
-
-        // get the remote Bluetooth device
         final String remoteDevice = prefs.getString(SettingsFragment.BLUETOOTH_LIST_KEY, null);
         if (remoteDevice == null || "".equals(remoteDevice)) {
-
-            // log error
             Log.e(TAG, "No Bluetooth device has been selected.");
-
-            // TODO kill this service gracefully
             stopService();
             throw new IOException();
         } else {
-
             final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
             dev = btAdapter.getRemoteDevice(remoteDevice);
             Log.d(TAG, "Stopping Bluetooth discovery.");
             btAdapter.cancelDiscovery();
 
-            try {
-                startObdConnection();
-            } catch (Exception e) {
-                Log.e(
-                        TAG,
-                        "There was an error while establishing connection. -> "
-                                + e.getMessage()
-                );
-
-                // in case of failure, stop this service.
-                stopService();
-                throw new IOException();
-            }
+            ConnectThread ct = new ConnectThread();
+            ct.run();
         }
     }
 
@@ -157,7 +142,6 @@ public class OBDGatewayService extends IntentService {
         Log.d(TAG, "Stopping service..");
         jobsQueue.removeAll(jobsQueue);
         isRunning = false;
-
         if (sock != null)
             try {
                 sock.close();
@@ -165,59 +149,6 @@ public class OBDGatewayService extends IntentService {
                 Log.e(TAG, e.getMessage());
             }
         stopSelf();
-    }
-
-    private void startObdConnection() throws IOException {
-        Log.d(TAG, "Starting OBD connection..");
-        isRunning = true;
-        try {
-            // Instantiate a BluetoothSocket for the remote device and connect it.
-            sock = dev.createRfcommSocketToServiceRecord(MY_UUID);
-            sock.connect();
-        } catch (Exception e1) {
-            Log.e(TAG, "There was an error while establishing Bluetooth connection. Falling back..", e1);
-            Class<?> clazz = sock.getRemoteDevice().getClass();
-            Class<?>[] paramTypes = new Class<?>[]{Integer.TYPE};
-            try {
-                Method m = clazz.getMethod("createRfcommSocket", paramTypes);
-                Object[] params = new Object[]{Integer.valueOf(1)};
-                sockFallback = (BluetoothSocket) m.invoke(sock.getRemoteDevice(), params);
-                sockFallback.connect();
-                sock = sockFallback;
-            } catch (Exception e2) {
-                Log.e(TAG, "Couldn't fallback while establishing Bluetooth connection. Stopping app..", e2);
-                stopService();
-                throw new IOException();
-            }
-        }
-
-        // Let's configure the connection.
-        Log.d(TAG, "Queueing jobs for connection configuration..");
-        enqueue(new ObdCommandJob(new ObdResetCommand()));
-        enqueue(new ObdCommandJob(new EchoOffObdCommand()));
-
-    /*
-     * Will send second-time based on tests.
-     *
-     * TODO this can be done w/o having to queue jobs by just issuing
-     * command.run(), command.getResult() and validate the result.
-     */
-        enqueue(new ObdCommandJob(new EchoOffObdCommand()));
-        enqueue(new ObdCommandJob(new LineFeedOffObdCommand()));
-        enqueue(new ObdCommandJob(new TimeoutObdCommand(62)));
-
-        // Get protocol from preferences
-        //final String protocol = prefs.getString(SettingsFragment.PROTOCOLS_LIST_KEY, "AUTO");
-        final String protocol = "AUTO";
-        enqueue(new ObdCommandJob(new SelectProtocolObdCommand(ObdProtocols.valueOf(protocol))));
-
-        // Job for returning dummy data
-        enqueue(new ObdCommandJob(new AmbientAirTemperatureObdCommand()));
-
-
-        Log.d(TAG, "Initialization jobs queued.");
-
-
     }
 
 
@@ -247,11 +178,12 @@ public class OBDGatewayService extends IntentService {
                     Log.d(TAG, "Job state is NEW. Run it..");
                     job.setState(ObdCommandJobState.RUNNING);
                     job.getCommand().run(sock.getInputStream(), sock.getOutputStream());
+                    Log.d(TAG, "Job result" + job.getCommand().getFormattedResult());
                 } else
                     // log not new job
-                    Log.e(TAG,
-                            "Job state was not new, so it shouldn't be in queue. BUG ALERT!");
+                    Log.e(TAG, "Job state was not new, so it shouldn't be in queue. BUG ALERT!");
             } catch (InterruptedException i) {
+                Log.d(TAG, "InterruptedException -> " + i.getMessage());
                 Thread.currentThread().interrupt();
             } catch (UnsupportedCommandException u) {
                 if (job != null) {
@@ -271,5 +203,63 @@ public class OBDGatewayService extends IntentService {
         }
     }
 
+
+    private class ConnectThread extends Thread {
+
+        @Override
+        public void run() {
+            Log.d(TAG, "Starting OBD connection..");
+            isRunning = true;
+            try {
+                sock = dev.createRfcommSocketToServiceRecord(MY_UUID);
+                sock.connect();
+                isRunning = true;
+            } catch (Exception e1) {
+                Log.e(TAG, "There was an error while establishing Bluetooth connection. Falling back..", e1);
+                Class<?> clazz = sock.getRemoteDevice().getClass();
+                Class<?>[] paramTypes = new Class<?>[]{Integer.TYPE};
+                try {
+                    Method m = clazz.getMethod("createRfcommSocket", paramTypes);
+                    Object[] params = new Object[]{Integer.valueOf(1)};
+                    sockFallback = (BluetoothSocket) m.invoke(sock.getRemoteDevice(), params);
+                    sockFallback.connect();
+                    sock = sockFallback;
+                    isRunning = true;
+                } catch (Exception e2) {
+                    Log.e(TAG, "Couldn't fallback while establishing Bluetooth connection. Stopping app..", e2);
+                    stopService();
+                    //throw new IOException();
+                }
+            }
+
+            if (isRunning) {
+                // Let's configure the connection.
+                Log.d(TAG, "Queueing jobs for connection configuration..");
+                enqueue(new ObdCommandJob(new ObdResetCommand()));
+                enqueue(new ObdCommandJob(new EchoOffObdCommand()));
+
+    /*
+     * Will send second-time based on tests.
+     *
+     * TODO this can be done w/o having to queue jobs by just issuing
+     * command.run(), command.getResult() and validate the result.
+     */
+                enqueue(new ObdCommandJob(new EchoOffObdCommand()));
+                enqueue(new ObdCommandJob(new LineFeedOffObdCommand()));
+                enqueue(new ObdCommandJob(new TimeoutObdCommand(62)));
+
+                // Get protocol from preferences
+                //final String protocol = prefs.getString(SettingsFragment.PROTOCOLS_LIST_KEY, "AUTO");
+                final String protocol = "AUTO";
+                enqueue(new ObdCommandJob(new SelectProtocolObdCommand(ObdProtocols.valueOf(protocol))));
+
+                // Job for returning dummy data
+                enqueue(new ObdCommandJob(new AmbientAirTemperatureObdCommand()));
+
+
+                Log.d(TAG, "Initialization jobs queued.");
+            }
+        }
+    }
 
 }

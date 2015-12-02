@@ -67,7 +67,7 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule {
     @Override
     public void onClickEvent(IModuleContext context) {
         super.onClickEvent(context);
-        TextToSpeech.speak(getValue());
+        TextToSpeech.speak(getValue()+" "+unitResource.getString());
     }
 
     @Override

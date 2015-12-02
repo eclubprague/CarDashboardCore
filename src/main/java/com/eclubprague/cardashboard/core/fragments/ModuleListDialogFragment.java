@@ -117,6 +117,7 @@ public class ModuleListDialogFragment extends DialogFragment {
                     } else {
                         onAddModuleListener.addModule( module.newInstance() );
                     }
+                    dismiss();
                 }
             } );
         }
@@ -142,7 +143,9 @@ public class ModuleListDialogFragment extends DialogFragment {
             } );
         } else {
             addView.setVisibility( View.GONE );
+
         }
+
 
 //        int width = getResources().getDisplayMetrics().widthPixels;
 //        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
