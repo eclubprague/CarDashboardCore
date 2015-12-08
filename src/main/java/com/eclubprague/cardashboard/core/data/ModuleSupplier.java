@@ -46,7 +46,8 @@ abstract public class ModuleSupplier {
                 homeScreenModule = ModuleDAO.loadParentModule( moduleContext );
             } catch ( IOException e ) {
                 AlertDialog.Builder builder = new AlertDialog.Builder( context.getContext() );
-                builder.setTitle( "Unable to load personal settings. Loading default." ).setMessage( e.getMessage() ).create().show();
+                //builder.setTitle( "Unable to load personal settings. Loading default." ).setMessage( e.getMessage() ).create().show();
+                Log.d(TAG, e.getMessage());
                 // should be prompt with file error
 //                throw new RuntimeException(e);
             }
@@ -115,7 +116,7 @@ abstract public class ModuleSupplier {
         if ( homeScreenModule == null ) {
             homeScreenModule = createHomeScreenModule( moduleContext );
         }
-        return (IParentModule) homeScreenModule;
+        return homeScreenModule;
     }
 
     public List<IModule> getAll() {

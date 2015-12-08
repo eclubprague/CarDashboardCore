@@ -1,6 +1,7 @@
 package com.eclubprague.cardashboard.core.data.modules;
 
 import android.text.TextDirectionHeuristic;
+import android.util.Log;
 
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
@@ -16,6 +17,8 @@ import java.util.List;
  * Created by Michael on 03.09.2015.
  */
 public class ModuleInfoContainer extends ModuleInfo {
+
+    private static final String TAG = ModuleInfoContainer.class.getSimpleName();
 
     private final List<ModuleInfo> submodules = new ArrayList<>();
 
@@ -34,6 +37,7 @@ public class ModuleInfoContainer extends ModuleInfo {
     }
 
     public ModuleInfo get( int position ) {
+        Log.d( TAG, "returning: " + submodules.get( position ) );
         return submodules.get( position );
     }
 
@@ -73,5 +77,10 @@ public class ModuleInfoContainer extends ModuleInfo {
                 new ModuleInfo( GmapsShortcutModule.class, GmapsShortcutModule.TITLE_RESOURCE, GmapsShortcutModule.ICON_RESOURCE )
         );
         return containers;
+    }
+
+    @Override
+    public String toString() {
+        return "ModuleInfoContainer{title=" + getTitle().getString() + ", class=" + getModuleClass().getSimpleName() + "}";
     }
 }

@@ -1,5 +1,6 @@
 package com.eclubprague.cardashboard.core.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import java.util.List;
  */
 public class ModuleListAdapter extends BaseExpandableListAdapter {
 
+    private static final String TAG = ModuleListAdapter.class.getSimpleName();
+
     private static final IconResource ICON_EXPAND = IconResource.fromResourceId( R.drawable.ic_expand_more_black_24dp );
     private static final IconResource ICON_COLLAPSE = IconResource.fromResourceId( R.drawable.ic_expand_less_black_24dp );
 
@@ -40,6 +43,7 @@ public class ModuleListAdapter extends BaseExpandableListAdapter {
     }
 
     public ModuleListAdapter( IModuleContext moduleContext, OnModuleSelectListener onModuleSelectListener ) {
+        Log.d(TAG, "constructor");
         this.moduleContext = moduleContext;
         this.onModuleCheckListener = null;
         this.onModuleSelectListener = onModuleSelectListener;

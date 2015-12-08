@@ -2,6 +2,7 @@ package com.eclubprague.cardashboard.core.data.modules;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.util.Log;
 
 import com.eclubprague.cardashboard.core.R;
 import com.eclubprague.cardashboard.core.model.resources.IconResource;
@@ -70,7 +71,7 @@ public enum ModuleLoader {
             JSONObject jsonObject = fillJsonObject( new JSONObject(), context, module );
             JSONArray jsonSubModulesArray = new JSONArray();
             for ( IModule m : parentModule.getSubmodules() ) {
-                ModuleLoader moduleLoader = moduleCreationToolsMap.getLoader( m.getClass() );
+                ModuleLoader moduleLoader = ModuleCreationToolsMap.getInstance().getLoader( m.getClass() );
                 JSONObject mJsonObject = moduleLoader.save( context, m );
                 if ( mJsonObject != null ) {
                     jsonSubModulesArray.put( mJsonObject );
@@ -152,6 +153,8 @@ public enum ModuleLoader {
         return valueOf( jsonObject.getString( COLUMN_LOADER ) );
     }
 
+    protected static final String TAG = ModuleLoader.class.getSimpleName();
+
     protected static final String COLUMN_CLASS = "class";
     protected static final String COLUMN_LOADER = "loader";
     protected static final String COLUMN_SUBMODULES = "submodules";
@@ -163,8 +166,6 @@ public enum ModuleLoader {
     protected static final ResourceColumns COLUMN_UNIT_RESOURCE = new ResourceColumns( COLUMN_UNIT );
     protected static final String COLUMN_INTENT = "intent";
     protected static final String EXCEPTION_START = "JSON file error: ";
-
-    protected final ModuleCreationToolsMap moduleCreationToolsMap = ModuleCreationToolsMap.getInstance();
 
     /**
      * Creates IModule from given JSON object definition.
@@ -185,7 +186,7 @@ public enum ModuleLoader {
     abstract public JSONObject save( IModuleContext context, IModule module ) throws JSONException;
 
     protected static IModule loadModule( String className ) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        Class<IModule> moduleClass = (Class<IModule>) ClassLoader.getSystemClassLoader().loadClass( className );
+        Class<IModule> moduleClass = (Class<IModule>) Class.forName( className );
         return moduleClass.newInstance();
     }
 
@@ -257,9 +258,9 @@ public enum ModuleLoader {
     }
 
     protected IModule createAndFillModule( IModuleContext context, JSONObject jsonObject ) throws JSONException {
-        IParentModule module;
+        IModule module;
         try {
-            module = (IParentModule) loadModule( jsonObject.getString( COLUMN_CLASS ) );
+            module = loadModule( jsonObject.getString( COLUMN_CLASS ) );
         } catch ( ClassNotFoundException | IllegalAccessException | InstantiationException e ) {
             throw new JSONException( e.getMessage() );
         }

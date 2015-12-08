@@ -35,10 +35,10 @@ public class ModuleInfo {
     }
 
     public StringResource getTitle() {
-        return getTitle();
+        return titleResource;
     }
 
     public IconResource getIcon() {
-        return getIcon();
+        return iconResource;
     }
 }

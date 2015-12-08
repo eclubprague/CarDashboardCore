@@ -1,5 +1,7 @@
 package com.eclubprague.cardashboard.core.data.modules;
 
+import android.util.Log;
+
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.custom.settings.ThemeSwitchModule;
 import com.eclubprague.cardashboard.core.modules.predefined.*;
@@ -14,10 +16,14 @@ import java.util.Map;
 public enum ModuleCreationToolsMap {
     INSTANCE;
 
+    private static final String TAG = ModuleCreationToolsMap.class.getSimpleName();
+
     private final Map<Class<? extends IModule>, ModuleLoader> loaderMap = new HashMap<>();
     private final Map<Class<? extends IModule>, ModuleCreator> creatorMap = new HashMap<>();
 
     ModuleCreationToolsMap() {
+
+        //Log.d("ModuleCreationToolsMap", "calling constructor");
         // register all
         register( BackModule.class, ModuleLoader.SUPPORT_SKIP, ModuleCreator.SUPPORT_SKIP );
         register( EmptyModule.class, ModuleLoader.DEFAULT, ModuleCreator.DEFAULT );
@@ -40,6 +46,7 @@ public enum ModuleCreationToolsMap {
     }
 
     public static ModuleCreationToolsMap getInstance() {
+        //Log.d("ModuleCreationToolsMap", "returning instance: " + INSTANCE);
         return INSTANCE;
     }
 
@@ -53,6 +60,9 @@ public enum ModuleCreationToolsMap {
     }
 
     public ModuleLoader getLoader( Class<? extends IModule> clazz ) {
+/*        Log.d( TAG, "trying to retrieve loader for: " + clazz.getName() + " from:" );
+        Log.d( TAG, "" + loaderMap );
+        Log.d( TAG, "retrieved: " + loaderMap.get( clazz ) );*/
         return loaderMap.get( clazz );
     }
 
@@ -63,5 +73,13 @@ public enum ModuleCreationToolsMap {
 
     public ModuleCreator getCreator( Class<? extends IModule> clazz ) {
         return creatorMap.get( clazz );
+    }
+
+    @Override
+    public String toString() {
+        return "ModuleCreationToolsMap{" +
+                "creatorMap=" + creatorMap +
+                ", loaderMap=" + loaderMap +
+                '}';
     }
 }
