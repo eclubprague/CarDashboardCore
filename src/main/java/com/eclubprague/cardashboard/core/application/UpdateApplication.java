@@ -1,9 +1,11 @@
 package com.eclubprague.cardashboard.core.application;
 
 import android.app.Application;
+import android.content.Intent;
 
 import com.eclubprague.cardashboard.core.application.update.UpdateFrequency;
 import com.eclubprague.cardashboard.core.application.update.UpdateRunnable;
+import com.eclubprague.cardashboard.core.obd.OBDGatewayService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,10 @@ public class UpdateApplication extends Application {
         for (HandlerTimer timer : timers) {
             timer.start(DELAY);
         }
+
+        Intent t = new Intent(this, OBDGatewayService.class);
+        startService(t);
+
     }
 
     @Override

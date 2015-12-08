@@ -1,6 +1,7 @@
 package com.eclubprague.cardashboard.core.modules.custom;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.eclubprague.cardashboard.core.R;
 
@@ -35,17 +36,16 @@ public class ObdRpmModule extends AbstractTimedUpdateDisplayModule<GlobalExtraFa
     @Override
     public String getUpdatedValue() {
         OBDGatewayService gatewayService = (OBDGatewayService) OBDGatewayService.getInstance();
-        if ( gatewayService != null ) {
-            gatewayService.enqueue( new ObdCommandJob( new EngineRPMObdCommand() ) );
-            ObdCommandJob results = gatewayService.getResult( EngineRPMObdCommand.class );
-            if ( results != null && results.getCommand().getResult() != null ) {
-                setLastValue( results.getCommand().getCalculatedResult() );
+        if (gatewayService != null && gatewayService.isRunning()) {
+            gatewayService.enqueue(new ObdCommandJob(new EngineRPMObdCommand()));
+            ObdCommandJob results = gatewayService.getResult(EngineRPMObdCommand.class);
+            if (results != null && results.getCommand().getResult() != null) {
+                String value = results.getCommand().getCalculatedResult();
+                setLastValue(value);
+                Log.d(TAG, value);
             }
+        }
 
-        }
-        if ( true ) {
-            return "1700";
-        }
         return getLastValue();
     }
 }

@@ -18,6 +18,8 @@ import com.eclubprague.cardashboard.core.modules.base.models.ModuleId;
 import com.eclubprague.cardashboard.core.modules.custom.ClockModule;
 import com.eclubprague.cardashboard.core.modules.custom.CompassModule;
 import com.eclubprague.cardashboard.core.modules.custom.DeviceBatteryModule;
+import com.eclubprague.cardashboard.core.modules.custom.DummyTemperatureModule;
+import com.eclubprague.cardashboard.core.modules.custom.FuckedLightButtonModule;
 import com.eclubprague.cardashboard.core.modules.custom.GpsSpeedModule;
 import com.eclubprague.cardashboard.core.modules.custom.settings.ThemeSwitchModule;
 import com.eclubprague.cardashboard.core.modules.predefined.SimpleParentModule;
@@ -49,7 +51,7 @@ abstract public class ModuleSupplier {
                 //builder.setTitle( "Unable to load personal settings. Loading default." ).setMessage( e.getMessage() ).create().show();
                 Log.d(TAG, e.getMessage());
                 // should be prompt with file error
-//                throw new RuntimeException(e);
+//               throw new RuntimeException(e);
             }
             if ( homeScreenModule == null ) {
                 homeScreenModule = new SimpleParentModule( SimpleParentModule.HOME_TITLE_RESOURCE, SimpleParentModule.HOME_ICON_RESOURCE );
@@ -59,7 +61,8 @@ abstract public class ModuleSupplier {
                 otherParent.addSubmodules(
                         new ClockModule(),
                         new DeviceBatteryModule(),
-                        new CompassModule()
+                        new CompassModule(),
+                        new FuckedLightButtonModule()
                 );
                 IParentModule settingsParent = new SimpleParentModule( SimpleParentModule.SETTINGS_TITLE_RESOURCE, SimpleParentModule.SETTINGS_ICON_RESOURCE );
                 settingsParent.addSubmodules(

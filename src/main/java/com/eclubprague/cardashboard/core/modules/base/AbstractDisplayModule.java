@@ -22,6 +22,7 @@ import com.eclubprague.cardashboard.core.views.ModuleView;
 abstract public class AbstractDisplayModule extends AbstractSimpleModule {
     private String value = null;
     private StringResource unitResource;
+    private boolean sayUnitOnTts = true;
 
     public AbstractDisplayModule() {
     }
@@ -60,10 +61,14 @@ abstract public class AbstractDisplayModule extends AbstractSimpleModule {
         }
     }
 
+    public void setSayUnitOnTts( boolean sayUnitOnTts ) {
+        this.sayUnitOnTts = sayUnitOnTts;
+    }
+
     @Override
     public void onClickEvent( IModuleContext context ) {
         super.onClickEvent( context );
-        TextToSpeech.speak( getValue() );
+        TextToSpeech.speak( getValue() + " " + ( ( sayUnitOnTts ) ? unitResource.getString() : "" ) );
     }
 
     @Override

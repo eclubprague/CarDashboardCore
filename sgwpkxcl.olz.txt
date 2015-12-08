@@ -1,0 +1,37 @@
+﻿Merge branch 'master' of https://github.com/eclubprague/CarDashboardCore
+
+Conflicts:
+	src/main/java/com/eclubprague/cardashboard/core/data/ModuleSupplier.java
+	src/main/java/com/eclubprague/cardashboard/core/data/modules/ModuleEnum.java
+	src/main/java/com/eclubprague/cardashboard/core/modules/base/AbstractDisplayModule.java
+	src/main/java/com/eclubprague/cardashboard/core/modules/custom/ObdRpmModule.java
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	C:/Users/Michael/Dropbox/AndroidStudioProjects/CarDashboardTablet/.git/modules/CarDashboardCore/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch and 'origin/master' have diverged,
+# and have 3 and 6 different commits each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+#
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	modified:   build.gradle
+#	modified:   src/main/java/com/eclubprague/cardashboard/core/application/UpdateApplication.java
+#	modified:   src/main/java/com/eclubprague/cardashboard/core/data/ModuleSupplier.java
+#	modified:   src/main/java/com/eclubprague/cardashboard/core/fragments/ModuleListDialogFragment.java
+#	modified:   src/main/java/com/eclubprague/cardashboard/core/modules/base/AbstractDisplayModule.java
+#	new file:   src/main/java/com/eclubprague/cardashboard/core/modules/custom/DummyTemperatureModule.java
+#	new file:   src/main/java/com/eclubprague/cardashboard/core/modules/custom/FuckedLightButtonModule.java
+#	modified:   src/main/java/com/eclubprague/cardashboard/core/modules/custom/ObdRpmModule.java
+#	new file:   src/main/java/com/eclubprague/cardashboard/core/modules/custom/ObdSpeedModule.java
+#	modified:   src/main/java/com/eclubprague/cardashboard/core/obd/OBDGatewayService.java
+#	modified:   src/main/res/values/strings.xml
+#
+
