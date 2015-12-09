@@ -72,6 +72,8 @@ public enum ModuleLoader {
             JSONArray jsonSubModulesArray = new JSONArray();
             for ( IModule m : parentModule.getSubmodules() ) {
                 ModuleLoader moduleLoader = ModuleCreationToolsMap.getInstance().getLoader( m.getClass() );
+//                Log.d(TAG, "" + ModuleCreationToolsMap.getInstance());
+//                Log.d(TAG, "looking for class: " + m.getClass());
                 JSONObject mJsonObject = moduleLoader.save( context, m );
                 if ( mJsonObject != null ) {
                     jsonSubModulesArray.put( mJsonObject );

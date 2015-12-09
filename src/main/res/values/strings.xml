@@ -51,7 +51,7 @@
     <string name="dialog_more">More</string>
     <string name="dialog_less">Less</string>
     <string name="common_ok">OK</string>
-    <string name="module_shortcuts_custom">New custom shortcut</string>
+    <string name="module_shortcuts_custom">New custom intent shortcut</string>
     <string name="module_shortcuts_new_maps_google">New Google Maps shortcut</string>
     <string name="gmaps_type_navigate">Navigate</string>
     <string name="gmaps_type_search">Search</string>
