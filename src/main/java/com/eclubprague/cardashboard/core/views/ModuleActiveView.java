@@ -1,10 +1,12 @@
 package com.eclubprague.cardashboard.core.views;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.eclubprague.cardashboard.core.R;
+import com.eclubprague.cardashboard.core.model.resources.StringResource;
 
 /**
  * Created by Michael on 13.08.2015.
@@ -13,6 +15,7 @@ import com.eclubprague.cardashboard.core.R;
  */
 public class ModuleActiveView extends ModuleView {
     private TextView valueView;
+    private TextView unitView;
 
     public ModuleActiveView(Context context) {
         super(context);
@@ -35,6 +38,14 @@ public class ModuleActiveView extends ModuleView {
             valueView = (TextView) findViewById(R.id.module_value);
         }
         valueView.setText(value);
+        return this;
+    }
+
+    public ModuleActiveView setUnit(@NonNull StringResource unitResource){
+        if(unitView == null){
+            unitView = (TextView) findViewById(R.id.module_unit);
+        }
+        unitResource.setInView(unitView);
         return this;
     }
 }

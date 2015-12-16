@@ -90,6 +90,10 @@ public class OBDGatewayService extends IntentService {
     }
 
     public void enqueue(ObdCommandJob job) {
+/*        if(true){ // TODO REMOVE
+            return;
+        }*/
+
         queueCounter++;
         Log.d(TAG, "Adding job[" + queueCounter + "] to queue..");
 
@@ -105,8 +109,8 @@ public class OBDGatewayService extends IntentService {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         //t.interrupt();
+        super.onDestroy();
     }
 
     @Override
