@@ -90,9 +90,7 @@ public class OBDGatewayService extends IntentService {
     }
 
     public void enqueue(ObdCommandJob job) {
-/*        if(true){ // TODO REMOVE
-            return;
-        }*/
+        if (!isRunning) return;
 
         queueCounter++;
         Log.d(TAG, "Adding job[" + queueCounter + "] to queue..");
@@ -220,9 +218,9 @@ public class OBDGatewayService extends IntentService {
                 isRunning = true;
             } catch (Exception e1) {
                 Log.e(TAG, "There was an error while establishing Bluetooth connection. Falling back..", e1);
-                Class<?> clazz = sock.getRemoteDevice().getClass();
-                Class<?>[] paramTypes = new Class<?>[]{Integer.TYPE};
                 try {
+                    Class<?> clazz = sock.getRemoteDevice().getClass();
+                    Class<?>[] paramTypes = new Class<?>[]{Integer.TYPE};
                     Method m = clazz.getMethod("createRfcommSocket", paramTypes);
                     Object[] params = new Object[]{Integer.valueOf(1)};
                     sockFallback = (BluetoothSocket) m.invoke(sock.getRemoteDevice(), params);
@@ -230,7 +228,7 @@ public class OBDGatewayService extends IntentService {
                     sock = sockFallback;
                     isRunning = true;
                 } catch (Exception e2) {
-                    Log.e(TAG, "Couldn't fallback while establishing Bluetooth connection. Stopping app..", e2);
+                    Log.e(TAG, "Couldn't fallback while establishing Bluetooth connection. Maybe bluetooth is turned off..", e2);
                     stopService();
                     //throw new IOException();
                 }
