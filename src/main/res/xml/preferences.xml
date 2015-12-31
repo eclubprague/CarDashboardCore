@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/preferences">
-
     <PreferenceCategory android:title="@string/title_pref_bluetooth">
         <CheckBoxPreference
             android:defaultValue="false"
@@ -16,15 +15,7 @@
             android:summary="@string/pref_bluetooth_list_devices_summary"
             android:title="@string/pref_bluetooth_list_devices_title" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/title_pref_logging">
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:dialogTitle="@string/pref_logging_title"
-            android:key="enable_bluetooth_preference"
-            android:summaryOff="@string/pref_logging_summaryOff"
-            android:summaryOn="@string/pref_logging_summaryOn"
-            android:title="@string/pref_logging_title" />
-    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/title_pref_obd">
         <!-- <ListPreference
             android:defaultValue="AUTO"
@@ -58,7 +49,6 @@
             android:summary="@string/pref_reader_config_summary"
             android:title="@string/pref_reader_config_title" /> -->
     </PreferenceCategory>
-
 
 
 </PreferenceScreen>

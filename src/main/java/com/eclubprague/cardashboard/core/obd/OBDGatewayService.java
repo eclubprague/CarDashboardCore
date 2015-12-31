@@ -134,7 +134,7 @@ public class OBDGatewayService extends IntentService {
     public void startService() throws IOException {
         Log.d(TAG, "Starting service..");
 
-        if (prefs.getBoolean(SettingsFragment.LOGGING_ENABLED, false))
+       //c if (prefs.getBoolean(SettingsFragment.LOGGING_ENABLED, false))
             obdLogWritter = new ObdLogWritter(GlobalDataProvider.getInstance().getContext(), System.currentTimeMillis() + ".csv");
         final String remoteDevice = prefs.getString(SettingsFragment.BLUETOOTH_LIST_KEY, null);
         if (remoteDevice == null || "".equals(remoteDevice)) {

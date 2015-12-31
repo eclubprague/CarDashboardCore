@@ -1,6 +1,7 @@
 package com.eclubprague.cardashboard.core.obd;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,6 +13,7 @@ import java.io.OutputStreamWriter;
 public class ObdLogWritter {
 
     BufferedWriter writer;
+    private static final String TAG = ObdLogWritter.class.getSimpleName();
 
     public ObdLogWritter(Context c, String filename) {
         File file = new File(c.getFilesDir() + "/logs/", filename);
@@ -26,6 +28,7 @@ public class ObdLogWritter {
     public void write(ObdCommandJob in) throws IOException {
         if (writer == null) throw new IOException();
         writer.write(in.getCommand().getName() + ";" + in.getCommand().getCalculatedResult() + ";" + in.getCommand().getResultUnit());
+        Log.d(TAG, in.getCommand().getName() + ";" + in.getCommand().getCalculatedResult() + ";" + in.getCommand().getResultUnit());
         writer.write("\n");
     }
 
