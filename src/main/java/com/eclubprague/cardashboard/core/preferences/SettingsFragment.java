@@ -1,19 +1,23 @@
 package com.eclubprague.cardashboard.core.preferences;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.view.View;
 import android.widget.Toast;
 
 import com.eclubprague.cardashboard.core.R;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
 
@@ -66,11 +70,59 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         }
         listBtDevices.setEntries(pairedDeviceStrings.toArray(new CharSequence[0]));
         listBtDevices.setEntryValues(vals.toArray(new CharSequence[0]));
-    }
 
+        EditTextPreference myPref = (EditTextPreference) findPreference("logging_preference_upload_logs");
+        myPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                new UploadLogs().execute();
+                return false;
+
+            }
+        });
+
+
+    }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         return false;
+    }
+
+
+    private class UploadLogs extends AsyncTask<Void, Void, Void> {
+        ProgressDialog pg;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pg = new ProgressDialog(getActivity());
+            pg.setTitle("Sending Data");
+            pg.setMessage("Please wait, data is sending");
+            pg.setCancelable(false);
+            pg.setIndeterminate(true);
+            pg.show();
+
+
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            pg.dismiss();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                for (int i = 0; i < 5; i++) {
+                    TimeUnit.SECONDS.sleep(1);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 }
