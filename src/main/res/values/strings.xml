@@ -24,6 +24,7 @@
     <string name="common_more">More</string>
     <string name="preferences">Preferences</string>
     <string name="title_pref_bluetooth">Bluetooth</string>
+    <string name="title_pref_logging">Logging</string>
     <string name="pref_bluetooth_title">Enable Bluetooth</string>
     <string name="pref_bluetooth_summaryOn">TODO</string>
     <string name="pref_bluetooth_summaryOff">TODO</string>
@@ -88,4 +89,7 @@
     <string name="title_application_list">Application list</string>
     <string name="title_custom_intent">Custom intent</string>
     <string name="title_custom_gmaps">Custom gmaps intent</string>
+    <string name="pref_logging_title">Enable logging</string>
+    <string name="pref_logging_summaryOff">TODO off</string>
+    <string name="pref_logging_summaryOn">TODO on</string>
 </resources>

@@ -44,6 +44,7 @@ public class OBDGatewayService extends IntentService {
     private BluetoothSocket sockFallback = null;
     private boolean isRunning = false;
     private Long queueCounter = 0L;
+    private ObdLogWritter obdLogWritter;
 
     public BluetoothSocket getSock() {
         return sock;
@@ -63,6 +64,14 @@ public class OBDGatewayService extends IntentService {
 
     protected synchronized void putResult(Class commandClass, ObdCommandJob commandInstance) {
         executedCommands.put(commandClass, commandInstance);
+        if (prefs.getBoolean(SettingsFragment.LOGGING_ENABLED, false))
+            try {
+                obdLogWritter.write(commandInstance);
+            } catch (IOException e) {
+                Log.e(TAG, "logWritter not available");
+                e.printStackTrace();
+            }
+
     }
 
     public synchronized ObdCommandJob getResult(Class commandClass) {
@@ -124,6 +133,9 @@ public class OBDGatewayService extends IntentService {
 
     public void startService() throws IOException {
         Log.d(TAG, "Starting service..");
+
+        if (prefs.getBoolean(SettingsFragment.LOGGING_ENABLED, false))
+            obdLogWritter = new ObdLogWritter(GlobalDataProvider.getInstance().getContext(), System.currentTimeMillis() + ".csv");
         final String remoteDevice = prefs.getString(SettingsFragment.BLUETOOTH_LIST_KEY, null);
         if (remoteDevice == null || "".equals(remoteDevice)) {
             Log.e(TAG, "No Bluetooth device has been selected.");
@@ -143,6 +155,13 @@ public class OBDGatewayService extends IntentService {
     public void stopService() {
         Log.d(TAG, "Stopping service..");
         jobsQueue.removeAll(jobsQueue);
+        if (prefs.getBoolean(SettingsFragment.LOGGING_ENABLED, false))
+            try {
+                obdLogWritter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e(TAG, "Logging writer is probably not opened.");
+            }
         isRunning = false;
         if (sock != null)
             try {

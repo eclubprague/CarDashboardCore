@@ -19,6 +19,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
     public static final String ENABLE_BT_KEY = "enable_bluetooth_preference";
     public static final String BLUETOOTH_LIST_KEY = "bluetooth_list_preference";
+    public static final String LOGGING_ENABLED = "logging_enabled_preference";
     public static final String IMPERIAL_UNITS_KEY = "imperial_units_preference";
 
 
