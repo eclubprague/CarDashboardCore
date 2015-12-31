@@ -102,15 +102,15 @@ public class OBDGatewayService extends IntentService {
         if (!isRunning) return;
 
         queueCounter++;
-        Log.d(TAG, "Adding job[" + queueCounter + "] to queue..");
+       // Log.d(TAG, "Adding job[" + queueCounter + "] to queue..");
 
         job.setId(queueCounter);
         try {
             jobsQueue.put(job);
-            Log.d(TAG, "Job queued successfully.");
+           // Log.d(TAG, "Job queued successfully.");
         } catch (InterruptedException e) {
             job.setState(ObdCommandJobState.QUEUE_ERROR);
-            Log.e(TAG, "Failed to queue job.");
+            //Log.e(TAG, "Failed to queue job.");
         }
     }
 
@@ -134,8 +134,8 @@ public class OBDGatewayService extends IntentService {
     public void startService() throws IOException {
         Log.d(TAG, "Starting service..");
 
-       //c if (prefs.getBoolean(SettingsFragment.LOGGING_ENABLED, false))
-            obdLogWritter = new ObdLogWritter(GlobalDataProvider.getInstance().getContext(), System.currentTimeMillis() + ".csv");
+        //c if (prefs.getBoolean(SettingsFragment.LOGGING_ENABLED, false))
+
         final String remoteDevice = prefs.getString(SettingsFragment.BLUETOOTH_LIST_KEY, null);
         if (remoteDevice == null || "".equals(remoteDevice)) {
             Log.e(TAG, "No Bluetooth device has been selected.");
@@ -191,15 +191,9 @@ public class OBDGatewayService extends IntentService {
             ObdCommandJob job = null;
             try {
                 job = jobsQueue.take();
-
-                // log job
-                Log.d(TAG, "Taking job[" + job.getId() + "] from queue..");
-
                 if (job.getState().equals(ObdCommandJobState.NEW)) {
-                    Log.d(TAG, "Job state is NEW. Run it..");
                     job.setState(ObdCommandJobState.RUNNING);
                     job.getCommand().run(sock.getInputStream(), sock.getOutputStream());
-                    Log.d(TAG, "Job result" + job.getCommand().getFormattedResult());
                 } else
                     // log not new job
                     Log.e(TAG, "Job state was not new, so it shouldn't be in queue. BUG ALERT!");
@@ -231,6 +225,7 @@ public class OBDGatewayService extends IntentService {
         public void run() {
             Log.d(TAG, "Starting OBD connection..");
             isRunning = true;
+            obdLogWritter = new ObdLogWritter(GlobalDataProvider.getInstance().getContext(), "log" + System.currentTimeMillis() + ".csv");
             try {
                 sock = dev.createRfcommSocketToServiceRecord(MY_UUID);
                 sock.connect();

@@ -6,6 +6,7 @@ import android.util.Log;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
@@ -16,10 +17,10 @@ public class ObdLogWritter {
     private static final String TAG = ObdLogWritter.class.getSimpleName();
 
     public ObdLogWritter(Context c, String filename) {
-        File file = new File(c.getFilesDir() + "/logs/", filename);
+        File file = new File(c.getFilesDir(), filename);
+        Log.d(TAG, file.getAbsolutePath());
         try {
-            file.createNewFile();
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
+            writer = new BufferedWriter(new FileWriter(file));
         } catch (IOException e) {
             e.printStackTrace();
         }
