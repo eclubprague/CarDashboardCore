@@ -6,7 +6,6 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -44,7 +43,7 @@ public class OBDGatewayService extends IntentService {
     private BluetoothSocket sockFallback = null;
     private boolean isRunning = false;
     private Long queueCounter = 0L;
-    private ObdLogWritter obdLogWritter;
+    private ObdLogWritter csvLogger;
 
     public BluetoothSocket getSock() {
         return sock;
@@ -66,7 +65,8 @@ public class OBDGatewayService extends IntentService {
         executedCommands.put(commandClass, commandInstance);
         if (prefs.getBoolean(SettingsFragment.LOGGING_ENABLED, false))
             try {
-                obdLogWritter.write(commandInstance);
+                if (csvLogger == null) initLogger();
+                csvLogger.write(commandInstance);
             } catch (IOException e) {
                 Log.e(TAG, "logWritter not available");
                 e.printStackTrace();
@@ -102,12 +102,12 @@ public class OBDGatewayService extends IntentService {
         if (!isRunning) return;
 
         queueCounter++;
-       // Log.d(TAG, "Adding job[" + queueCounter + "] to queue..");
+        // Log.d(TAG, "Adding job[" + queueCounter + "] to queue..");
 
         job.setId(queueCounter);
         try {
             jobsQueue.put(job);
-           // Log.d(TAG, "Job queued successfully.");
+            // Log.d(TAG, "Job queued successfully.");
         } catch (InterruptedException e) {
             job.setState(ObdCommandJobState.QUEUE_ERROR);
             //Log.e(TAG, "Failed to queue job.");
@@ -135,7 +135,8 @@ public class OBDGatewayService extends IntentService {
         Log.d(TAG, "Starting service..");
 
         //c if (prefs.getBoolean(SettingsFragment.LOGGING_ENABLED, false))
-
+        if (prefs.getBoolean(SettingsFragment.LOGGING_ENABLED, false))
+            initLogger();
         final String remoteDevice = prefs.getString(SettingsFragment.BLUETOOTH_LIST_KEY, null);
         if (remoteDevice == null || "".equals(remoteDevice)) {
             Log.e(TAG, "No Bluetooth device has been selected.");
@@ -152,12 +153,17 @@ public class OBDGatewayService extends IntentService {
         }
     }
 
+    private void initLogger() {
+        if (prefs.getBoolean(SettingsFragment.LOGGING_ENABLED, false))
+            csvLogger = new ObdLogWritter(GlobalDataProvider.getInstance().getContext(), "log" + System.currentTimeMillis() + ".csv");
+    }
+
     public void stopService() {
         Log.d(TAG, "Stopping service..");
         jobsQueue.removeAll(jobsQueue);
         if (prefs.getBoolean(SettingsFragment.LOGGING_ENABLED, false))
             try {
-                obdLogWritter.close();
+                csvLogger.close();
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.e(TAG, "Logging writer is probably not opened.");
@@ -225,7 +231,6 @@ public class OBDGatewayService extends IntentService {
         public void run() {
             Log.d(TAG, "Starting OBD connection..");
             isRunning = true;
-            obdLogWritter = new ObdLogWritter(GlobalDataProvider.getInstance().getContext(), "log" + System.currentTimeMillis() + ".csv");
             try {
                 sock = dev.createRfcommSocketToServiceRecord(MY_UUID);
                 sock.connect();
