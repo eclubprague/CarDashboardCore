@@ -116,7 +116,7 @@ public class OBDGatewayService extends IntentService {
 
     @Override
     public void onDestroy() {
-        //t.interrupt();
+        stopService();
         super.onDestroy();
     }
 
