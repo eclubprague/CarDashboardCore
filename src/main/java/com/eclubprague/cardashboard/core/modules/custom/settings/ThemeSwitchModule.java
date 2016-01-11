@@ -34,6 +34,10 @@ public class ThemeSwitchModule extends AbstractDisplayModule {
     }
 
     @Override
+    public void speak() {
+    }
+
+    @Override
     public String getUpdatedValue() {
         return ThemeUtils.getCurrentTheme( GlobalDataProvider.getInstance().getModuleContext() ).name().toLowerCase();
     }

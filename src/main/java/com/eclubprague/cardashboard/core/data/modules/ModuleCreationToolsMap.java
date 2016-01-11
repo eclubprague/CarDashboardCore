@@ -3,7 +3,8 @@ package com.eclubprague.cardashboard.core.data.modules;
 import android.util.Log;
 
 import com.eclubprague.cardashboard.core.modules.base.IModule;
-import com.eclubprague.cardashboard.core.modules.custom.settings.ThemeSwitchModule;
+import com.eclubprague.cardashboard.core.modules.custom.obd.*;
+import com.eclubprague.cardashboard.core.modules.custom.settings.*;
 import com.eclubprague.cardashboard.core.modules.predefined.*;
 import com.eclubprague.cardashboard.core.modules.custom.*;
 
@@ -41,6 +42,7 @@ public class ModuleCreationToolsMap {
         register(LightButtonModule.class, ModuleLoader.DEFAULT, ModuleCreator.DEFAULT);
         register(ObdRpmModule.class, ModuleLoader.DISPLAY, ModuleCreator.DEFAULT);
         register(ObdSpeedModule.class, ModuleLoader.DISPLAY, ModuleCreator.DEFAULT);
+        register(ObdEngineLoadModule.class, ModuleLoader.DISPLAY, ModuleCreator.DEFAULT);
         register(TemperatureModule.class, ModuleLoader.DISPLAY, ModuleCreator.DEFAULT);
 
         register(ThemeSwitchModule.class, ModuleLoader.DISPLAY, ModuleCreator.DEFAULT);

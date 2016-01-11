@@ -7,6 +7,7 @@ import com.eclubprague.cardashboard.core.model.resources.IconResource;
 import com.eclubprague.cardashboard.core.model.resources.StringResource;
 import com.eclubprague.cardashboard.core.modules.base.IModule;
 import com.eclubprague.cardashboard.core.modules.custom.*;
+import com.eclubprague.cardashboard.core.modules.custom.obd.ObdEngineLoadModule;
 import com.eclubprague.cardashboard.core.modules.custom.settings.ThemeSwitchModule;
 import com.eclubprague.cardashboard.core.modules.predefined.*;
 
@@ -52,7 +53,8 @@ public class ModuleInfoContainer extends ModuleInfo {
         obdContainer.add(
                 new ModuleInfo(GpsSpeedModule.class, GpsSpeedModule.TITLE_RESOURCE, GpsSpeedModule.ICON_RESOURCE),
                 new ModuleInfo(ObdRpmModule.class, ObdRpmModule.TITLE_RESOURCE, ObdRpmModule.ICON_RESOURCE),
-                new ModuleInfo(ObdSpeedModule.class, ObdSpeedModule.TITLE_RESOURCE, ObdSpeedModule.ICON_RESOURCE)
+                new ModuleInfo(ObdSpeedModule.class, ObdSpeedModule.TITLE_RESOURCE, ObdSpeedModule.ICON_RESOURCE),
+                new ModuleInfo( ObdEngineLoadModule.class, ObdEngineLoadModule.TITLE_RESOURCE, ObdEngineLoadModule.ICON_RESOURCE )
         );
         ModuleInfoContainer otherContainer = new ModuleInfoContainer(SimpleParentModule.class, SimpleParentModule.OTHERS_TITLE_RESOURCE, SimpleParentModule.OTHERS_ICON_RESOURCE);
         containers.add(otherContainer);

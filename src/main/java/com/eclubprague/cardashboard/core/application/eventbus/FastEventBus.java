@@ -25,7 +25,7 @@ public enum FastEventBus {
     private final Map<Class<? extends Event>, Set<EventReceiver>> listenersMap = new HashMap<>();
 
     public synchronized <T extends Event> void register(EventReceiver<T> receiver, Class<T> eventClass) {
-        Log.d(TAG, "receiver registered: " + receiver);
+//        Log.d(TAG, "receiver registered: " + receiver);
         Set<EventReceiver> eventListeners;
         eventListeners = listenersMap.get(eventClass);
         if (eventListeners == null) {
@@ -38,7 +38,7 @@ public enum FastEventBus {
     }
 
     public synchronized <T extends Event> void unregister(EventReceiver<T> receiver, Class<T> eventClass) {
-        Log.d(TAG, "receiver unregistered: " + receiver);
+//        Log.d(TAG, "receiver unregistered: " + receiver);
         Set<EventReceiver> eventListeners = listenersMap.get(eventClass);
         if (eventListeners != null) {
             eventListeners.remove(receiver);

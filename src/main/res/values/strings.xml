@@ -88,4 +88,5 @@
     <string name="title_application_list">Application list</string>
     <string name="title_custom_intent">Custom intent</string>
     <string name="title_custom_gmaps">Custom gmaps intent</string>
+    <string name="module_obd_load_title">Engine load</string>
 </resources>

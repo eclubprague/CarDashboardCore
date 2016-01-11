@@ -24,6 +24,7 @@ public class ClockModule extends AbstractTimedUpdateDisplayModule<GlobalMediumUp
 
     public ClockModule() {
         super(TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
+        setSayUnitOnTts( false );
     }
 
     @Override

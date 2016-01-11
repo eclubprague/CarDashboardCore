@@ -22,6 +22,7 @@ public class ClockSecondsModule extends AbstractTimedUpdateDisplayModule<GlobalM
 
     public ClockSecondsModule() {
         super(TITLE_RESOURCE, ICON_RESOURCE, UNIT_RESOURCE);
+        setSayUnitOnTts( false );
     }
 
 
